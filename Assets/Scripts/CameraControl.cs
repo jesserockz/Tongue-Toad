@@ -31,6 +31,8 @@ public class CameraControl : MonoBehaviour {
 			curRotation += rot;
 			
 			if (curRotation >= angleToRotate) {
+				//ensure the player is back at correct point
+				transform.RotateAround (Vector3.zero, Vector3.forward, -(curRotation - angleToRotate));
 				rotatemode = false;
 			}
 		}	
