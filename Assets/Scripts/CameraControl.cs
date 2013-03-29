@@ -11,7 +11,7 @@ public class CameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.End)){
+		if(Input.GetKeyDown(KeyCode.End) && !rotatemode){
 			rotatemode = true;
 			rotateleft = 180;
 		}
@@ -20,7 +20,7 @@ public class CameraControl : MonoBehaviour {
 	
 	//FixedUpdate is called a fixed number of times per second
 	void FixedUpdate(){
-	if(rotatemode && rotateleft!=0){
+		if(rotatemode && rotateleft!=0){
 			transform.RotateAround (Vector3.zero, Vector3.forward, 100 * Time.deltaTime);
 			rotateleft--;
 		}	
