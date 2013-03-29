@@ -2,8 +2,12 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraControl : MonoBehaviour {
+	
+	float angleToRotate = 360;
+	float timeToRotate = 3.0f;
+	
 	bool rotatemode = false;
-	int rotateleft = 0;
+	float curRotation = 0;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,17 +17,24 @@ public class CameraControl : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.End) && !rotatemode){
 			rotatemode = true;
-			rotateleft = 180;
+			curRotation = 0;
 		}
 		
+		Debug.Log(transform.name);
 	}
 	
 	//FixedUpdate is called a fixed number of times per second
 	void FixedUpdate(){
-		if(rotatemode && rotateleft!=0){
-			transform.RotateAround (Vector3.zero, Vector3.forward, 100 * Time.deltaTime);
-			rotateleft--;
+		if(rotatemode){
+			float rot = Time.deltaTime / timeToRotate * angleToRotate;
+			transform.RotateAround (Vector3.zero, Vector3.forward, rot);
+			curRotation += rot;
+			
+			if (curRotation >= angleToRotate) {
+				rotatemode = false;
+			}
 		}	
+		
 		
 	}
 }
