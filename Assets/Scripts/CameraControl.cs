@@ -13,6 +13,7 @@ public class CameraControl : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.End)){
 			rotatemode = true;
+			rotateleft = 180;
 		}
 		
 	}
