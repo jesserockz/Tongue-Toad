@@ -3,6 +3,10 @@ Temp/*
 Library/*
 obj
 
+Assembly-CSharp-firstpass.pidb
+Assembly-CSharp.pidb
+Assembly-UnityScript-firstpass.pidb
+
 !Library/*.asset
 !Library/AssetImportState
 !Library/AssetVersioning.db
