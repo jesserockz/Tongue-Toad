@@ -3,13 +3,18 @@ using System.Collections;
 
 public class CameraControl : MonoBehaviour {
 	
-	public float angleToRotate;
+	public float countToRotate;
 	public float timeToRotate;
-	
-	bool starting = true;
+	public float rotateAcceleration;
+	public float cameraZoomSpeed;
+	public float maxCameraZoomOut;
 	
 	bool rotatemode = false;
 	float curRotation = 0;
+	bool slidingOut = false;
+	bool slidingIn = false;
+	float slideInStart = float.MaxValue;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -22,6 +27,8 @@ public class CameraControl : MonoBehaviour {
 			rotatemode = true;
 			curRotation = 0;
 			Player.currentEnergy = 100;
+			slidingOut = true;
+			
 		}
 		
 		Debug.Log(transform.name);
@@ -30,19 +37,40 @@ public class CameraControl : MonoBehaviour {
 	//FixedUpdate is called a fixed number of times per second
 	void FixedUpdate(){
 		if(rotatemode){
-			if(curRotation<angleToRotate/2) timeToRotate -= 0.07f;
-			else if(curRotation>angleToRotate/2) timeToRotate +=0.07f;
-			float rot = Time.deltaTime / timeToRotate * angleToRotate;
-			transform.RotateAround (new Vector3(0,2,2), Vector3.left, -rot);
-			curRotation += rot;
-			
-			if (curRotation >= angleToRotate) {
-				//ensure the player is back at correct point
-				transform.RotateAround (new Vector3(0,2,2), Vector3.left, (curRotation - angleToRotate));
-				rotatemode = false;
-			}
+			zoom ();
+			rotate();
 		}	
+	}
+	
+	void zoom(){
+		if(camera.fieldOfView<maxCameraZoomOut && slidingOut)
+				camera.fieldOfView+=cameraZoomSpeed;
+		else if(camera.fieldOfView>=maxCameraZoomOut && slidingOut){
+			slidingOut = false;
+			slideInStart = (countToRotate*360)-curRotation;
+		}
+	
+		if(camera.fieldOfView>52 && slidingIn)
+			camera.fieldOfView-=cameraZoomSpeed;
+		else if(camera.fieldOfView<52 && slidingIn)
+			slidingIn = false;
+
+		if(curRotation>=slideInStart) slidingIn = true;
+	}
 		
-		
+	
+	void rotate(){
+		if(curRotation<countToRotate*360/2) 
+			timeToRotate -= rotateAcceleration;
+		else if(curRotation>countToRotate*360/2) 
+			timeToRotate += rotateAcceleration;
+		float rot = Time.deltaTime / timeToRotate * countToRotate*360;
+		transform.RotateAround (new Vector3(0,2,2), Vector3.left, -rot);
+		curRotation += rot;
+		if (curRotation >= countToRotate*360) {
+			//ensure the player is back at correct point
+			transform.RotateAround (new Vector3(0,2,2), Vector3.left, (curRotation - countToRotate*360));
+			rotatemode = false;
+		}
 	}
 }
