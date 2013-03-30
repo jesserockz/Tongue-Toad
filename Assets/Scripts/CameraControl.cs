@@ -3,8 +3,10 @@ using System.Collections;
 
 public class CameraControl : MonoBehaviour {
 	
-	float angleToRotate = 360;
-	float timeToRotate = 3.0f;
+	public float angleToRotate;
+	public float timeToRotate;
+	
+	bool starting = true;
 	
 	bool rotatemode = false;
 	float curRotation = 0;
@@ -28,13 +30,15 @@ public class CameraControl : MonoBehaviour {
 	//FixedUpdate is called a fixed number of times per second
 	void FixedUpdate(){
 		if(rotatemode){
+			if(curRotation<angleToRotate/2) timeToRotate -= 0.07f;
+			else if(curRotation>angleToRotate/2) timeToRotate +=0.07f;
 			float rot = Time.deltaTime / timeToRotate * angleToRotate;
-			transform.RotateAround (new Vector3(0,2,5), Vector3.left, -rot);
+			transform.RotateAround (new Vector3(0,2,2), Vector3.left, -rot);
 			curRotation += rot;
 			
 			if (curRotation >= angleToRotate) {
 				//ensure the player is back at correct point
-				transform.RotateAround (new Vector3(0,2,5), Vector3.left, (curRotation - angleToRotate));
+				transform.RotateAround (new Vector3(0,2,2), Vector3.left, (curRotation - angleToRotate));
 				rotatemode = false;
 			}
 		}	
