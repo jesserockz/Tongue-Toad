@@ -12,15 +12,15 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {		
+	void Update () {	
 		bool l = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
 		bool r = Input.GetKey(KeyCode.RightArrow) || Input.GetKey (KeyCode.D);
 		bool shoot = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
 		
-		if(l && transform.position.x>-maxMovement) {
+		if(l) {
 			transform.position -= new Vector3(speed,0,0);
 		}
-		if(r && transform.position.x<maxMovement) {
+		if(r){//&& transform.position.x<maxMovement) {
 			transform.position += new Vector3(speed,0,0);
 		}
 		if(Input.GetKeyDown(KeyCode.Q)){

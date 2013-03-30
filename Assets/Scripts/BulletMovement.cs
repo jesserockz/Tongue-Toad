@@ -14,6 +14,9 @@ public class BulletMovement : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter (Collider other) {
+		if(other.name.Equals("LeftWall") || other.name.Equals("RightWall"))
+			return;
+		
         Destroy(other.gameObject);
 		Destroy (gameObject);
     }
