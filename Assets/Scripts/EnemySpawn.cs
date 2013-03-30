@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemySpawn : MonoBehaviour {
-	public GameObject enemy;
+	public GameObject Enemy;
 	
 	private float between = 2.0f;
 	private float lastSpawn = 0;
@@ -15,7 +15,7 @@ public class EnemySpawn : MonoBehaviour {
 	void Update () {
 		if (Time.time - lastSpawn > between) {
 			//Instantiate(enemyPrefab);
-			Instantiate(enemy, new Vector3(0,0,15f), Quaternion.identity);
+			Instantiate(Enemy, new Vector3(0,0,15f), Quaternion.identity);
 			lastSpawn = Time.time;
 		}
 	}

@@ -15,9 +15,11 @@ public class CameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.End) && !rotatemode){
+		bool spinKey = Input.GetKey (KeyCode.End) || Input.GetKey (KeyCode.Return);
+		if(spinKey && !rotatemode){
 			rotatemode = true;
 			curRotation = 0;
+			Player.currentEnergy = 100;
 		}
 		
 		Debug.Log(transform.name);
