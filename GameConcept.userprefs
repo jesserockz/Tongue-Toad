@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\BulletMovement.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Menu\SoundManager.cs" Line="19" Column="24" />
+      <File FileName="Assets\Scripts\Menu\MainGui.cs" Line="116" Column="114" />
+      <File FileName="Assets\Scripts\Menu\MenuSound.cs" Line="11" Column="1" />
+      <File FileName="Assets\Scripts\Game\BulletMovement.cs" Line="5" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

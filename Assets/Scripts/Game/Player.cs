@@ -27,6 +27,11 @@ public class Player : MonoBehaviour {
 	void Start () {
 		currentHealth = maxHealth;
 		currentEnergy = maxEnergy;
+		
+		score = 0;
+		combo = 0;
+		
+		Pause.setPause(false);
 	}
 	
 	void OnCollisionEnter (Collision c) {
@@ -59,7 +64,7 @@ public class Player : MonoBehaviour {
 	/// Returns true if the player can currently shoot (e.g cannot shoot if gun/ tongue is timing out)
 	/// </summary>
 	private bool canShoot() {
-		return currentEnergy > 0;
+		return currentEnergy > 0 && !Pause.isPaused;
 	}
 	
 	//damages the player (and maybe calls gameover or something like that)
