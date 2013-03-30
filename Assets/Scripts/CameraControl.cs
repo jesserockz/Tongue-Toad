@@ -29,12 +29,12 @@ public class CameraControl : MonoBehaviour {
 	void FixedUpdate(){
 		if(rotatemode){
 			float rot = Time.deltaTime / timeToRotate * angleToRotate;
-			transform.RotateAround (Vector3.zero, Vector3.forward, rot);
+			transform.RotateAround (new Vector3(0,2,5), Vector3.left, -rot);
 			curRotation += rot;
 			
 			if (curRotation >= angleToRotate) {
 				//ensure the player is back at correct point
-				transform.RotateAround (Vector3.zero, Vector3.forward, -(curRotation - angleToRotate));
+				transform.RotateAround (new Vector3(0,2,5), Vector3.left, (curRotation - angleToRotate));
 				rotatemode = false;
 			}
 		}	

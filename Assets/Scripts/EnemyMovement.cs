@@ -21,7 +21,7 @@ public class EnemyMovement : MonoBehaviour {
 	void Update () {
 		//transform.position -= new Vector3(0,0,speed);
 		if(Time.time - lastChange > nextChange){
-			float randomForceX = Random.Range(-10f,10f);
+			float randomForceX = Random.Range(-20f,20f);
 			float randomForceZ = Random.Range(-1f,0f);
 			rigidbody.AddForce(randomForceX,0f,randomForceZ);
 		}

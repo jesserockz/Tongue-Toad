@@ -16,10 +16,7 @@ public class BulletMovement : MonoBehaviour {
 		}
 	}
 	
-	void OnTriggerEnter (Collider other) {
-		if(other.name.Equals("LeftWall") || other.name.Equals("RightWall"))
-			return; 
-		
+	void OnTriggerEnter (Collider other) {	
 		if (other.tag == "Enemy") {
 			Player.score += 10 + Player.combo;
 			Player.currentEnergy += 5;
