@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 	public Transform EnemyPrefab;
 	public Rigidbody Bullet;
 	public float speed = 0.07f;
-
+	public float maxMovement = 3.5f;
 	void OnCollisionEnter (Collision c) {
 		Debug.Log (c.gameObject.name);
 	}
@@ -17,10 +17,10 @@ public class PlayerMovement : MonoBehaviour {
 		bool r = Input.GetKey(KeyCode.RightArrow) || Input.GetKey (KeyCode.D);
 		bool shoot = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
 		
-		if(l && transform.position.x>-3.5) {
+		if(l && transform.position.x>-maxMovement) {
 			transform.position -= new Vector3(speed,0,0);
 		}
-		if(r && transform.position.x<3.5) {
+		if(r && transform.position.x<maxMovement) {
 			transform.position += new Vector3(speed,0,0);
 		}
 		if(Input.GetKeyDown(KeyCode.Q)){
