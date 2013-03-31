@@ -23,7 +23,7 @@ public class Underwater : MonoBehaviour {
 		defaultFogColor = RenderSettings.fogColor;
 		defaultFogDensity = RenderSettings.fogDensity;
 		defaultSkybox = RenderSettings.skybox;
-		//blur.enabled = false;
+		blur.enabled = false;
     }
  
     void Update () {
@@ -33,7 +33,7 @@ public class Underwater : MonoBehaviour {
             RenderSettings.fogColor = new Color(0, 0.4f, 0.7f, 0.6f);
             RenderSettings.fogDensity = 0.09f;
             RenderSettings.skybox = noSkybox;
-			//blur.enabled = true;
+			blur.enabled = true;
         }
         else
         {
@@ -41,7 +41,7 @@ public class Underwater : MonoBehaviour {
             RenderSettings.fogColor = defaultFogColor;
             RenderSettings.fogDensity = defaultFogDensity;
             RenderSettings.skybox = defaultSkybox;
-			//blur.enabled =  false;
+			blur.enabled =  false;
         }
     }
 }

@@ -27,6 +27,8 @@ public class EnemyMovement : MonoBehaviour {
 		}
 		if(transform.position.z<-5f) {
 			Player.combo = 0;
+		}
+		if(transform.position.z<-10f) {
 			Destroy(gameObject);
 		}
 	}
