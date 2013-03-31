@@ -18,29 +18,29 @@ public class Underwater : MonoBehaviour {
  
     void Start () {
 	    //Set the background color
-	    camera.backgroundColor = new Color(0, 0.4f, 0.7f, 1);
-		defaultFog = RenderSettings.fog;
-		defaultFogColor = RenderSettings.fogColor;
-		defaultFogDensity = RenderSettings.fogDensity;
-		defaultSkybox = RenderSettings.skybox;
+	    //camera.backgroundColor = new Color(0, 0.4f, 0.7f, 1);
+		//defaultFog = RenderSettings.fog;
+		//defaultFogColor = RenderSettings.fogColor;
+		//defaultFogDensity = RenderSettings.fogDensity;
+		//defaultSkybox = RenderSettings.skybox;
 		blur.enabled = false;
     }
  
     void Update () {
         if (transform.position.y < underwaterLevel)
         {
-            RenderSettings.fog = true;
-            RenderSettings.fogColor = new Color(0, 0.4f, 0.7f, 0.6f);
-            RenderSettings.fogDensity = 0.09f;
-            RenderSettings.skybox = noSkybox;
+            //RenderSettings.fog = true;
+            //RenderSettings.fogColor = new Color(0, 0.4f, 0.7f, 0.6f);
+            //RenderSettings.fogDensity = 0.09f;
+            //RenderSettings.skybox = noSkybox;
 			blur.enabled = true;
         }
         else
         {
-            RenderSettings.fog = defaultFog;
-            RenderSettings.fogColor = defaultFogColor;
-            RenderSettings.fogDensity = defaultFogDensity;
-            RenderSettings.skybox = defaultSkybox;
+            //RenderSettings.fog = defaultFog;
+            //RenderSettings.fogColor = defaultFogColor;
+            //RenderSettings.fogDensity = defaultFogDensity;
+            //RenderSettings.skybox = defaultSkybox;
 			blur.enabled =  false;
         }
     }
