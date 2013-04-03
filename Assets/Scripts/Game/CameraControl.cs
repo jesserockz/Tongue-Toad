@@ -15,9 +15,12 @@ public class CameraControl : MonoBehaviour {
 	bool slidingIn = false;
 	float slideInStart = float.MaxValue;
 	
+	Vector3 lastaccel;
+	
+	
 	// Use this for initialization
 	void Start () {
-	
+		lastaccel = Input.acceleration;
 	}
 	
 	// Update is called once per frame
@@ -30,8 +33,22 @@ public class CameraControl : MonoBehaviour {
 			
 		}
 		
+		shake();
+
 		Debug.Log(transform.name);
 	}
+	
+	void shake(){
+		Vector3 accel = Input.acceleration;
+		if((accel-lastaccel).magnitude>1f && !rotatemode){
+			rotatemode = true;
+			Player.currentEnergy = 100;
+			slidingOut = true;
+		}
+		lastaccel = accel;
+	}
+	
+	
 	
 	//FixedUpdate is called a fixed number of times per second
 	void FixedUpdate(){
