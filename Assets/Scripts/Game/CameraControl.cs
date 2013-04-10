@@ -34,8 +34,6 @@ public class CameraControl : MonoBehaviour {
 		}
 		
 		shake();
-
-		Debug.Log(transform.name);
 	}
 	
 	void shake(){

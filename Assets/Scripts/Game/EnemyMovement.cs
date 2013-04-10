@@ -25,11 +25,11 @@ public class EnemyMovement : MonoBehaviour {
 			float randomForceZ = Random.Range(-1f,0f);
 			rigidbody.AddForce(randomForceX,0f,randomForceZ);
 		}
-		if(transform.position.z<-5f) {
-			Player.combo = 0;
-		}
-		if(transform.position.z<-10f) {
+		
+		if(transform.position.z < -5f) {
 			Destroy(gameObject);
+			Player.combo = 0;
+			Player.currentHealth -= 10;
 		}
 	}
 }

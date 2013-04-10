@@ -9,6 +9,9 @@ public class MainGui : MonoBehaviour
 	
 	private Mode mode;
 	
+	private TestHtml hs;
+	
+	
 	private enum Mode {
 		Menu,
 		Options,
@@ -20,15 +23,15 @@ public class MainGui : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		GameObject o = GameObject.Find("HighScoreInterface");
+		
+		hs = (TestHtml)o.GetComponent("TestHtml");
+		
 		mode = Mode.Menu;
 		ButtonItem b1 = new ButtonItem("New Game", newGame);
 		ButtonItem b2 = new ButtonItem("Highscores", highScore);
 		ButtonItem b3 = new ButtonItem("Options", options);
 		ButtonItem b4 = new ButtonItem("Exit", exit);
-		
-		Debug.Log(Application.platform);
-		
-		Debug.Log (Application.platform);
 		
 		buttons.Add (b1);
 		buttons.Add (b2);
@@ -42,9 +45,11 @@ public class MainGui : MonoBehaviour
 	}
 		
 	private void highScore() {
+		Debug.Log(hs);
 		mode = Mode.Highscore;
+		hs.reloadCoroutine();
 	}
-	
+	 
 	private void options() {
 		mode = Mode.Options;
 	}
@@ -87,6 +92,35 @@ public class MainGui : MonoBehaviour
 		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "Highscore");
 		
 		//highscore drawing code goes here
+		
+		float w = 200;
+		float h = 20;
+		float x = (Screen.width - w) / 2.0f;
+		float y = Screen.height * 0.7f;
+		float iy = 40;
+		float dx = h + 10;
+		
+		if (TestHtml.loading) GUI.Label (new Rect(x, Screen.height * 0.4f, w, h), "Loading from highscore server...");
+		else if (TestHtml.error) GUI.Label (new Rect(x, Screen.height * 0.4f, w, h), "Couldn't connect to highscore server");
+		else {
+			string[] names = TestHtml.contents.Split('\n');
+			
+			for (int i = 2; i < names.Length && i < 12 && names[i].Length != 0; i++) {
+				string[] info = names[i].Split(' ');
+				string name = info[0].Split('=')[1];
+				string score = info[1].Split('=')[1];
+				GUI.Label (new Rect(Screen.width / 2 - 100, 50 + 20 * i, 200, 30), (i - 1) + ": " + name);
+				GUI.Label (new Rect(Screen.width / 2, 50 + 20 * i, 200, 30), "Score: " + score);
+			}
+		}
+		
+		if(GUI.Button(new Rect(x, y - 30, w, h), "Refresh scores...")) {
+			hs.reloadCoroutine();
+		}
+		
+		if(GUI.Button(new Rect(x, y, w, h), "Return to menu")) {
+			mode = Mode.Menu;
+		}
 	}
 	
 	private void drawOptions() {

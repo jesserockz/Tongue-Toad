@@ -10,7 +10,7 @@ public class BulletMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.position.z>20) {
+		if(transform.position.z>40) {
 			Player.combo = 0;
 			Destroy(gameObject);
 		}

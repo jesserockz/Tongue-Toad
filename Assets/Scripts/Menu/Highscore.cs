@@ -9,6 +9,8 @@ using System.Collections;
 public class Highscore : MonoBehaviour
 {
 	
+	
+	
 	static Highscore ()
 	{
 		
@@ -28,8 +30,7 @@ public class Highscore : MonoBehaviour
 	
 	public List<string> getOnlineHighscores ()
 	{
-		string url = "http://www.troyshaw.co.nz/hs.php?mode=get";
-		string scoreSource = "";
+		string url = "http://www.troyshaw.co.nz/toad/hs.php?mode=get";
 	
 		WWW source = new WWW (url);
 		StartCoroutine(WaitForRequest(source));;
@@ -43,4 +44,11 @@ public class Highscore : MonoBehaviour
 	{
 		yield return www;
 	}
+	
+	 public WWW GetWWW() {
+		string url = "http://www.troyshaw.co.nz/toad/hs.php?mode=get";
+		
+        WWW www = new WWW(url);
+        return www;
+    }
 }

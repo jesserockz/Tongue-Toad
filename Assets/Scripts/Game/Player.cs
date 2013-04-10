@@ -39,25 +39,27 @@ public class Player : MonoBehaviour {
 		Pause.setPause(false);
 	}
 	
-	void OnCollisionEnter (Collision c) {
+	void OnTriggerEnter (Collider c) {
 		string tag = c.gameObject.tag;
 		if (tag == "Enemy") {
-			currentHealth = Mathf.Max (currentHealth - 5, 0);
-		}
+			currentHealth = Mathf.Max (currentHealth - 10, 0);
+		}	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//l = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
-		//r = Input.GetKey(KeyCode.RightArrow) || Input.GetKey (KeyCode.D);
+		if (currentHealth < 0) initiateGameOver ();
+		
 		bool shoot = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
-	
-		#if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR || UNITY_WEBPLAYER
-		accel = new Vector3(Input.GetAxis("Horizontal"),0f,Input.GetAxis("Vertical"));
-		#elif UNITY_ANDROID || UNITY_IPHONE
-		Vector3 v = Input.acceleration;
-		accel = new Vector3(Mathf.Clamp((v.x-aCalib.x)*2,-1f,1f),Mathf.Clamp((v.z-aCalib.z)*2,-1f,1f),Mathf.Clamp((v.z-aCalib.z)*2,-1f,1f));
-		#endif
+		
+		
+		if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
+			//device with accelerometer
+			Vector3 v = Input.acceleration;
+			accel = new Vector3(Mathf.Clamp((v.x-aCalib.x)*2,-1f,1f),Mathf.Clamp((v.z-aCalib.z)*2,-1f,1f),Mathf.Clamp((v.z-aCalib.z)*2,-1f,1f));
+		} else {
+			accel = new Vector3(Input.GetAxis("Horizontal"),0f,Input.GetAxis("Vertical"));
+		}
 		
 		if (shoot && canShoot()) {
 			//subtract energy from bullet shot
@@ -113,5 +115,9 @@ public class Player : MonoBehaviour {
 			GUI.Box(new Rect(x,y,w,h), "Hit Enter/ End to renew energy!");
 #endif
 		}
+	}
+	
+	private void initiateGameOver() {
+			Application.LoadLevel("GameOver");
 	}
 }
