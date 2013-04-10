@@ -15,7 +15,8 @@ public class MainGui : MonoBehaviour
 	private enum Mode {
 		Menu,
 		Options,
-		Highscore
+		Highscore,
+		Credits
 	};
 	
 	
@@ -31,13 +32,15 @@ public class MainGui : MonoBehaviour
 		ButtonItem b1 = new ButtonItem("New Game", newGame);
 		ButtonItem b2 = new ButtonItem("Highscores", highScore);
 		ButtonItem b3 = new ButtonItem("Options", options);
-		ButtonItem b4 = new ButtonItem("Exit", exit);
+		ButtonItem b4 = new ButtonItem("Credits", credits);
+		ButtonItem b5 = new ButtonItem("Exit", exit);
 		
 		buttons.Add (b1);
 		buttons.Add (b2);
 		buttons.Add (b3);
+		buttons.Add (b4);
 		//only add exit button if not a web plugin
-		if (!Application.isWebPlayer) buttons.Add (b4);
+		if (!Application.isWebPlayer) buttons.Add (b5);
 	}
 	
 	private void newGame() {
@@ -52,6 +55,10 @@ public class MainGui : MonoBehaviour
 	 
 	private void options() {
 		mode = Mode.Options;
+	}
+	
+	private void credits() {
+		mode = Mode.Credits;
 	}
 	
 	private void exit() {
@@ -69,6 +76,7 @@ public class MainGui : MonoBehaviour
 		case Mode.Menu: drawMenu(); break;
 		case Mode.Highscore: drawHighscore(); break;
 		case Mode.Options: drawOptions(); break;
+		case Mode.Credits: drawCredits(); break;
 		}
 	}
 	
@@ -152,7 +160,34 @@ public class MainGui : MonoBehaviour
 		if(GUI.Button(new Rect(x, y + iy * i++, w, h), "Return to menu")) {
 			mode = Mode.Menu;
 		}
+	}
+	
+	private void drawCredits() {
+		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "Credits");
 		
+		float w = 200;
+		float h = 25;
+		float x = (Screen.width - w) / 2.0f;
+		float y = Screen.width * 0.2f;
+		float iy = 20;
+		float dx = h + 10;
+		int i = 0;
+		
+		List<string> credits = new List<string>();
+		credits.Add("Programmer: Troy Shaw");
+		credits.Add("Programmer: Jesse Hills");
+		credits.Add("Artist: Kiran Matthews");
+		credits.Add("Artist: Jordan Dai");
+		credits.Add("Artist: Bat Mandoza");
+		credits.Add("Artist: Loxy Reid");
+		
+		for (i = 0; i < credits.Count; i++) {
+			GUI.Label (new Rect(x, y + i * iy, w, h), credits[i]);
+		}
+		
+		if(GUI.Button(new Rect(x, y + iy * (i + 3), w, h), "Return to menu")) {
+			mode = Mode.Menu;
+		}
 	}
 }
 

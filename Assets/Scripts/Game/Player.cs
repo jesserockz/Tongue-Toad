@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (currentHealth < 0) initiateGameOver ();
+		if (currentHealth <= 0) initiateGameOver ();
 		
 		bool shoot = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
 		
