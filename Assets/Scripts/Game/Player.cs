@@ -5,6 +5,7 @@ public class Player : MonoBehaviour {
 	
 	//used for creating bullet
 	public Rigidbody Bullet;
+    public Transform frog;
 	
 	//movement variables
 	public float speed = 0.15f;
@@ -64,7 +65,7 @@ public class Player : MonoBehaviour {
 		if (shoot && canShoot()) {
 			//subtract energy from bullet shot
 			currentEnergy = Mathf.Max(currentEnergy - 5, 0);
-			Instantiate(Bullet,transform.position+new Vector3(0,0.2f,1f),Quaternion.identity);
+			Instantiate(Bullet,frog.position,frog.rotation);
 		}
 	}
 	
@@ -118,6 +119,8 @@ public class Player : MonoBehaviour {
 	}
 	
 	private void initiateGameOver() {
-			Application.LoadLevel("GameOver");
+        Screen.lockCursor = false;
+        Screen.showCursor = true;
+		Application.LoadLevel("GameOver");
 	}
 }
