@@ -30,13 +30,17 @@ public class GameOverGui : MonoBehaviour
 		
 		
 		//haven't click submit yet, so prompt them for name
-		if (!submitted) {
+		//ignore this for now cause I don't want to accidentally accuse players of cheating when they haven't
+		if (Player.hasCheated && false) {
+			//player is a cheater... damn them
+			GUI.Label (new Rect(x, Screen.height * 0.4f, width + 50, 20), "You cheated. No highscore for you.");
+		} else if (!submitted) {
 			
 			GUI.Label (new Rect (x + 50, y + offset * i++ + 5, width, 20), "Send Highscore!");
-			GUI.Label (new Rect (x, y + offset * i++ + 10, width, 20), "Score: " + Player.score);
+			GUI.Label (new Rect (x, y + offset * i++ + 10, width, 20), "Score: " + Player.getScore());
 			GUI.Label (new Rect (x, y + offset * i, 45, 20), "Name:");
 			currentName = GUI.TextField (new Rect (x + 45, y + offset * i++, width - 45, 20), currentName, 12);
-			if (currentName.Length > 0 && !char.IsLetterOrDigit (currentName [currentName.Length - 1])) {
+			while (currentName.Length > 0 && !Regex.IsMatch(currentName, "^[a-zA-Z0-9]+$")) {
 				incorrectTime = 4.5f;
 				currentName = currentName.Substring (0, currentName.Length - 1);
 			}
@@ -54,11 +58,10 @@ public class GameOverGui : MonoBehaviour
 					return;
 			
 				submitted = true;
-				hs.submitHighscore(currentName, Player.score);
+				hs.submitHighscore(currentName, Player.getScore());
 			}
 			
 		} else {
-			
 			if (SubmitHighscore.loading) GUI.Label (new Rect(x, Screen.height * 0.4f, width, 20), "Submitting highscore to server...");
 			else if (SubmitHighscore.error) GUI.Label (new Rect(x, Screen.height * 0.4f, width, 20), "Couldn't connect to highscore server");
 			else if (SubmitHighscore.placing == null || SubmitHighscore.placing.StartsWith("error")) {
@@ -86,4 +89,6 @@ public class GameOverGui : MonoBehaviour
 	{
 		
 	}
+	
+	
 }

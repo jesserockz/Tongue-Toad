@@ -18,7 +18,7 @@ public class BulletMovement : MonoBehaviour {
 	
 	void OnTriggerEnter (Collider other) {	
 		if (other.tag == "Enemy") {
-			Player.score += 10 + Player.combo;
+			Player.addScore(10 + Player.combo);
 			Player.currentEnergy += 5;
 			Player.combo++;
 			Destroy(other.gameObject);
