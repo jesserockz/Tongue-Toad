@@ -5,15 +5,15 @@ public class BulletMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rigidbody.AddForce(transform.forward*2000);
+        //rigidbody.AddForce(transform.forward*2000);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.position.z>40) {
-			Player.combo = 0;
-			Destroy(gameObject);
-		}
+		//if(transform.position.z>40) {
+		//	Player.combo = 0;
+		//	Destroy(gameObject);
+		//}
 	}
 	
 	void OnTriggerEnter (Collider other) {	
@@ -22,7 +22,7 @@ public class BulletMovement : MonoBehaviour {
 			Player.currentEnergy += 5;
 			Player.combo++;
 			Destroy(other.gameObject);
-			Destroy (gameObject);
+			//Destroy (gameObject);
 		}
     }
 }

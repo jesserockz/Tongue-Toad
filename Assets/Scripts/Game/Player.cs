@@ -5,12 +5,15 @@ public class Player : MonoBehaviour
 {
 
     //used for creating bullet
-    public Rigidbody Bullet;
+    //public Rigidbody Bullet;
     public Transform frog;
+    public Transform tongue;
 
     //movement variables
-    public float speed = 0.15f;
+    public float speed = 5f;
     public float maxMovement = 5.5f;
+
+    public float tongueExtensionTime = 1.2f;
 
     //user statistics
     public int maxHealth;
@@ -37,7 +40,8 @@ public class Player : MonoBehaviour
     //if true it means the game has detected the player has artificially changed their score during play
     public static bool hasCheated = false;
 
-
+    bool tongueOut = false;
+    bool tongueRetracting = false;
 
     bool l, r;
 
@@ -63,6 +67,8 @@ public class Player : MonoBehaviour
         scoreCheck = cheatOffset;
         numTimesIncrementScore = 0;
         changingScore = false;
+
+        //tongue = ((GameObject)Instantiate(Bullet, frog.position, frog.rotation)).transform;
     }
 
     void OnTriggerEnter(Collider c)
@@ -82,21 +88,62 @@ public class Player : MonoBehaviour
         //currently not using this as it's not tested thoroughly and don't want to accuse users of cheating when they're not
         //detectCheating();
 
-        bool shoot = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
+        bool shoot = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);
 
 #if UNITY_IPHONE || UNITY_ANDROID
             //device with accelerometer
             Vector3 v = Input.acceleration;
             accel = new Vector3(Mathf.Clamp((v.x - aCalib.x) * 2, -1f, 1f), Mathf.Clamp((v.z - aCalib.z) * 2, -1f, 1f), Mathf.Clamp((v.z - aCalib.z) * 2, -1f, 1f));
 #else
-            accel = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        accel = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 #endif
 
-            if (shoot && canShoot())
+        if (!Pause.isPaused)
         {
-            //subtract energy from bullet shot
-            currentEnergy = Mathf.Max(currentEnergy - 5, 0);
-            Instantiate(Bullet, frog.position, frog.rotation);
+
+            if (shoot && !tongueOut)
+            {
+                frog.GetComponent<MouseLook>().enabled = false;
+                tongue.rotation = frog.rotation;
+                tongueOut = true;
+            }
+            else if (shoot && tongueOut && !tongueRetracting)
+            {
+                //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
+                Vector3 s = tongue.transform.localScale;
+                //
+                tongue.localScale = new Vector3(s.x, s.y, s.z + 0.2f );
+                Vector3 p = tongue.position;
+                tongue.position += tongue.forward * 0.1f ;
+                frog.LookAt(tongue);
+            }
+            else if (tongueOut && (!shoot || tongueRetracting))
+            {
+                tongueRetracting = true;
+                tongue.transform.LookAt(frog.transform);
+                //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
+                Vector3 s = tongue.transform.localScale;
+                tongue.localScale = new Vector3(s.x, s.y, s.z - 0.2f);
+                Vector3 p = tongue.position;
+                tongue.position += tongue.forward * 0.1f;
+                
+                if (tongue.localScale.z<=0.3)
+                {
+                    tongueRetracting = false;
+                    tongueOut = false;
+                    tongue.position = frog.position;
+                    tongue.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                }
+                frog.LookAt(tongue);
+
+            }
+            else if (!tongueOut && !shoot)
+            {
+                tongueRetracting = false;
+                frog.GetComponent<MouseLook>().enabled = true;
+                tongue.position = frog.position;
+            }
+
         }
     }
 
@@ -168,7 +215,7 @@ public class Player : MonoBehaviour
         int lY = 40;
         int i = 0;
         //GUI.Box(new Rect(0, 0, 50, 50), "Statistics");
-        GUI.Box(new Rect(10, 10, 100, 200), "Stats");
+        GUI.Box(new Rect(10, 10, 100, 220), "Stats");
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "health: " + currentHealth);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "energy: " + currentEnergy);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "score: " + score);
@@ -176,6 +223,7 @@ public class Player : MonoBehaviour
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "X: " + accel.x);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "Y: " + accel.y);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "Z: " + accel.z);
+        //tongueExtensionTime = GUI.HorizontalSlider(new Rect(lX, lY + i++ * 20, 100, 100), tongueExtensionTime, 0, 10);
 
         //anticheat box
         if (Player.hasCheated) GUI.Box(new Rect(Screen.width - 150 - 10, lY, 150, 30), "Cheating was detected");
