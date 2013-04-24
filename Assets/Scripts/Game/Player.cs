@@ -3,17 +3,9 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-
-    //used for creating bullet
-    //public Rigidbody Bullet;
-    public Transform frog;
-    public Transform tongue;
-
     //movement variables
     public float speed = 5f;
     public float maxMovement = 5.5f;
-
-    public float tongueExtensionTime = 1.2f;
 
     //user statistics
     public int maxHealth;
@@ -39,9 +31,6 @@ public class Player : MonoBehaviour
     private static int numTimesIncrementScore;
     //if true it means the game has detected the player has artificially changed their score during play
     public static bool hasCheated = false;
-
-    bool tongueOut = false;
-    bool tongueRetracting = false;
 
     bool l, r;
 
@@ -88,7 +77,7 @@ public class Player : MonoBehaviour
         //currently not using this as it's not tested thoroughly and don't want to accuse users of cheating when they're not
         //detectCheating();
 
-        bool shoot = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);
+        
 
 #if UNITY_IPHONE || UNITY_ANDROID
             //device with accelerometer
@@ -98,54 +87,7 @@ public class Player : MonoBehaviour
         accel = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 #endif
 
-        if (!Pause.isPaused)
-        {
-
-            if (shoot && !tongueOut)
-            {
-                frog.GetComponent<MouseLook>().enabled = false;
-                tongue.rotation = frog.rotation;
-                tongueOut = true;
-            }
-            else if (shoot && tongueOut && !tongueRetracting)
-            {
-                //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
-                Vector3 s = tongue.transform.localScale;
-                //
-                tongue.localScale = new Vector3(s.x, s.y, s.z + 0.2f );
-                Vector3 p = tongue.position;
-                tongue.position += tongue.forward * 0.1f ;
-                frog.LookAt(new Vector3(tongue.position.x,0f,tongue.position.z));
-            }
-            else if (tongueOut && (!shoot || tongueRetracting))
-            {
-                tongueRetracting = true;
-                tongue.transform.LookAt(frog.position+new Vector3(0f,0.35f,0f));
-                //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
-                Vector3 s = tongue.transform.localScale;
-                tongue.localScale = new Vector3(s.x, s.y, s.z - 0.2f);
-                Vector3 p = tongue.position;
-                tongue.position += tongue.forward * 0.1f;
-                
-                if (tongue.localScale.z<=0.1)
-                {
-                    tongueRetracting = false;
-                    tongueOut = false;
-                    tongue.position = frog.position+new Vector3(0f,0.35f,0.2f);
-                    tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                }
-                frog.LookAt(new Vector3(tongue.position.x, 0f, tongue.position.z));
-
-            }
-            else if (!tongueOut && !shoot)
-            {
-                tongueRetracting = false;
-                frog.GetComponent<MouseLook>().enabled = true;
-                tongue.position = frog.position + new Vector3(0f, 0.35f, 0.2f);
-                tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            }
-
-        }
+        
     }
 
     void FixedUpdate()
