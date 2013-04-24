@@ -157,7 +157,6 @@ public class Player : MonoBehaviour
         int lX = 25;
         int lY = 40;
         int i = 0;
-        //GUI.Box(new Rect(0, 0, 50, 50), "Statistics");
         GUI.Box(new Rect(10, 10, 100, 220), "Stats");
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "health: " + currentHealth);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "energy: " + currentEnergy);
@@ -166,7 +165,6 @@ public class Player : MonoBehaviour
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "X: " + accel.x);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "Y: " + accel.y);
         GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "Z: " + accel.z);
-        //tongueExtensionTime = GUI.HorizontalSlider(new Rect(lX, lY + i++ * 20, 100, 100), tongueExtensionTime, 0, 10);
 
         //anticheat box
         if (Player.hasCheated) GUI.Box(new Rect(Screen.width - 150 - 10, lY, 150, 30), "Cheating was detected");

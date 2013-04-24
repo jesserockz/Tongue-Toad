@@ -10,6 +10,7 @@ public class Tongue : MonoBehaviour {
     public float tongueExtensionTime = 1.2f;
 
     public Transform frog;
+    public Transform tongue;
 
 	// Use this for initialization
 	void Start () {
@@ -23,53 +24,73 @@ public class Tongue : MonoBehaviour {
 
         if (!Pause.isPaused)
         {
-
             if (shoot && !tongueOut)
             {
                 frog.GetComponent<MouseLook>().enabled = false;
                 transform.rotation = frog.rotation;
+                tongue.rotation = frog.rotation;
                 tongueOut = true;
             }
             else if (shoot && tongueOut && !tongueRetracting)
             {
-                //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
-                Vector3 s = transform.localScale;
-                //
-                transform.localScale = new Vector3(s.x, s.y, s.z + 0.2f);
-                Vector3 p = transform.position;
-                transform.position += transform.forward * 0.1f;
+                //Move tonguetip in direction of frog
+                transform.rotation = frog.rotation;
+                transform.position += transform.forward * 0.2f;
                 frog.LookAt(new Vector3(transform.position.x, 0f, transform.position.z));
+                
+                //Move and stretch tongue into position
+                float newX = ((frog.position.x - transform.position.x) / 2) + transform.position.x;
+                float newZ = ((frog.position.z - transform.position.z) / 2) + transform.position.z;
+                Vector3 newTonguePos = new Vector3(newX, frogPosition().y, newZ);
+                float distance = Vector3.Distance(transform.position, frogPosition());
+                tongue.position = newTonguePos;
+                tongue.localScale = new Vector3(0.1f, 0.1f, distance);
+                tongue.LookAt(transform);
+
+
             }
             else if (tongueOut && (!shoot || tongueRetracting))
             {
-                tongueRetracting = true;
-                transform.LookAt(frog.position + new Vector3(0f, 0.35f, 0f));
-                //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
-                Vector3 s = transform.localScale;
-                transform.localScale = new Vector3(s.x, s.y, s.z - 0.2f);
-                Vector3 p = transform.position;
-                transform.position += transform.forward * 0.1f;
 
-                if (transform.localScale.z <= 0.1)
+                tongueRetracting = true;
+                transform.LookAt(frogPosition());
+                transform.position += transform.forward * 0.2f;
+
+                float newX = ((frog.position.x - transform.position.x) / 2) + transform.position.x;
+                float newZ = ((frog.position.z - transform.position.z) / 2) + transform.position.z;
+                Vector3 newTonguePos = new Vector3(newX, frogPosition().y, newZ);
+                float distance = Vector3.Distance(transform.position, frogPosition());
+                tongue.position = newTonguePos;
+                tongue.localScale = new Vector3(0.1f, 0.1f, distance);
+                tongue.LookAt(transform);
+
+                if (Vector3.Distance(transform.position, frogPosition()) <= 0.2)
                 {
                     tongueRetracting = false;
                     tongueOut = false;
-                    transform.position = frog.position + new Vector3(0f, 0.35f, 0.2f);
-                    transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    transform.position = frogPosition();
+                    tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    tongue.position = frogPosition();
                 }
-                frog.LookAt(new Vector3(transform.position.x, 0f, transform.position.z));
 
+                frog.LookAt(new Vector3(transform.position.x, 0f, transform.position.z));
             }
             else if (!tongueOut && !shoot)
             {
                 tongueRetracting = false;
                 frog.GetComponent<MouseLook>().enabled = true;
-                transform.position = frog.position + new Vector3(0f, 0.35f, 0.2f);
-                transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                transform.position = frogPosition();
+                tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                tongue.position = frogPosition();
             }
 
         }
 	}
+
+    Vector3 frogPosition()
+    {
+        return frog.position + new Vector3(0f, 0.35f, 0f);
+    }
 	
 	void OnTriggerEnter (Collider other) {	
 		if (other.tag == "Enemy") {
@@ -77,7 +98,6 @@ public class Tongue : MonoBehaviour {
 			Player.currentEnergy += 5;
 			Player.combo++;
 			Destroy(other.gameObject);
-			//Destroy (gameObject);
 		}
     }
 }
