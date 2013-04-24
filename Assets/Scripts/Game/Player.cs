@@ -115,33 +115,34 @@ public class Player : MonoBehaviour
                 tongue.localScale = new Vector3(s.x, s.y, s.z + 0.2f );
                 Vector3 p = tongue.position;
                 tongue.position += tongue.forward * 0.1f ;
-                frog.LookAt(tongue);
+                frog.LookAt(new Vector3(tongue.position.x,0f,tongue.position.z));
             }
             else if (tongueOut && (!shoot || tongueRetracting))
             {
                 tongueRetracting = true;
-                tongue.transform.LookAt(frog.transform);
+                tongue.transform.LookAt(frog.position+new Vector3(0f,0.35f,0f));
                 //tongue.position += tongue.transform.forward * tongueExtensionTime * 5 * Time.deltaTime;
                 Vector3 s = tongue.transform.localScale;
                 tongue.localScale = new Vector3(s.x, s.y, s.z - 0.2f);
                 Vector3 p = tongue.position;
                 tongue.position += tongue.forward * 0.1f;
                 
-                if (tongue.localScale.z<=0.3)
+                if (tongue.localScale.z<=0.1)
                 {
                     tongueRetracting = false;
                     tongueOut = false;
-                    tongue.position = frog.position;
-                    tongue.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                    tongue.position = frog.position+new Vector3(0f,0.35f,0.2f);
+                    tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 }
-                frog.LookAt(tongue);
+                frog.LookAt(new Vector3(tongue.position.x, 0f, tongue.position.z));
 
             }
             else if (!tongueOut && !shoot)
             {
                 tongueRetracting = false;
                 frog.GetComponent<MouseLook>().enabled = true;
-                tongue.position = frog.position;
+                tongue.position = frog.position + new Vector3(0f, 0.35f, 0.2f);
+                tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             }
 
         }
