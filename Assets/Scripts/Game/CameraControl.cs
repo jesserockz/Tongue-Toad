@@ -26,15 +26,20 @@ public class CameraControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		bool spinKey = Input.GetKey (KeyCode.End) || Input.GetKey (KeyCode.Return);
-		if(spinKey && !rotatemode){
-			rotatemode = true;
-			Player.currentEnergy = 100;
-			slidingOut = true;
-			
+		if(spinKey){
+            activateSpin();
 		}
-		
 		shake();
 	}
+
+    public void activateSpin()
+    {
+        if (!rotatemode)
+        {
+            rotatemode = true;
+            slidingOut = true;
+        }
+    }
 	
 	void shake(){
 		Vector3 accel = Input.acceleration;

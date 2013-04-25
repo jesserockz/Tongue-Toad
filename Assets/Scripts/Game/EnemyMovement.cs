@@ -7,12 +7,13 @@ public class EnemyMovement : MonoBehaviour {
 	public float speed = 0.05f;
 	float lastChange = 0f;
 	float nextChange = 0f;
+    bool inUtoadpia = false;
 
 	void Start () {
 		float xPos = Random.Range(-3.5f,3.5f);
 		transform.position += new Vector3(xPos,startingYOffset,startingZOffset);
-		float randomForceX = Random.Range(-100f,100f);
-		float randomForceZ = Random.Range(-250f,-100f);
+		float randomForceX = Random.Range(-250f,100f);
+		float randomForceZ = Random.Range(-100f,-50f);
 		rigidbody.AddForce(randomForceX,0f,randomForceZ);
 		lastChange = Time.time;
 		nextChange = Random.Range(1.0f,3.0f);
@@ -26,10 +27,13 @@ public class EnemyMovement : MonoBehaviour {
 			rigidbody.AddForce(randomForceX,0f,randomForceZ);
 		}
 		
-		if(transform.position.z < -5f) {
-			Destroy(gameObject);
+		if(transform.position.z < -5f && !inUtoadpia) {
+			//Destroy(gameObject);
+            inUtoadpia = true;
 			Player.combo = 0;
 			Player.currentHealth -= 10;
 		}
+        if(transform.position.z< -20f)
+            Destroy(gameObject);
 	}
 }

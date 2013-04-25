@@ -73,11 +73,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (currentHealth <= 0) initiateGameOver();
-
         //currently not using this as it's not tested thoroughly and don't want to accuse users of cheating when they're not
         //detectCheating();
-
-        
 
 #if UNITY_IPHONE || UNITY_ANDROID
             //device with accelerometer
@@ -86,22 +83,12 @@ public class Player : MonoBehaviour
 #else
         accel = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 #endif
-
-        
     }
 
     void FixedUpdate()
     {
         controller.Move(new Vector3(accel.x * speed * Time.deltaTime, 0f, 0f));
         transform.position = new Vector3(transform.position.x, 0f, 0f);
-    }
-
-    /// <summary>
-    /// Returns true if the player can currently shoot (e.g cannot shoot if gun/ tongue is timing out)
-    /// </summary>
-    private bool canShoot()
-    {
-        return currentEnergy > 0 && !Pause.isPaused;
     }
 
     //damages the player (and maybe calls gameover or something like that)

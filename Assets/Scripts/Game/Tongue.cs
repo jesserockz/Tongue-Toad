@@ -4,8 +4,8 @@ using System.Collections;
 public class Tongue : MonoBehaviour {
 
 
-    bool tongueOut = false;
-    bool tongueRetracting = false;
+    public bool tongueOut = false;
+    public bool tongueRetracting = false;
 
     public float tongueExtensionTime = 1.2f;
 
@@ -21,20 +21,22 @@ public class Tongue : MonoBehaviour {
 	void Update () {
 
         bool shoot = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);
-
+        //Debug.Log(tongueRetracting);
         if (!Pause.isPaused)
         {
-            if (shoot && !tongueOut)
+            if (shoot && !tongueOut) //User has started tongue extension
             {
+                Debug.Log("Fire ze Tongue");
                 frog.GetComponent<MouseLook>().enabled = false;
                 transform.rotation = frog.rotation;
                 tongue.rotation = frog.rotation;
                 tongueOut = true;
             }
-            else if (shoot && tongueOut && !tongueRetracting)
+            else if (shoot && tongueOut && !tongueRetracting) //Tongue extension continuing out
             {
+                //Debug.Log("Tongue Extending");
                 //Move tonguetip in direction of frog
-                transform.rotation = frog.rotation;
+                //transform.rotation = frog.rotation;
                 transform.position += transform.forward * 0.2f;
                 frog.LookAt(new Vector3(transform.position.x, 0f, transform.position.z));
                 
@@ -46,12 +48,12 @@ public class Tongue : MonoBehaviour {
                 tongue.position = newTonguePos;
                 tongue.localScale = new Vector3(0.1f, 0.1f, distance);
                 tongue.LookAt(transform);
-
+                
 
             }
-            else if (tongueOut && (!shoot || tongueRetracting))
+            else if (tongueOut && (!shoot || tongueRetracting)) //Tongue retracting back into mouth
             {
-
+                //Debug.Log("Tongue Retracting");
                 tongueRetracting = true;
                 transform.LookAt(frogPosition());
                 transform.position += transform.forward * 0.2f;
@@ -75,8 +77,9 @@ public class Tongue : MonoBehaviour {
 
                 frog.LookAt(new Vector3(transform.position.x, 0f, transform.position.z));
             }
-            else if (!tongueOut && !shoot)
+            else if (!tongueOut && !shoot) //Tongue dormant inside mouth waiting to ATTACK!!!
             {
+                //Debug.Log("Boring...");
                 tongueRetracting = false;
                 frog.GetComponent<MouseLook>().enabled = true;
                 transform.position = frogPosition();
@@ -98,6 +101,11 @@ public class Tongue : MonoBehaviour {
 			Player.currentEnergy += 5;
 			Player.combo++;
 			Destroy(other.gameObject);
-		}
+        }
+        else if (other.tag == "Terrain")
+        {
+            Debug.Log("Tongue hit terrain");
+            tongueRetracting = true;
+        }
     }
 }
