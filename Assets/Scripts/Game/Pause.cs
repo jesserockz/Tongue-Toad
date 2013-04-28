@@ -15,7 +15,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown (KeyCode.Escape))
         {
             setPause(!isPaused);
         }
@@ -31,7 +31,8 @@ public class Pause : MonoBehaviour
             float y = (Screen.height - h) / 2.0f;
 
             GUI.Box(new Rect(x, y, w, h), "Paused!");
-
+			
+			if (GUI.Button(new Rect(x + 20, y + h - 60, w - 40, 20), "Unpause")) setPause (false);
             if (GUI.Button(new Rect(x + 20, y + h - 30, w - 40, 20), "Exit")) Application.LoadLevel("Menu");
         }
     }
@@ -50,6 +51,7 @@ public class Pause : MonoBehaviour
             Screen.showCursor = false;
             Screen.lockCursor = true;
         }
+		
         Time.timeScale = isPaused ? 0 : 1.0f;
     }
 }
