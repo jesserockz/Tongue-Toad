@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 
 public class GameOverGui : MonoBehaviour
 {
-	
 	private string currentName = "";
 	private float incorrectTime = 0;
 	private bool submitted = false;
@@ -14,6 +13,7 @@ public class GameOverGui : MonoBehaviour
 	
 	void Start() {
 		GameObject o = GameObject.Find("SubmitHighscore");
+		
 		
 		hs = (SubmitHighscore)o.GetComponent("SubmitHighscore");
 	}

@@ -8,8 +8,8 @@ public class Pause : MonoBehaviour
 
     void Start()
     {
-        Screen.showCursor = false;
-        Screen.lockCursor = true;
+        //Screen.showCursor = false;
+        //Screen.lockCursor = true;
     }
 
     // Update is called once per frame
@@ -41,16 +41,9 @@ public class Pause : MonoBehaviour
     public static void setPause(bool pause)
     {
         isPaused = pause;
-        if (pause)
-        {
-            Screen.showCursor = true;
-            Screen.lockCursor = false;
-        }
-        else
-        {
-            Screen.showCursor = false;
-            Screen.lockCursor = true;
-        }
+		
+		//Screen.lockCursor = !pause;
+		//Screen.showCursor = pause;
 		
         Time.timeScale = isPaused ? 0 : 1.0f;
     }

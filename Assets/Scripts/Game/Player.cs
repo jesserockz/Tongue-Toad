@@ -56,8 +56,6 @@ public class Player : MonoBehaviour
         scoreCheck = cheatOffset;
         numTimesIncrementScore = 0;
         changingScore = false;
-
-        //tongue = ((GameObject)Instantiate(Bullet, frog.position, frog.rotation)).transform;
     }
 
     void OnTriggerEnter(Collider c)
@@ -130,50 +128,32 @@ public class Player : MonoBehaviour
             score = (scoreCheck - cheatOffset - numTimesIncrementScore * cheatIncrementValue) / cheatMultiplier;
         }
     }
-
-    public static int getScore()
-    {
-        return score;
-    }
-
-
-    //temp method atm just to have stats on screen
-    //draws health/ energy/ score
-    void OnGUI()
-    {
-        int lX = 25;
-        int lY = 40;
-        int i = 0;
-        GUI.Box(new Rect(10, 10, 100, 220), "Stats");
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "health: " + currentHealth);
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "energy: " + currentEnergy);
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "score: " + score);
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "combo: " + combo);
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "X: " + accel.x);
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "Y: " + accel.y);
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "Z: " + accel.z);
-
-        //anticheat box
-        if (Player.hasCheated) GUI.Box(new Rect(Screen.width - 150 - 10, lY, 150, 30), "Cheating was detected");
-
-        if (currentEnergy == 0)
-        {
-            float w = 220;
-            float h = 23;
-            float x = (float)(Screen.width - w) / 2;
-            float y = (float)(Screen.height * 0.75);
-#if UNITY_IPHONE || UNITY_ANDROID
-			GUI.Box(new Rect(x,y,w,h), "Shake to renew energy!");
-#else
-            GUI.Box(new Rect(x, y, w, h), "Hit Enter/ End to renew energy!");
-#endif
-        }
-    }
-
+	
     private void initiateGameOver()
     {
         Screen.lockCursor = false;
         Screen.showCursor = true;
         Application.LoadLevel("GameOver");
     }
+
+    public static int getScore()
+    {
+        return score;
+    }
+	
+	public int getHealth()
+	{
+		return currentHealth;
+	}
+	
+	public int getEnergy()
+	{
+		return currentEnergy;	
+	}
+	
+	public int getCombo()
+	{
+		return combo;
+	}
+
 }
