@@ -88,7 +88,7 @@ public class MainGui : MonoBehaviour
 		float x = (Screen.width - w) / 2.0f;
 		float y = Screen.width * 0.3f;
 		float iy = 40;
-		float dx = h + 10;
+		//float dx = h + 10;
 		
 		for (int i = 0; i < buttons.Count; i++) {
 			ButtonItem bi = buttons[i];
@@ -105,8 +105,8 @@ public class MainGui : MonoBehaviour
 		float h = 20;
 		float x = (Screen.width - w) / 2.0f;
 		float y = Screen.height * 0.7f;
-		float iy = 40;
-		float dx = h + 10;
+		//float iy = 40;
+		//float dx = h + 10;
 		
 		if (TestHtml.loading) GUI.Label (new Rect(x, Screen.height * 0.4f, w, h), "Loading from highscore server...");
 		else if (TestHtml.error) GUI.Label (new Rect(x, Screen.height * 0.4f, w, h), "Couldn't connect to highscore server");
@@ -139,7 +139,7 @@ public class MainGui : MonoBehaviour
 		float x = (Screen.width - w) / 2.0f;
 		float y = Screen.width * 0.3f;
 		float iy = 30;
-		float dx = h + 10;
+		//float dx = h + 10;
 		int i = 0;
 		//music
 		
@@ -170,7 +170,7 @@ public class MainGui : MonoBehaviour
 		float x = (Screen.width - w) / 2.0f;
 		float y = Screen.width * 0.2f;
 		float iy = 20;
-		float dx = h + 10;
+		//float dx = h + 10;
 		int i = 0;
 		
 		List<string> credits = new List<string>();

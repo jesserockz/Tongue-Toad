@@ -6,6 +6,8 @@ public class Tongue : MonoBehaviour
 	public bool tongueOut = false;
 	public bool tongueRetracting = false;
 	public float tongueExtensionTime = 1.2f;
+
+    public float maxExtension = 20f;
 	
 	public Transform toad;
 	public Transform tongue;
@@ -45,6 +47,10 @@ public class Tongue : MonoBehaviour
 			tongue.position = newTonguePos;
 			tongue.localScale = new Vector3 (0.1f, 0.1f, distance);
 			tongue.LookAt (transform);
+
+            if (transform.position.z >= maxExtension)
+                tongueRetracting = true;
+
 		} else if (tongueOut && (!shoot || tongueRetracting)) { 
 			//Tongue retracting back into mouth
 			tongueRetracting = true;
@@ -92,8 +98,9 @@ public class Tongue : MonoBehaviour
 			Player.combo++;
 			Destroy (other.gameObject);
 		} else if (other.tag == "Terrain") {
-			Debug.Log ("Tongue hit terrain");
+			//Debug.Log ("Tongue hit terrain");
 			tongueRetracting = true;
+            SoundEngine.Get().PlayEffect("ball_fire");
 		}
 	}
 }

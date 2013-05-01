@@ -7,7 +7,7 @@ public class MenuSound : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		AudioSource s = new AudioSource();
+		//AudioSource s = new AudioSource();
 
 		//mainTheme.
 	}

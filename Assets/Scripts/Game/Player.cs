@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     CharacterController controller;
 
+    Tongue tongue;
+
     // Use this for initialization
     void Start()
     {
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
         combo = 0;
         controller = GetComponent<CharacterController>();
         Pause.setPause(false);
-
+        
         //cheat detect
         hasCheated = false;
         scoreCheck = cheatOffset;

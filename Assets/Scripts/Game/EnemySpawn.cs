@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemySpawn : MonoBehaviour {
 	public GameObject enemy;
     public GameObject friendly;
+    public GameObject snail;
 	
 	private float between = 2.0f;
 	private float lastSpawn = 0;
@@ -19,7 +20,8 @@ public class EnemySpawn : MonoBehaviour {
 			if(Random.Range(0,100)<=20)
                 Instantiate(friendly, new Vector3(25f,0.3f,50f), Quaternion.identity);
 			else
-                Instantiate(enemy, new Vector3(25f, 0.3f, 50f), Quaternion.identity);
+                //Instantiate(enemy, new Vector3(25f, 0.3f, 50f), Quaternion.identity);
+                Instantiate(snail, new Vector3(25f, 0.2f, 50f), Quaternion.identity);
             lastSpawn = Time.time;
 		}
 	}

@@ -10,6 +10,8 @@ public class MouseFollower : MonoBehaviour {
 	public float rotationSpeed = 4.0f;
 	
 	public Transform toad;
+
+    Tongue tongue;
 	
 	//plane on the level of the water
 	private Plane horoPlane;
@@ -18,18 +20,30 @@ public class MouseFollower : MonoBehaviour {
 		
 	//vector of where we're looking
 	private Vector3 vector = Vector3.zero;
+
+    bool cursorVisible = true;
 	
 	// Use this for initialization
 	void Start () {
 		//constructs a plane facing up that is the same level as the water
-		GameObject water = GameObject.Find ("Water");
+		//GameObject water = GameObject.Find ("Water");
 		
 		horoPlane = new Plane(Vector3.up, Vector3.zero);
 		verticalPlane = new Plane(Vector3.forward, new Vector3(0, 0, 78));
+
+        //Get tongue object script to control rotation
+        tongue = GameObject.FindGameObjectWithTag("Tongue").GetComponent<Tongue>();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            cursorVisible = !cursorVisible;
+            Screen.showCursor = cursorVisible;
+            //Screen.lockCursor = !cursorVisible;
+        }
 		float distance;
 		Ray ray = Camera.mainCamera.ScreenPointToRay(Input.mousePosition);
 		
@@ -65,6 +79,8 @@ public class MouseFollower : MonoBehaviour {
 		//TODO this is a cheap hack, there's probably a better way to do this
 		if (normalized.z < 0.2) normalized.z = -Mathf.Clamp (normalized.z, -2f, 0f);
 		Quaternion targetRotation = Quaternion.LookRotation(normalized, Vector3.up);
-		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 
+            Time.deltaTime * rotationSpeed*
+            ((tongue.maxExtension-tongue.transform.position.z)/tongue.maxExtension));
 	}
 }

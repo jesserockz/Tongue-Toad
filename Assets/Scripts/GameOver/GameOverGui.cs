@@ -31,10 +31,11 @@ public class GameOverGui : MonoBehaviour
 		
 		//haven't click submit yet, so prompt them for name
 		//ignore this for now cause I don't want to accidentally accuse players of cheating when they haven't
-		if (Player.hasCheated && false) {
+		//if (Player.hasCheated && false) {
 			//player is a cheater... damn them
-			GUI.Label (new Rect(x, Screen.height * 0.4f, width + 50, 20), "You cheated. No highscore for you.");
-		} else if (!submitted) {
+		//	GUI.Label (new Rect(x, Screen.height * 0.4f, width + 50, 20), "You cheated. No highscore for you.");
+		// } else 
+    if (!submitted) {
 			
 			GUI.Label (new Rect (x + 50, y + offset * i++ + 5, width, 20), "Send Highscore!");
 			GUI.Label (new Rect (x, y + offset * i++ + 10, width, 20), "Score: " + Player.getScore());

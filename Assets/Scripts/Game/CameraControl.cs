@@ -9,11 +9,11 @@ public class CameraControl : MonoBehaviour {
 	public float cameraZoomSpeed;
 	public float maxCameraZoomOut;
 	
-	bool rotatemode = false;
-	float curRotation = 0;
-	bool slidingOut = false;
-	bool slidingIn = false;
-	float slideInStart = float.MaxValue;
+	public bool rotatemode = false;
+    public float curRotation = 0;
+    public bool slidingOut = false;
+    public bool slidingIn = false;
+    public float slideInStart = float.MaxValue;
 	
 	Vector3 lastaccel;
 	
@@ -21,6 +21,7 @@ public class CameraControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		lastaccel = Input.acceleration;
+        SoundEngine.Get().PlayMusic("tongue toad",true);
 	}
 	
 	// Update is called once per frame
@@ -93,6 +94,7 @@ public class CameraControl : MonoBehaviour {
 			if (curRotation >= countToRotate*360) {
 				//ensure the player is back at correct point
 				transform.RotateAround (new Vector3(0,2,2), Vector3.left, (curRotation - countToRotate*360));
+                curRotation = 0;
 				rotatemode = false;
 			}
 		}

@@ -6,9 +6,9 @@ public class PlayerStatsGui : MonoBehaviour {
 	Player player;
 	// Use this for initialization
 	void Start () {
-		GameObject p = GameObject.Find ("Player");
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
 		player = p.GetComponent<Player>();
-		Debug.Log (player);
+		//Debug.Log (player);
 	}
 	
 	//temp method atm just to have stats on screen
