@@ -14,10 +14,10 @@ public class CameraControl : MonoBehaviour {
     
 
     public float curRotation = 0;
-    bool slidingOut = false;
-    bool slidingIn = false;
-    float slideInStart = float.MaxValue;
-    float fieldOfView = 0f;
+    public bool slidingOut = false;
+    public bool slidingIn = false;
+    public float slideInStart = float.MaxValue;
+    public float fieldOfView = 0f;
 	
 	Vector3 lastaccel;
 	
@@ -45,7 +45,7 @@ public class CameraControl : MonoBehaviour {
 
     public void activateSpin()
     {
-        if (!rotating)
+        if (!rotating && !slidingIn)
         {
             rotating = true;
             slidingOut = true;
@@ -73,12 +73,7 @@ public class CameraControl : MonoBehaviour {
 	void zoom(){
         if (currentRotationMode == BARRELROLLMODE) maxCameraZoomOut = 40f;
 
-		if(camera.fieldOfView<maxCameraZoomOut && slidingOut)
-				camera.fieldOfView+=cameraZoomSpeed;
-		else if(camera.fieldOfView>=maxCameraZoomOut && slidingOut){
-			slidingOut = false;
-			slideInStart = (countToRotate*360)-curRotation;
-		}
+		
 
 		if(camera.fieldOfView>fieldOfView && slidingIn)
 			camera.fieldOfView-=cameraZoomSpeed;
@@ -87,7 +82,15 @@ public class CameraControl : MonoBehaviour {
 			curRotation = 0;
 			slideInStart = float.MaxValue;
 		}
-		
+
+        if (camera.fieldOfView < maxCameraZoomOut && slidingOut)
+            camera.fieldOfView += cameraZoomSpeed;
+        else if (camera.fieldOfView >= maxCameraZoomOut && slidingOut)
+        {
+            slidingOut = false;
+            slideInStart = (countToRotate * 360) - curRotation;
+        }
+
 		if(curRotation>=slideInStart)
 			slidingIn = true;
 	}
