@@ -18,10 +18,10 @@ public class EnemySpawn : MonoBehaviour {
 		if (Time.time - lastSpawn > between) {
 			//Instantiate(enemyPrefab);
 			if(Random.Range(0,100)<=20)
-                Instantiate(friendly, new Vector3(25f,0.3f,50f), Quaternion.identity);
+                Instantiate(friendly, new Vector3(25f,0.3f,60f), Quaternion.identity);
 			else
-                //Instantiate(enemy, new Vector3(25f, 0.3f, 50f), Quaternion.identity);
-                Instantiate(snail, new Vector3(25f, 0.2f, 50f), Quaternion.identity);
+                //Instantiate(enemy, new Vector3(25f, 0.3f, 55f), Quaternion.identity);
+                Instantiate(snail, new Vector3(25f, 0.2f, 60f), Quaternion.identity);
             lastSpawn = Time.time;
 		}
 	}

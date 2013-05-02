@@ -9,19 +9,29 @@ public class CameraControl : MonoBehaviour {
 	public float cameraZoomSpeed;
 	public float maxCameraZoomOut;
 	
-	public bool rotatemode = false;
+	bool rotating = false;
+
+    
+
     public float curRotation = 0;
-    public bool slidingOut = false;
-    public bool slidingIn = false;
-    public float slideInStart = float.MaxValue;
+    bool slidingOut = false;
+    bool slidingIn = false;
+    float slideInStart = float.MaxValue;
+    float fieldOfView = 0f;
 	
 	Vector3 lastaccel;
 	
-	
+    public static int UNDERWATERMODE = 0;
+	public static int BARRELROLLMODE = 1;
+    //public static fixed int NEWMODE= 2;
+
+    int currentRotationMode = BARRELROLLMODE;
+
 	// Use this for initialization
 	void Start () {
+        fieldOfView = camera.fieldOfView;
 		lastaccel = Input.acceleration;
-        SoundEngine.Get().PlayMusic("tongue toad",true);
+        //SoundEngine.PlayMusic("tongue toad",true);
 	}
 	
 	// Update is called once per frame
@@ -35,17 +45,17 @@ public class CameraControl : MonoBehaviour {
 
     public void activateSpin()
     {
-        if (!rotatemode)
+        if (!rotating)
         {
-            rotatemode = true;
+            rotating = true;
             slidingOut = true;
         }
     }
 	
 	void shake(){
 		Vector3 accel = Input.acceleration;
-		if((accel-lastaccel).magnitude>1f && !rotatemode){
-			rotatemode = true;
+		if((accel-lastaccel).magnitude>1f && !rotating){
+			rotating = true;
 			Player.currentEnergy = 100;
 			slidingOut = true;
 		}
@@ -61,7 +71,8 @@ public class CameraControl : MonoBehaviour {
 	}
 	
 	void zoom(){
-		
+        if (currentRotationMode == BARRELROLLMODE) maxCameraZoomOut = 40f;
+
 		if(camera.fieldOfView<maxCameraZoomOut && slidingOut)
 				camera.fieldOfView+=cameraZoomSpeed;
 		else if(camera.fieldOfView>=maxCameraZoomOut && slidingOut){
@@ -69,9 +80,9 @@ public class CameraControl : MonoBehaviour {
 			slideInStart = (countToRotate*360)-curRotation;
 		}
 
-		if(camera.fieldOfView>52 && slidingIn)
+		if(camera.fieldOfView>fieldOfView && slidingIn)
 			camera.fieldOfView-=cameraZoomSpeed;
-		else if(camera.fieldOfView<=52 && slidingIn){
+		else if(camera.fieldOfView<=fieldOfView && slidingIn){
 			slidingIn = false;
 			curRotation = 0;
 			slideInStart = float.MaxValue;
@@ -83,20 +94,44 @@ public class CameraControl : MonoBehaviour {
 		
 	
 	void rotate(){
-		if(rotatemode){
-			if(curRotation<countToRotate*360/2) 
-				timeToRotate -= rotateAcceleration;
-			else if(curRotation>countToRotate*360/2) 
-				timeToRotate += rotateAcceleration;
-			float rot = Time.deltaTime / timeToRotate * countToRotate*360;
-			transform.RotateAround (new Vector3(0,2,2), Vector3.left, -rot);
-			curRotation += rot;
-			if (curRotation >= countToRotate*360) {
-				//ensure the player is back at correct point
-				transform.RotateAround (new Vector3(0,2,2), Vector3.left, (curRotation - countToRotate*360));
-                curRotation = 0;
-				rotatemode = false;
-			}
+		if(rotating){
+            if (currentRotationMode == UNDERWATERMODE)
+            {
+                if (curRotation < countToRotate * 360 / 2)
+                    timeToRotate -= rotateAcceleration;
+                else if (curRotation > countToRotate * 360 / 2)
+                    timeToRotate += rotateAcceleration;
+                float rot = Time.deltaTime / timeToRotate * countToRotate * 360;
+                transform.RotateAround(new Vector3(0, 2, 2), Vector3.left, -rot);
+                curRotation += rot;
+                if (curRotation >= countToRotate * 360)
+                {
+                    //ensure the player is back at correct point
+                    transform.RotateAround(new Vector3(0, 2, 2), Vector3.left, (curRotation - countToRotate * 360));
+                    curRotation = 0;
+                    rotating = false;
+                }
+            }
+            else if (currentRotationMode == BARRELROLLMODE)
+            {
+                if (curRotation < countToRotate * 360 / 2)
+                    timeToRotate -= rotateAcceleration;
+                else if (curRotation > countToRotate * 360 / 2)
+                    timeToRotate += rotateAcceleration;
+                float rot = Time.deltaTime / timeToRotate * countToRotate * 360;
+                //transform.RotateAround(new Vector3(0, 2, 2), Vector3.left, -rot);
+                transform.Rotate(Vector3.forward, rot);
+                curRotation += rot;
+                //transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, curRotation, transform.rotation.w);
+                if (curRotation >= countToRotate * 360)
+                {
+                    //ensure the player is back at correct point
+                    //transform.RotateAround(new Vector3(0, 2, 2), Vector3.left, (curRotation - countToRotate * 360));
+                    curRotation = 0;
+                    transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, curRotation, transform.rotation.w);
+                    rotating = false;
+                }
+            }
 		}
 	}
 }

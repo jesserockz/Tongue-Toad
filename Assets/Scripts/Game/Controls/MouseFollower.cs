@@ -5,13 +5,17 @@ using System.Collections;
 /// Class gives a control mode for the character.
 /// This mode makes the toad rotate towards where the mouse is onscreen.
 /// </summary>
-public class MouseFollower : MonoBehaviour {
+public class MouseFollower : MonoBehaviour
+{
+	
+	private bool follow = true;
+	
+	float rotationY;
+	float sensitivity = 2.0f;
 	
 	public float rotationSpeed = 4.0f;
-	
 	public Transform toad;
-
-    Tongue tongue;
+	Tongue tongue;
 	
 	//plane on the level of the water
 	private Plane horoPlane;
@@ -20,67 +24,109 @@ public class MouseFollower : MonoBehaviour {
 		
 	//vector of where we're looking
 	private Vector3 vector = Vector3.zero;
-
-    bool cursorVisible = true;
+	bool cursorVisible = true;
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		//constructs a plane facing up that is the same level as the water
 		//GameObject water = GameObject.Find ("Water");
 		
-		horoPlane = new Plane(Vector3.up, Vector3.zero);
-		verticalPlane = new Plane(Vector3.forward, new Vector3(0, 0, 78));
+		horoPlane = new Plane (Vector3.up, Vector3.zero);
+		verticalPlane = new Plane (Vector3.forward, new Vector3 (0, 0, 78));
 
-        //Get tongue object script to control rotation
-        tongue = GameObject.FindGameObjectWithTag("Tongue").GetComponent<Tongue>();
+		//Get tongue object script to control rotation
+		tongue = GameObject.FindGameObjectWithTag ("Tongue").GetComponent<Tongue> ();
 
 	}
 	
+	
 	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            cursorVisible = !cursorVisible;
-            Screen.showCursor = cursorVisible;
-            //Screen.lockCursor = !cursorVisible;
-        }
-		float distance;
-		Ray ray = Camera.mainCamera.ScreenPointToRay(Input.mousePosition);
+	void Update ()
+	{
 		
-		//we'll first try for the horozontal plane
-		if (horoPlane.Raycast(ray, out distance))
-		{
-			//we got it, so look at it
-			vector = ray.GetPoint(distance); 
-			//toad.LookAt(vector);
-		} 
-		else 
-		{
-			//otherwise we have to use vertical plane
-			verticalPlane.Raycast (ray, out distance);
-			vector = ray.GetPoint(distance);
-			//make sure we don't make the toad look up/ down
-			vector.y = 0;
-			//toad.LookAt (vector);
+		float distanceMult = (tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension;
+		
+		if (Input.GetKeyDown (KeyCode.F1)) {
+			//change the mode
+			follow = !follow;
+			
+			Screen.showCursor = follow;
+			Screen.lockCursor = !follow;
 		}
 		
-		//Debug.DrawLine(toad.position, vector,Color.red);
-		Vector3 angle = toad.rotation.eulerAngles;
-		float y = angle.y;
-		
-		if (y > 180) {
-			y = Mathf.Clamp(y, 280f, 360f);
+		if (Pause.isPaused) {
+				Screen.showCursor = true;
+				Screen.lockCursor = false;
 		} else {
-			y = Mathf.Clamp (y, 0f, 80f);
+			if (follow ) {
+				Screen.showCursor = false;
+				Screen.lockCursor = false;
+			} else {
+				Screen.showCursor = false;
+				Screen.lockCursor = true;
+			}
 		}
 		
-		// Smoothly rotates towards target
-		Vector3 normalized = vector - transform.position;
-		//TODO this is a cheap hack, there's probably a better way to do this
-		if (normalized.z < 0.2) normalized.z = -Mathf.Clamp (normalized.z, -2f, 0f);
-		Quaternion targetRotation = Quaternion.LookRotation(normalized, Vector3.up);
-		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 
-            Time.deltaTime * rotationSpeed*
-            ((tongue.maxExtension-tongue.transform.position.z)/tongue.maxExtension));
+		if (Input.GetKeyDown (KeyCode.F2) && false) {
+			//set mouse invisible
+			cursorVisible = !cursorVisible;
+			Screen.showCursor = cursorVisible;
+			Screen.lockCursor = !cursorVisible;
+		}
+		
+		if (Input.GetKeyDown (KeyCode.KeypadPlus) || Input.GetKeyDown (KeyCode.Plus)) {
+			sensitivity += 0.2f;
+		} else if (Input.GetKeyDown (KeyCode.KeypadMinus) || Input.GetKeyDown (KeyCode.Minus)) {
+			sensitivity -= 0.2f;
+		}
+		
+		if (!follow && !Pause.isPaused) {
+			rotationY += Input.GetAxis("Mouse X") * sensitivity * distanceMult;
+			rotationY = Mathf.Clamp (rotationY, -60f, 60f);
+			
+			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, rotationY, 0);
+			
+		} else {
+			float distance;
+			Ray ray = Camera.mainCamera.ScreenPointToRay (Input.mousePosition);
+		
+			//we'll first try for the horozontal plane
+			if (horoPlane.Raycast (ray, out distance)) {
+				//we got it, so look at it
+				vector = ray.GetPoint (distance); 
+				//toad.LookAt(vector);
+			} else {
+				//otherwise we have to use vertical plane
+				verticalPlane.Raycast (ray, out distance);
+				vector = ray.GetPoint (distance);
+				//make sure we don't make the toad look up/ down
+				vector.y = 0;
+				//toad.LookAt (vector);
+			}
+		
+			//Debug.DrawLine(toad.position, vector,Color.red);
+			Vector3 angle = toad.rotation.eulerAngles;
+			float y = angle.y;
+		
+			if (y > 180) {
+				y = Mathf.Clamp (y, 280f, 360f);
+			} else {
+				y = Mathf.Clamp (y, 0f, 80f);
+			}
+		
+			// Smoothly rotates towards target
+			Vector3 normalized = vector - transform.position;
+			//TODO this is a cheap hack, there's probably a better way to do this
+			if (normalized.z < 0.2)
+				normalized.z = -Mathf.Clamp (normalized.z, -2f, 0f);
+			Quaternion targetRotation = Quaternion.LookRotation (normalized, Vector3.up);
+			transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, 
+            Time.deltaTime * rotationSpeed *
+            ((tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension));
+		}
+		
+        
+		
 	}
 }

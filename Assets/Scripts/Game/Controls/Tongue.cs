@@ -100,7 +100,7 @@ public class Tongue : MonoBehaviour
 		} else if (other.tag == "Terrain") {
 			//Debug.Log ("Tongue hit terrain");
 			tongueRetracting = true;
-            SoundEngine.Get().PlayEffect("ball_fire");
+            //SoundEngine.Get().PlayEffect("ball_fire");
 		}
 	}
 }

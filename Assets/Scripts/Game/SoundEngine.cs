@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SoundEngine : MonoBehaviour {
-
-    public Dictionary<string,AudioClip> effects = new Dictionary<string,AudioClip>();
-    public Dictionary<string, AudioClip> music = new Dictionary<string, AudioClip>();
+	
+	
+	
+    public static Dictionary<string,AudioClip> effects = new Dictionary<string,AudioClip>();
+    public static Dictionary<string, AudioClip> music = new Dictionary<string, AudioClip>();
     List<AudioSource> playingAudio = new List<AudioSource>();
 
-    static SoundEngine soundEngine;
-    AudioSource bgm;
+	static AudioSource bgm;
 
 	void Awake () {
-        soundEngine = this;
+        // = this;
         gameObject.AddComponent<AudioSource>();
         Object[] ec = Resources.LoadAll("Sounds/Effects",typeof(AudioClip));
         foreach (Object c in ec)
@@ -28,7 +29,7 @@ public class SoundEngine : MonoBehaviour {
         }
 
         bgm = gameObject.GetComponent<AudioSource>();
-        bgm.clip = music["tongue toad"];
+        bgm.clip = music["music track"];
         bgm.loop = true;
         //bgm.PlayOneShot(music["tongue toad"]);
         
@@ -61,24 +62,17 @@ public class SoundEngine : MonoBehaviour {
         }
     }
 
-    public static SoundEngine Get()
-    {
-        return soundEngine;
-    }
 
 
-    public bool PlayEffect(string name, Transform location)
+    public void PlayEffect(string name, Transform location)
     {
-        
         AudioClip clip = effects[name];
         AudioSource.PlayClipAtPoint(clip, location.position);
-        return true;
     }
-    public bool PlayEffect(string name)
+    public void PlayEffect(string name)
     {
         AudioClip clip = effects[name];
         AudioSource.PlayClipAtPoint(clip, Vector3.zero);
-        return true;
     }
 
     public void PlayMusic(string name, bool background, Transform location)
