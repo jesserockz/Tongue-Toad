@@ -51,20 +51,20 @@ public class MouseFollower : MonoBehaviour
 			//change the mode
 			follow = !follow;
 			
-			Screen.showCursor = follow;
-			Screen.lockCursor = !follow;
+			//Screen.showCursor = follow;
+			//Screen.lockCursor = !follow;
 		}
 		
 		if (Pause.isPaused) {
-				Screen.showCursor = true;
-				Screen.lockCursor = false;
+				//Screen.showCursor = true;
+				//Screen.lockCursor = false;
 		} else {
 			if (follow ) {
-				Screen.showCursor = false;
-				Screen.lockCursor = false;
+				//Screen.showCursor = false;
+				//Screen.lockCursor = false;
 			} else {
-				Screen.showCursor = false;
-				Screen.lockCursor = true;
+				//Screen.showCursor = false;
+				//Screen.lockCursor = true;
 			}
 		}
 		

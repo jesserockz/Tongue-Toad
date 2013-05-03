@@ -7,8 +7,9 @@ public class Tongue : MonoBehaviour
 	public bool tongueRetracting = false;
 	public float tongueNormalSpeed = 1.5f;
     float tongueSpeed = 0.0f;
+	float retractSpeed = 0.65f;
 
-    public float maxExtension = 20f;
+    public float maxExtension = 15f;
 	
 	public Transform toad;
 	public Transform tongue;
@@ -67,7 +68,7 @@ public class Tongue : MonoBehaviour
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;
-            tongueSpeed = 0.2f;
+            tongueSpeed = 0.45f;
             transform.LookAt(toadPosition());
             transform.position += transform.forward * tongueSpeed;
 
