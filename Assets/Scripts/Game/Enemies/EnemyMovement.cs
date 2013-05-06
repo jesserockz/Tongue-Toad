@@ -36,4 +36,15 @@ public class EnemyMovement : MonoBehaviour {
         if(transform.position.z< -20f)
             Destroy(gameObject);
 	}
+	
+	void OnTriggerEnter(Collider other) 
+	{
+		if (other.name == "TongueTip" || other.name == "TongueBody") Debug.Log ("tongue trigger");
+	}
+	
+	void OnCollisionEnter(Collision c)
+	{
+		GameObject other = c.gameObject; 
+		if (other.name == "TongueTip" || other.name == "TongueBody") Debug.Log ("tongue collide");
+	}
 }

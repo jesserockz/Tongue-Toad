@@ -30,4 +30,15 @@ public class FriendlyMovement : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+	
+	void OnTriggerEnter(Collider other) 
+	{
+		if (other.name == "TongueTip" || other.name == "TongueBody") Debug.Log ("tongue trigger");
+	}
+	
+	void OnCollisionEnter(Collision c)
+	{
+		GameObject other = c.gameObject; 
+		if (other.name == "TongueTip" || other.name == "TongueBody") Debug.Log ("tongue collide");
+	}
 }

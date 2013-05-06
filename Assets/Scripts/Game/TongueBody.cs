@@ -17,6 +17,7 @@ public class TongueBody : MonoBehaviour {
     {
         if (other.tag == "Enemy")
         {
+			
             Player.addScore(10 + Player.combo);
             Player.currentEnergy += 5;
             Player.combo++;

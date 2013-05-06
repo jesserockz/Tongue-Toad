@@ -32,7 +32,7 @@ public class MouseFollower : MonoBehaviour
 		//constructs a plane facing up that is the same level as the water
 		//GameObject water = GameObject.Find ("Water");
 		
-		horoPlane = new Plane (Vector3.up, Vector3.zero);
+		horoPlane = new Plane (Vector3.up, new Vector3(0, 0, 0));
 		verticalPlane = new Plane (Vector3.forward, new Vector3 (0, 0, 78));
 
 		//Get tongue object script to control rotation
@@ -94,7 +94,8 @@ public class MouseFollower : MonoBehaviour
 			//we'll first try for the horozontal plane
 			if (horoPlane.Raycast (ray, out distance)) {
 				//we got it, so look at it
-				vector = ray.GetPoint (distance); 
+				vector = ray.GetPoint (distance);
+				vector.y = 0f;
 				//toad.LookAt(vector);
 			} else {
 				//otherwise we have to use vertical plane
