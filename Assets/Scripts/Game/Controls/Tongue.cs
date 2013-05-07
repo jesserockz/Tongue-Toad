@@ -31,7 +31,7 @@ public class Tongue : MonoBehaviour
 
         if (shoot && !tongueOut)
         { //User has started tongue extension
-            //toad.GetComponent<MouseLook> ().enabled = false;
+            toad.GetComponent<MouseFollower> ().enabled = false;
             transform.rotation = toad.rotation;
             tongue.rotation = toad.rotation;
             tongueOut = true;
@@ -101,7 +101,7 @@ public class Tongue : MonoBehaviour
         {
             //Tongue dormant inside mouth waiting to ATTACK!!!
             tongueRetracting = false;
-            //toad.GetComponent<MouseLook> ().enabled = true;
+            toad.GetComponent<MouseFollower> ().enabled = true;
             transform.position = toadPosition();
             tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             tongue.position = toadPosition();
@@ -115,16 +115,22 @@ public class Tongue : MonoBehaviour
 	}
 	
 	void OnTriggerEnter (Collider other)
-	{	
-		if (other.tag == "Enemy") {
-			Player.addScore (10 + Player.combo);
-			Player.currentEnergy += 5;
-			Player.combo++;
-			Destroy (other.gameObject);
-		} else if (other.tag == "Terrain") {
-			//Debug.Log ("Tongue hit terrain");
+	{
+        if (other.tag == "Enemy")
+        {
+            Player.addScore(10 + Player.combo);
+            Player.currentEnergy += 5;
+            Player.combo++;
+            Destroy(other.gameObject);
+        }
+        else if (other.tag == "Friendly")
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
+            Destroy(other.gameObject);
+        }
+        else if (other.tag == "Terrain")
+        {
 			tongueRetracting = true;
-            //SoundEngine.Get().PlayEffect("ball_fire");
 		}
 	}
 }

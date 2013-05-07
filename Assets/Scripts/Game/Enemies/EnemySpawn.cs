@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemySpawn : MonoBehaviour {
-	public GameObject enemy;
+	//public GameObject enemy;
     public GameObject friendly;
-    public GameObject snail;
-	public GameObject[] newSnail;
+    //public GameObject snail;
+	public GameObject[] leafSnail;
 	
 	public GameObject[] lineSpawnPoint;
 	
@@ -83,6 +83,7 @@ public class EnemySpawn : MonoBehaviour {
 		int range = Random.Range (5, 15);
 		for (int i = 0; i < range; i++)
 		{
+            GameObject snail = getRandomSnail();
 			//float xOffset = Random.Range(0.0f, 5.0f);
 			Instantiate(snail, transform.position, Quaternion.identity);
 		}
@@ -107,7 +108,7 @@ public class EnemySpawn : MonoBehaviour {
 	
 	private GameObject getRandomSnail()
 	{
-		return newSnail[Random.Range (0, newSnail.Length)];
+		return leafSnail[Random.Range (0, leafSnail.Length)];
 	}
 	
 	//returns a random vector of one of the positions of a line formation spawn point 
