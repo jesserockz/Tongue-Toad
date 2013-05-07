@@ -11,8 +11,6 @@ public class CameraControl : MonoBehaviour {
 	
 	bool rotating = false;
 
-    
-
     public float curRotation = 0;
     public bool slidingOut = false;
     public bool slidingIn = false;
@@ -42,7 +40,20 @@ public class CameraControl : MonoBehaviour {
 		}
 		shake();
 	}
+	
+	//FixedUpdate is called a fixed number of times per second
+	void FixedUpdate(){
+		checkCameraEffects();
+		zoom ();
+		rotate ();
+	}
+	
+	private void checkCameraEffects() {
 
+    	GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MotionBlur>().enabled = (rotating || slidingIn);
+
+	}
+	
     public void activateSpin()
     {
         if (!rotating && !slidingIn)
@@ -60,14 +71,6 @@ public class CameraControl : MonoBehaviour {
 			slidingOut = true;
 		}
 		lastaccel = accel;
-	}
-	
-	
-	
-	//FixedUpdate is called a fixed number of times per second
-	void FixedUpdate(){
-		zoom ();
-		rotate ();
 	}
 	
 	void zoom(){

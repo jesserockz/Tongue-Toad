@@ -68,7 +68,7 @@ public class Tongue : MonoBehaviour
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;
-            tongueSpeed = 0.45f;
+            tongueSpeed = 0.5f;
             transform.LookAt(toadPosition());
             transform.position += transform.forward * tongueSpeed;
 
@@ -107,7 +107,7 @@ public class Tongue : MonoBehaviour
 
 	Vector3 toadPosition ()
 	{
-		return toad.position + new Vector3 (0f, 0.35f, 0f);
+		return toad.position + new Vector3 (0f, 0.50f, 0f);
 	}
 	
 	void OnTriggerEnter (Collider other)
