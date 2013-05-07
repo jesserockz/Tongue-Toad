@@ -68,8 +68,11 @@ public class Tongue : MonoBehaviour
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;
-            tongueSpeed = 0.5f;
-            transform.LookAt(toadPosition());
+			float mult = (maxExtension  - Vector3.Distance(transform.position, toadPosition())) / maxExtension;
+			//keeps the speed between 0.5-0.9, the tongue getting faster as it approaches
+            tongueSpeed = Mathf.Min (Mathf.Max (0.6f, mult * 1.5f), 1f);
+            //tongueSpeed = 0.8f;
+			transform.LookAt(toadPosition());
             transform.position += transform.forward * tongueSpeed;
 
             float newX = ((toad.position.x - transform.position.x) / 2) + transform.position.x;
@@ -80,8 +83,9 @@ public class Tongue : MonoBehaviour
             tongue.position = newTonguePos;
             tongue.localScale = new Vector3(0.1f, 0.1f, distance);
             tongue.LookAt(transform);
-
-            if (Vector3.Distance(transform.position, toadPosition()) <= 0.2)
+			
+			//if the distance is less tha
+            if (transform.position.z < toadPosition().z || Vector3.Distance(transform.position, toadPosition()) <= 0.2)
             {
                 tongueRetracting = false;
                 tongueOut = false;
