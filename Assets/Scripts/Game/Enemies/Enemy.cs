@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour {
 		//if their health is 0 or below, they are now dying
 		if (health <= 0) {
 			//disable collider and forward movement so they stop and don't screw with other physics bodie
-			GetComponent<MeshCollider>().enabled = false;
+			//GetComponent<MeshCollider>().enabled = false;
 			GetComponent<ForwardMovement>().enabled = false;
 			//delay playing to wait for animation to hit water
 			//NOTE: there should be a method PlayDelay() which works in seconds, but my editor can't find it
