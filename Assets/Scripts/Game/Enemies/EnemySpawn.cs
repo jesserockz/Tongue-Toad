@@ -26,25 +26,58 @@ public class EnemySpawn : MonoBehaviour {
 			
 			int val = Random.Range (0, 100);
 			
+			
 			//get a new between value
-			between  = Random.Range (4.0f, 8.0f);
+			between  = Random.Range (0.1f, 3.0f);
 			
-			if(val <= 20) {
-				spawnDiagonal();
-                //Instantiate(friendly, new Vector3(25f,0.3f,60f), Quaternion.identity);
+			if(val <= 10) {
+				spawnGood();
 			}
-			else if (val <= 50) {
-                //Instantiate(enemy, new Vector3(25f, 0.3f, 55f), Quaternion.identity);
-                //Instantiate(snail, new Vector3(25f, 0.2f, 60f), Quaternion.identity);
-				spawnAbreast();
-			} else if (val <= 70) {
-				spawnLine ();
-			} else {
-				spawnDiagonal();
+			else {
+				int whatBad = Random.Range (0, 100);
+				
+				if (whatBad <= 75) spawnPleb();
+				else spawnCopter();
 			}
+			
+			
             lastSpawn = Time.time;
-			
 		}
+	}
+	
+	private void spawnGood()
+	{
+		GameObject snail = getRandomSnail();
+		Vector3 middle = getLinePosition();
+		
+		Instantiate(friendly, middle, Quaternion.Euler(0, -180, 0));
+	}
+	
+	
+	private void spawnPleb()
+	{
+		GameObject snail = getRandomSnail();
+		Vector3 point = getLinePosition();
+		
+		Instantiate(snail, point, Quaternion.Euler(0, -180, 0));
+	}
+	
+	private void spawnCopter()
+	{
+		GameObject copter = getRandomCopter();
+		Vector3 point = getLinePosition();
+		
+		Instantiate(copter, point, Quaternion.Euler(0, -180, 0));
+		
+	}
+	
+	private void spawnRandom()
+	{
+		GameObject snail = getRandomSnail();
+		Vector3 middle = getLinePosition();
+		
+		
+		Instantiate(snail, middle, Quaternion.Euler(0, -180, 0));
 	}
 	
 	//spawns a few monsters in an abreast formation
@@ -109,15 +142,12 @@ public class EnemySpawn : MonoBehaviour {
 	
 	private GameObject getRandomSnail()
 	{
-        int whichSnail = Random.Range(0, 3);
-        if (whichSnail == 0)
-        {
-            return flyingSnail[Random.Range(0, flyingSnail.Length)];
-        }
-        else
-        {
-            return leafSnail[Random.Range(0, leafSnail.Length)];
-        }
+         return leafSnail[Random.Range(0, leafSnail.Length)];
+	}
+	
+	private GameObject getRandomCopter()
+	{
+		return flyingSnail[Random.Range(0, flyingSnail.Length)];
 	}
 	
 	//returns a random vector of one of the positions of a line formation spawn point 

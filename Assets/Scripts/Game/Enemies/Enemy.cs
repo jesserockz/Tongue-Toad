@@ -28,6 +28,12 @@ public class Enemy : MonoBehaviour {
 		case EnemyState.DEAD: break;
 		case EnemyState.IDLE:break;
 		}
+		
+		if(transform.position.z < -5f) {
+			Player.currentHealth -= 10;
+			Player.combo = 0;
+			Destroy(gameObject);
+		}
 	}
 	
 	public void attack(int damage)
@@ -46,6 +52,7 @@ public class Enemy : MonoBehaviour {
 			//this current method works in like hertz or something, so I just guessed this number...
 			GetComponent<AudioSource>().Play(25000);	
 			state = EnemyState.DYING;
+			Debug.Log ("attacked");
 		}
 	}
 			

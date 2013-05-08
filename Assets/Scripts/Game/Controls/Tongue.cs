@@ -124,7 +124,7 @@ public class Tongue : MonoBehaviour
 
 	Vector3 toadPosition ()
 	{
-		return toad.position + new Vector3 (0f, 0.40f, 0f);
+		return toad.position + new Vector3 (0f, 0.25f, 0f);
 	}
 	
 	void OnTriggerEnter (Collider other)
@@ -140,7 +140,7 @@ public class Tongue : MonoBehaviour
 			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
 			
 			//fling the enemy back
-			o.GetComponent<Rigidbody>().velocity = (3.0f * dir);
+			o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
 			
 			//attack the enemy... death, animations, etc, are handled there.
 			enemy.attack(player.getTongueDamage());

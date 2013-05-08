@@ -31,8 +31,8 @@ public class TongueBody : MonoBehaviour {
             Enemy enemy = o.GetComponent<Enemy>();
 
             //direction of impact
-			Vector3 dir = o.transform.position - transform.position;
-            
+			Vector3 dir = Vector3.Normalize(o.transform.position - transform.position);
+            Debug.Log (dir);
             //fling the enemy back
             o.GetComponent<Rigidbody>().velocity = (3.0f * dir);
 

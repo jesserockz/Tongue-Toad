@@ -27,6 +27,8 @@ public class FriendlyMovement : MonoBehaviour {
 		}
 		
 		if(transform.position.z < -20f) {
+			Player.addScore(50);
+			Player.combo++;
 			Destroy(gameObject);
 		}
 	}

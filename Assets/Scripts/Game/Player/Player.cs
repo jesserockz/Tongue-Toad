@@ -109,8 +109,8 @@ public class Player : MonoBehaviour
 	public void attackEnemy(Enemy enemy)
 	{
 		Player.addScore(10 + Player.combo);
-            Player.currentEnergy += 5;
-            Player.combo++;
+        Player.currentEnergy += 5;
+        Player.combo++;
 	}
 	
     //method adds to highscore, also incrementing our scorecheck value to ensure no cheating happens
