@@ -32,7 +32,7 @@ public class SoundEngine : MonoBehaviour {
         bgm.clip = music["music track"];
         bgm.loop = true;
         //bgm.PlayOneShot(music["tongue toad"]);
-        
+        bgm.volume = 0.4f;
         bgm.Play();
 	}
 

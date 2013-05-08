@@ -36,8 +36,8 @@ public class MouseFollower : MonoBehaviour
 		verticalPlane = new Plane (Vector3.forward, new Vector3 (0, 0, 78));
 
 		//Get tongue object script to control rotation
-		tongue = GameObject.FindGameObjectWithTag ("Tongue").GetComponent<Tongue> ();
-
+		//tongue = GameObject.FindGameObjectWithTag ("Tongue").GetComponent<Tongue> ();
+		tongue = GameObject.Find ("TongueTip").GetComponent<Tongue> ();
 	}
 	
 	
@@ -53,19 +53,6 @@ public class MouseFollower : MonoBehaviour
 			
 			//Screen.showCursor = follow;
 			//Screen.lockCursor = !follow;
-		}
-		
-		if (Pause.isPaused) {
-				//Screen.showCursor = true;
-				//Screen.lockCursor = false;
-		} else {
-			if (follow ) {
-				//Screen.showCursor = false;
-				//Screen.lockCursor = false;
-			} else {
-				//Screen.showCursor = false;
-				//Screen.lockCursor = true;
-			}
 		}
 		
 		if (Input.GetKeyDown (KeyCode.F2) && false) {
@@ -126,8 +113,5 @@ public class MouseFollower : MonoBehaviour
             Time.deltaTime * rotationSpeed *
             ((tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension));
 		}
-		
-        
-		
 	}
 }

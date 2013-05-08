@@ -12,7 +12,7 @@ public class EnemySpawn : MonoBehaviour {
 	private float between = 4.0f;
 	private float lastSpawn = 0;
 	
-	
+	private Quaternion spawnAngle = Quaternion.Euler(0, 180, 0);
 	
 	void Start() {
 		
@@ -53,9 +53,9 @@ public class EnemySpawn : MonoBehaviour {
 		Vector3 offset = new Vector3(1.5f, 0, 0);
 		GameObject snail = getRandomSnail();
 		
-		Instantiate(snail, middle, Quaternion.identity);
-		Instantiate(snail, middle - offset, Quaternion.identity);
-		Instantiate(snail, middle + offset, Quaternion.identity);
+		Instantiate(snail, middle, Quaternion.Euler(0, -180, 0));
+		Instantiate(snail, middle - offset, Quaternion.Euler(0, -180, 0));
+		Instantiate(snail, middle + offset, Quaternion.Euler(0, -180, 0));
 	}
 	
 	//spawns a few monsters in a line formation
@@ -66,9 +66,9 @@ public class EnemySpawn : MonoBehaviour {
 		
 		GameObject snail = getRandomSnail();
 		
-		Instantiate(snail, middle - offset, Quaternion.identity);
-		Instantiate(snail, middle, Quaternion.identity);
-		Instantiate(snail, middle + offset, Quaternion.identity);
+		Instantiate(snail, middle - offset, Quaternion.Euler(0, -180, 0));
+		Instantiate(snail, middle, Quaternion.Euler(0, -180, 0));
+		Instantiate(snail, middle + offset, Quaternion.Euler(0, -180, 0));
 	}
 	
 	//spawns a few monsters in a star formation
@@ -85,7 +85,7 @@ public class EnemySpawn : MonoBehaviour {
 		{
             GameObject snail = getRandomSnail();
 			//float xOffset = Random.Range(0.0f, 5.0f);
-			Instantiate(snail, transform.position, Quaternion.identity);
+			Instantiate(snail, transform.position, Quaternion.Euler(0, -180, 0));
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class EnemySpawn : MonoBehaviour {
 		
 		for (int i = 0; i < lineSpawnPoint.Length; i++)
 		{
-			Instantiate(snail, lineSpawnPoint[i].transform.position + new Vector3(0, 0, orientation * (3 + i * -3)), Quaternion.identity);
+			Instantiate(snail, lineSpawnPoint[i].transform.position + new Vector3(0, 0, orientation * (3 + i * -3)), Quaternion.Euler(0, -180, 0));
 		}
 		
 	}

@@ -1,0 +1,136 @@
+fileFormatVersion: 2
+guid: 332b585cac589e64290305adb8453bc9
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Body1
+    100002: Body2
+    100004: bot_lip1
+    100006: bot_lip2
+    100008: Head1
+    100010: Head2
+    100012: Head3
+    100014: L_eye1
+    100016: L_eye2
+    100018: L_eye3
+    100020: Leaf1
+    100022: Leaf2
+    100024: Leaf3
+    100026: Leaf4
+    100028: Leaf5
+    100030: polySurface2
+    100032: pSphere2
+    100034: R_eye1
+    100036: R_eye2
+    100038: R_eye3
+    100040: //RootNode
+    100042: Tail1
+    100044: Tail2
+    100046: Tail3
+    100048: top_lip1
+    100050: top_lip2
+    100052: transform2
+    400000: Body1
+    400002: Body2
+    400004: bot_lip1
+    400006: bot_lip2
+    400008: Head1
+    400010: Head2
+    400012: Head3
+    400014: L_eye1
+    400016: L_eye2
+    400018: L_eye3
+    400020: Leaf1
+    400022: Leaf2
+    400024: Leaf3
+    400026: Leaf4
+    400028: Leaf5
+    400030: polySurface2
+    400032: pSphere2
+    400034: R_eye1
+    400036: R_eye2
+    400038: R_eye3
+    400040: //RootNode
+    400042: Tail1
+    400044: Tail2
+    400046: Tail3
+    400048: top_lip1
+    400050: top_lip2
+    400052: transform2
+    4300000: polySurface2
+    7400000: Idle2
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: polySurface2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: Idle2
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .0299999993
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

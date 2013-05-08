@@ -8,7 +8,6 @@ public class ForwardMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//rigidbody.velocity.z = 10;
 		rigidbody.velocity = new Vector3(0, 0, -5);
 	}
 	

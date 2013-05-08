@@ -13,10 +13,17 @@ public class Tongue : MonoBehaviour
 	
 	public Transform toad;
 	public Transform tongue;
-
+	
+	private Player player;
+	private PlayerSounds playerSounds;
+	
 	// Use this for initialization
 	void Start ()
 	{
+		GameObject p = GameObject.FindGameObjectWithTag("Player");
+		player = p.GetComponent<Player>();
+		playerSounds = p.GetComponent<PlayerSounds>();
+		
         tongueSpeed = tongueNormalSpeed;
 	}
 	
@@ -35,6 +42,8 @@ public class Tongue : MonoBehaviour
             transform.rotation = toad.rotation;
             tongue.rotation = toad.rotation;
             tongueOut = true;
+			playerSounds.tongueStartSource.Play();
+			playerSounds.tongueStretchSource.Play ();
         }
         else if (shoot && tongueOut && !tongueRetracting)
         { //Tongue extension continuing out
@@ -68,6 +77,8 @@ public class Tongue : MonoBehaviour
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;
+			
+			
 			float mult = (maxExtension  - Vector3.Distance(transform.position, toadPosition())) / maxExtension;
 			//keeps the speed between 0.5-0.9, the tongue getting faster as it approaches
             tongueSpeed = Mathf.Min (Mathf.Max (0.6f, mult * 1.5f), 1f);
@@ -99,6 +110,8 @@ public class Tongue : MonoBehaviour
         }
         else if (!tongueOut && !shoot)
         {
+						playerSounds.tongueStretchSource.Stop ();
+
             //Tongue dormant inside mouth waiting to ATTACK!!!
             tongueRetracting = false;
             toad.GetComponent<MouseFollower> ().enabled = true;
@@ -116,17 +129,29 @@ public class Tongue : MonoBehaviour
 	
 	void OnTriggerEnter (Collider other)
 	{
-        if (other.tag == "Enemy")
+		GameObject o = other.gameObject;
+		
+        if (o.tag == "Enemy")
         {
-            Player.addScore(10 + Player.combo);
-            Player.currentEnergy += 5;
-            Player.combo++;
-            Destroy(other.gameObject);
+			//get the enemy
+			Enemy enemy = o.GetComponent<Enemy>();
+			
+			//direction of impact
+			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
+			
+			//fling the enemy back
+			o.GetComponent<Rigidbody>().velocity = (3.0f * dir);
+			
+			//attack the enemy... death, animations, etc, are handled there.
+			enemy.attack(player.getTongueDamage());
+			
+			//now tell the player they've attacked an enemy. That stuff is handled there
+            player.attackEnemy(enemy);
         }
-        else if (other.tag == "Friendly")
+        else if (o.tag == "Friendly")
         {
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
-            Destroy(other.gameObject);
+            Destroy(o);
         }
         else if (other.tag == "Terrain")
         {

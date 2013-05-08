@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 657615efd9e34854baa0b289fa963f6d
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - movement: {fileID: 8300000, guid: ad54d6c40b34b4f89af238ac9c03dd96, type: 3}
+  - tongueStart: {fileID: 8300000, guid: 41ea774d050ee4d4ba099a4c635de338, type: 3}
+  - tongueStretch: {fileID: 8300000, guid: 5a99a16ddcd444e6dac8104c790439e4, type: 3}
+  - tongueComplete: {fileID: 8300000, guid: f2f1d9d61fdc44e028d3581d01e98d22, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

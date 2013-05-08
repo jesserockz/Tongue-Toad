@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     private static int score;
 
     public static int combo;
+	
+	//currently we're just gonna 1 hit anything. If we want to add in multihits later, adjust this appropriately
+	private int tongueDamage = 1000;
 
     //stuff to detect cheating
     //at start of game we set scoreCheck to cheatOffset
@@ -96,7 +99,20 @@ public class Player : MonoBehaviour
     {
         //nothing currently
     }
-
+	
+	public int getTongueDamage()
+	{
+		return tongueDamage;
+	}
+	
+	//Called when the player attacks an enemy. Only do stuff related to the player here, enemy stuff is handled by the enemy
+	public void attackEnemy(Enemy enemy)
+	{
+		Player.addScore(10 + Player.combo);
+            Player.currentEnergy += 5;
+            Player.combo++;
+	}
+	
     //method adds to highscore, also incrementing our scorecheck value to ensure no cheating happens
     public static void addScore(int value)
     {
