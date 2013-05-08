@@ -31,7 +31,7 @@ public class Tongue : MonoBehaviour
     void Update()
     {
         //return if paused
-        if (Pause.isPaused)
+        if (Pause.isPaused || Time.timeScale == 0)
             return;
 
         bool shoot = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);

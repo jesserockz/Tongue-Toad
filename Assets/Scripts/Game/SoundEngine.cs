@@ -6,8 +6,8 @@ public class SoundEngine : MonoBehaviour {
 	
 	
 	
-    public static Dictionary<string,AudioClip> effects = new Dictionary<string,AudioClip>();
-    public static Dictionary<string, AudioClip> music = new Dictionary<string, AudioClip>();
+    public Dictionary<string,AudioClip> effects = new Dictionary<string,AudioClip>();
+    public Dictionary<string, AudioClip> music = new Dictionary<string, AudioClip>();
     List<AudioSource> playingAudio = new List<AudioSource>();
 
 	static AudioSource bgm;
@@ -33,7 +33,7 @@ public class SoundEngine : MonoBehaviour {
         bgm.loop = true;
         //bgm.PlayOneShot(music["tongue toad"]);
         bgm.volume = 0.4f;
-        bgm.Play();
+        //bgm.Play();
 	}
 
     void Start() { 
