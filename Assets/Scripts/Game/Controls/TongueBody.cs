@@ -18,27 +18,34 @@ public class TongueBody : MonoBehaviour {
 	{
 		Debug.Log (c.gameObject.tag);
 	}
-	
-    void OnTriggerEnter(Collider collider)
+
+    void OnTriggerEnter(Collider other)
     {
-		Debug.Log ("tongue body collided: " + collider.gameObject.tag);
-		GameObject o = collider.gameObject;
+        GameObject o = other.gameObject;
+        //Debug.Log("TongueBody collided with " + o.tag);
         if (o.tag == "Enemy")
         {
-			//get the enemy
-			Enemy enemy = o.GetComponent<Enemy>();
+            Debug.Log("TongueBody collided with " + o.tag);
+
+            //get the enemy
+            Enemy enemy = o.GetComponent<Enemy>();
+
+            //direction of impact
 			Vector3 dir = o.transform.position - transform.position;
-			
-			
-			o.GetComponent<Rigidbody>().AddForce((o.transform.position - transform.position) * 10);
-			//attack the enemy... death, animations, etc, are handled there.
-			enemy.attack(player.getTongueDamage());
-			
-			//now tell the player they've attacked an enemy. That stuff is handled there
+            
+            //fling the enemy back
+            o.GetComponent<Rigidbody>().velocity = (3.0f * dir);
+
+            //attack the enemy... death, animations, etc, are handled there.
+            enemy.attack(player.getTongueDamage());
+
+            //now tell the player they've attacked an enemy. That stuff is handled there
             player.attackEnemy(enemy);
         }
         else if (o.tag == "Friendly")
         {
+            Debug.Log("TongueBody collided with " + o.tag);
+
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
             Destroy(o);
         }

@@ -38,7 +38,7 @@ public class Tongue : MonoBehaviour
 
         if (shoot && !tongueOut)
         { //User has started tongue extension
-            toad.GetComponent<MouseFollower> ().enabled = false;
+            //toad.GetComponent<MouseFollower> ().enabled = false;
             transform.rotation = toad.rotation;
             tongue.rotation = toad.rotation;
             tongueOut = true;
@@ -64,13 +64,7 @@ public class Tongue : MonoBehaviour
             if (tongue.localScale.z >= maxExtension)
             {
                 tongueRetracting = true;
-                //tongueSpeed = 0.2f;
-                //Debug.Log(tongue.localScale.z);
             }
-            //else if (tongue.localScale.z >= (maxExtension - 4f) && tongueSpeed > 0.2f)
-            //{
-            //    tongueSpeed -= 0.1f;
-            //}
 
         }
         else if (tongueOut && (!shoot || tongueRetracting))
@@ -85,7 +79,7 @@ public class Tongue : MonoBehaviour
             //tongueSpeed = 0.8f;
 			transform.LookAt(toadPosition());
             transform.position += transform.forward * tongueSpeed;
-
+            
             float newX = ((toad.position.x - transform.position.x) / 2) + transform.position.x;
             float newZ = ((toad.position.z - transform.position.z) / 2) + transform.position.z;
             Vector3 newTonguePos = new Vector3(newX, toadPosition().y, newZ);
@@ -100,9 +94,9 @@ public class Tongue : MonoBehaviour
             {
                 tongueRetracting = false;
                 tongueOut = false;
-                transform.position = toadPosition();
+                //transform.position = toadPosition();
                 tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                tongue.position = toadPosition();
+                //tongue.position = toadPosition();
                 tongueSpeed = tongueNormalSpeed;
             }
 
@@ -114,25 +108,27 @@ public class Tongue : MonoBehaviour
 
             //Tongue dormant inside mouth waiting to ATTACK!!!
             tongueRetracting = false;
-            toad.GetComponent<MouseFollower> ().enabled = true;
-            transform.position = toadPosition();
+            //toad.GetComponent<MouseFollower> ().enabled = true;
+            //transform.position = toadPosition();
             tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            tongue.position = toadPosition();
+            //tongue.position = toadPosition();
             tongueSpeed = tongueNormalSpeed;
         }
     }
 
 	Vector3 toadPosition ()
 	{
-		return toad.position + new Vector3 (0f, 0.50f, 0f);
+		return toad.position + new Vector3 (0f, 0.50f, 0.35f);
 	}
 	
 	void OnTriggerEnter (Collider other)
 	{
 		GameObject o = other.gameObject;
-		
+        //Debug.Log("TongueTip collided with " + o.tag);
         if (o.tag == "Enemy")
         {
+            Debug.Log("TongueTip collided with " + o.tag);
+
 			//get the enemy
 			Enemy enemy = o.GetComponent<Enemy>();
 			
@@ -150,11 +146,15 @@ public class Tongue : MonoBehaviour
         }
         else if (o.tag == "Friendly")
         {
+            Debug.Log("TongueTip collided with " + o.tag);
+
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
             Destroy(o);
         }
-        else if (other.tag == "Terrain")
+        else if (o.tag == "Terrain")
         {
+            Debug.Log("TongueTip collided with " + o.tag);
+
 			tongueRetracting = true;
 		}
 	}

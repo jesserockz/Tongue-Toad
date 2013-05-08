@@ -6,6 +6,7 @@ public class EnemySpawn : MonoBehaviour {
     public GameObject friendly;
     //public GameObject snail;
 	public GameObject[] leafSnail;
+    public GameObject[] flyingSnail;
 	
 	public GameObject[] lineSpawnPoint;
 	
@@ -108,7 +109,15 @@ public class EnemySpawn : MonoBehaviour {
 	
 	private GameObject getRandomSnail()
 	{
-		return leafSnail[Random.Range (0, leafSnail.Length)];
+        int whichSnail = Random.Range(0, 3);
+        if (whichSnail == 0)
+        {
+            return flyingSnail[Random.Range(0, flyingSnail.Length)];
+        }
+        else
+        {
+            return leafSnail[Random.Range(0, leafSnail.Length)];
+        }
 	}
 	
 	//returns a random vector of one of the positions of a line formation spawn point 
