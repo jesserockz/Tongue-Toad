@@ -38,7 +38,7 @@ public class Tongue : MonoBehaviour
 
         if (shoot && !tongueOut)
         { //User has started tongue extension
-            toad.GetComponent<MouseFollower> ().enabled = false;
+            //toad.GetComponent<MouseFollower> ().enabled = false;
             transform.rotation = toad.rotation;
             tongue.rotation = toad.rotation;
             tongueOut = true;
@@ -114,7 +114,7 @@ public class Tongue : MonoBehaviour
 
             //Tongue dormant inside mouth waiting to ATTACK!!!
             tongueRetracting = false;
-            toad.GetComponent<MouseFollower> ().enabled = true;
+            //toad.GetComponent<MouseFollower> ().enabled = true;
             transform.position = toadPosition();
             tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             tongue.position = toadPosition();
@@ -124,7 +124,7 @@ public class Tongue : MonoBehaviour
 
 	Vector3 toadPosition ()
 	{
-		return toad.position + new Vector3 (0f, 0.25f, 0f);
+		return toad.position + new Vector3 (0f, 0.5f, 0f);
 	}
 	
 	void OnTriggerEnter (Collider other)

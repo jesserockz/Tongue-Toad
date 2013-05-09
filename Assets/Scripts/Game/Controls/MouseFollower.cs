@@ -31,7 +31,6 @@ public class MouseFollower : MonoBehaviour
 	{
 		//constructs a plane facing up that is the same level as the water
 		//GameObject water = GameObject.Find ("Water");
-		
 		horoPlane = new Plane (Vector3.up, new Vector3(0, 0, 0));
 		verticalPlane = new Plane (Vector3.forward, new Vector3 (0, 0, 78));
 
@@ -51,8 +50,8 @@ public class MouseFollower : MonoBehaviour
 			//change the mode
 			follow = !follow;
 			
-			//Screen.showCursor = follow;
-			//Screen.lockCursor = !follow;
+			Screen.showCursor = follow;
+			Screen.lockCursor = !follow;
 		}
 		
 		if (Input.GetKeyDown (KeyCode.F2) && false) {
