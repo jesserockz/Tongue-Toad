@@ -25,6 +25,12 @@ ModelImporter:
     100038: transform7
     100040: transform8
     100042: transform9
+    100044: joint1
+    100046: joint2
+    100048: joint3
+    100050: joint4
+    100052: joint5
+    100054: joint6
     400000: pCylinder1
     400002: //RootNode
     400004: polySurface1
@@ -47,10 +53,18 @@ ModelImporter:
     400038: transform7
     400040: transform8
     400042: transform9
+    400044: joint1
+    400046: joint2
+    400048: joint3
+    400050: joint4
+    400052: joint5
+    400054: joint6
     2300000: polySurface1
     3300000: polySurface1
     4300000: polySurface1
+    7400000: plant2_animation
     9500000: //RootNode
+    13700000: polySurface1
   materials:
     importMaterials: 1
     materialName: 0

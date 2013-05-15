@@ -45,7 +45,7 @@ public class Tongue : MonoBehaviour
 			playerSounds.tongueStartSource.Play();
 			playerSounds.tongueStretchSource.Play ();
         }
-        else if (shoot && tongueOut && !tongueRetracting)
+        else if (tongueOut && !tongueRetracting )//&& shoot)
         { //Tongue extension continuing out
             //Move tonguetip in direction of frog
             //transform.rotation = frog.rotation;
@@ -73,7 +73,7 @@ public class Tongue : MonoBehaviour
             //}
 
         }
-        else if (tongueOut && (!shoot || tongueRetracting))
+        else if (tongueOut && (tongueRetracting ))//|| !shoot ))
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;
@@ -144,7 +144,7 @@ public class Tongue : MonoBehaviour
 			
 			//attack the enemy... death, animations, etc, are handled there.
 			enemy.attack(player.getTongueDamage());
-			
+            tongueRetracting = true;
 			//now tell the player they've attacked an enemy. That stuff is handled there
             player.attackEnemy(enemy);
         }

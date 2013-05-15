@@ -4,9 +4,12 @@ using System.Collections;
 public class TongueBody : MonoBehaviour {
 	
 	Player player;
+    Tongue tongue;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        tongue = player.GetComponentInChildren<Tongue>();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +26,7 @@ public class TongueBody : MonoBehaviour {
     {
         GameObject o = other.gameObject;
         //Debug.Log("TongueBody collided with " + o.tag);
-        if (o.tag == "Enemy")
+        if (o.tag == "Enemy" && tongue.tongueRetracting)
         {
             Debug.Log("TongueBody collided with " + o.tag);
 

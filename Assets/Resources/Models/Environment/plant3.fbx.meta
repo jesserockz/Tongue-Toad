@@ -55,6 +55,32 @@ ModelImporter:
     100098: transform7
     100100: transform8
     100102: transform9
+    100104: joint1
+    100106: joint10
+    100108: joint11
+    100110: joint12
+    100112: joint13
+    100114: joint14
+    100116: joint15
+    100118: joint16
+    100120: joint17
+    100122: joint18
+    100124: joint19
+    100126: joint2
+    100128: joint20
+    100130: joint21
+    100132: joint22
+    100134: joint23
+    100136: joint24
+    100138: joint25
+    100140: joint26
+    100142: joint3
+    100144: joint4
+    100146: joint5
+    100148: joint6
+    100150: joint7
+    100152: joint8
+    100154: joint9
     400000: pCylinder1
     400002: //RootNode
     400004: polySurface1
@@ -107,10 +133,38 @@ ModelImporter:
     400098: transform7
     400100: transform8
     400102: transform9
+    400104: joint1
+    400106: joint10
+    400108: joint11
+    400110: joint12
+    400112: joint13
+    400114: joint14
+    400116: joint15
+    400118: joint16
+    400120: joint17
+    400122: joint18
+    400124: joint19
+    400126: joint2
+    400128: joint20
+    400130: joint21
+    400132: joint22
+    400134: joint23
+    400136: joint24
+    400138: joint25
+    400140: joint26
+    400142: joint3
+    400144: joint4
+    400146: joint5
+    400148: joint6
+    400150: joint7
+    400152: joint8
+    400154: joint9
     2300000: polySurface6
     3300000: polySurface6
     4300000: polySurface6
+    7400000: plant3_animation
     9500000: //RootNode
+    13700000: polySurface6
   materials:
     importMaterials: 1
     materialName: 0
