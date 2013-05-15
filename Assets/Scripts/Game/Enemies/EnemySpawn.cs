@@ -29,8 +29,8 @@ public class EnemySpawn : MonoBehaviour {
 			
 			//get a new between value
 			between  = Random.Range (0.1f, 3.0f);
-			
-			if(val <= 10) {
+
+			if(val <= 100) {
 				spawnGood();
 			}
 			else {
@@ -48,7 +48,7 @@ public class EnemySpawn : MonoBehaviour {
 	private void spawnGood()
 	{ 
 		Vector3 middle = getLinePosition();
-		middle.y = 0;
+		middle.y = -0.35f;
 		
 		GameObject o = (GameObject) Instantiate(friendly, middle, Quaternion.Euler(0, -180, 0));
 		//quick hack to make it loop animation
