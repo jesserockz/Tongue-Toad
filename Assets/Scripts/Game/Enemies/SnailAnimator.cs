@@ -9,16 +9,20 @@ public class SnailAnimator : MonoBehaviour {
 	private Enemy enemy;
 	
 	private AnimationState idle, death;
-	private string idleString = "Idle1";
-	private string deathString = "Death1";
+    private string idleAnim = "";
+    private string deathAnim = "";
+	private string[] idleString = {"Idle1","Idle2","Idle3"};
+	private string[] deathString = {"Death1","Death2","Death3"};
 	
 	bool playedDeath = false;
 	// Use this for initialization
 	void Start () {
 		enemy = GetComponent<Enemy>();
-		
-		idle = animation[idleString];
-		death = animation[deathString];
+        idleAnim = idleString[Random.Range(0, idleString.Length)];
+        deathAnim = deathString[Random.Range(0, deathString.Length)];
+
+		idle = animation[idleAnim];
+		death = animation[deathAnim];
 		
 		death.wrapMode = WrapMode.Once;
 	}
@@ -27,10 +31,10 @@ public class SnailAnimator : MonoBehaviour {
 	void Update () {
 		if (enemy.getState() == Enemy.EnemyState.IDLE)
 		{
-			animation.Play (idleString);
+			animation.Play (idleAnim);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-			animation.Play (deathString);	
+			animation.Play (deathAnim);	
 			playedDeath = true;
 		}
 	}
