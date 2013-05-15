@@ -30,7 +30,7 @@ public class EnemySpawn : MonoBehaviour {
 			//get a new between value
 			between  = Random.Range (0.1f, 3.0f);
 			
-			if(val <= 10) {
+			if(val <= 90) {
 				spawnGood();
 			}
 			else {
@@ -46,11 +46,13 @@ public class EnemySpawn : MonoBehaviour {
 	}
 	
 	private void spawnGood()
-	{
-		GameObject snail = getRandomSnail();
+	{ 
 		Vector3 middle = getLinePosition();
+		middle.y = 0;
 		
-		Instantiate(friendly, middle, Quaternion.Euler(0, -180, 0));
+		GameObject o = (GameObject) Instantiate(friendly, middle, Quaternion.Euler(0, -180, 0));
+		//quick hack to make it loop animation
+		o.GetComponent<Animation>()["friendly toad animation"].wrapMode = WrapMode.Loop;
 	}
 	
 	
