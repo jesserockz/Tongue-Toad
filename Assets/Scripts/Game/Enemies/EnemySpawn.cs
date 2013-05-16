@@ -30,7 +30,7 @@ public class EnemySpawn : MonoBehaviour {
 			//get a new between value
 			between  = Random.Range (0.1f, 3.0f);
 
-			if(val <= 100) {
+			if(val <= 10) {
 				spawnGood();
 			}
 			else {

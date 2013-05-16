@@ -26,7 +26,7 @@ public class TongueBody : MonoBehaviour {
     {
         GameObject o = other.gameObject;
         //Debug.Log("TongueBody collided with " + o.tag);
-        if (o.tag == "Enemy" && tongue.tongueRetracting)
+        if (o.tag == "Enemy" )
         {
             Debug.Log("TongueBody collided with " + o.tag);
 

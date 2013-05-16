@@ -45,7 +45,7 @@ public class Tongue : MonoBehaviour
 			playerSounds.tongueStartSource.Play();
 			playerSounds.tongueStretchSource.Play ();
         }
-        else if (tongueOut && !tongueRetracting )//&& shoot)
+        else if (tongueOut && !tongueRetracting && shoot)
         { //Tongue extension continuing out
             //Move tonguetip in direction of frog
             //transform.rotation = frog.rotation;
@@ -73,7 +73,7 @@ public class Tongue : MonoBehaviour
             //}
 
         }
-        else if (tongueOut && (tongueRetracting ))//|| !shoot ))
+        else if (tongueOut && (tongueRetracting || !shoot ))
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;

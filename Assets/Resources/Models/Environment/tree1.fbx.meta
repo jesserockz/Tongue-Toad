@@ -3,116 +3,115 @@ guid: 6b2e70b4b14c16346a203f98d11915ac
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: pCylinder1
-    100002: polySurface1
-    100004: pPlane10
-    100006: pPlane11
-    100008: pPlane4
-    100010: pPlane5
-    100012: pPlane6
-    100014: pPlane7
-    100016: pPlane8
-    100018: pPlane9
-    100020: transform1
-    100022: transform2
-    100024: transform3
-    100026: transform4
-    100028: transform5
-    100030: transform6
-    100032: transform7
-    100034: transform8
-    100036: transform9
-    100038: //RootNode
-    100040: joint1
-    100042: joint10
-    100044: joint11
-    100046: joint12
-    100048: joint13
-    100050: joint14
-    100052: joint15
-    100054: joint16
-    100056: joint17
-    100058: joint18
-    100060: joint19
-    100062: joint2
-    100064: joint20
-    100066: joint21
-    100068: joint22
-    100070: joint23
-    100072: joint24
-    100074: joint25
-    100076: joint26
-    100078: joint27
-    100080: joint28
-    100082: joint29
-    100084: joint3
-    100086: joint30
-    100088: joint31
-    100090: joint32
-    100092: joint33
-    100094: joint4
-    100096: joint5
-    100098: joint6
-    100100: joint7
-    100102: joint8
-    100104: joint9
-    400000: pCylinder1
-    400002: polySurface1
-    400004: pPlane10
-    400006: pPlane11
-    400008: pPlane4
-    400010: pPlane5
-    400012: pPlane6
-    400014: pPlane7
-    400016: pPlane8
-    400018: pPlane9
-    400020: transform1
-    400022: transform2
-    400024: transform3
-    400026: transform4
-    400028: transform5
-    400030: transform6
-    400032: transform7
-    400034: transform8
-    400036: transform9
-    400038: //RootNode
-    400040: joint1
-    400042: joint10
-    400044: joint11
-    400046: joint12
-    400048: joint13
-    400050: joint14
-    400052: joint15
-    400054: joint16
-    400056: joint17
-    400058: joint18
-    400060: joint19
-    400062: joint2
-    400064: joint20
-    400066: joint21
-    400068: joint22
-    400070: joint23
-    400072: joint24
-    400074: joint25
-    400076: joint26
-    400078: joint27
-    400080: joint28
-    400082: joint29
-    400084: joint3
-    400086: joint30
-    400088: joint31
-    400090: joint32
-    400092: joint33
-    400094: joint4
-    400096: joint5
-    400098: joint6
-    400100: joint7
-    400102: joint8
-    400104: joint9
-    2300000: polySurface1
-    3300000: polySurface1
+    100000: joint1
+    100002: joint10
+    100004: joint11
+    100006: joint12
+    100008: joint13
+    100010: joint14
+    100012: joint15
+    100014: joint16
+    100016: joint17
+    100018: joint18
+    100020: joint19
+    100022: joint2
+    100024: joint20
+    100026: joint21
+    100028: joint22
+    100030: joint23
+    100032: joint24
+    100034: joint25
+    100036: joint26
+    100038: joint27
+    100040: joint28
+    100042: joint29
+    100044: joint3
+    100046: joint30
+    100048: joint31
+    100050: joint32
+    100052: joint33
+    100054: joint4
+    100056: joint5
+    100058: joint6
+    100060: joint7
+    100062: joint8
+    100064: joint9
+    100066: pCylinder1
+    100068: polySurface1
+    100070: pPlane10
+    100072: pPlane11
+    100074: pPlane4
+    100076: pPlane5
+    100078: pPlane6
+    100080: pPlane7
+    100082: pPlane8
+    100084: pPlane9
+    100086: transform1
+    100088: transform2
+    100090: transform3
+    100092: transform4
+    100094: transform5
+    100096: transform6
+    100098: transform7
+    100100: transform8
+    100102: transform9
+    100104: //RootNode
+    400000: joint1
+    400002: joint10
+    400004: joint11
+    400006: joint12
+    400008: joint13
+    400010: joint14
+    400012: joint15
+    400014: joint16
+    400016: joint17
+    400018: joint18
+    400020: joint19
+    400022: joint2
+    400024: joint20
+    400026: joint21
+    400028: joint22
+    400030: joint23
+    400032: joint24
+    400034: joint25
+    400036: joint26
+    400038: joint27
+    400040: joint28
+    400042: joint29
+    400044: joint3
+    400046: joint30
+    400048: joint31
+    400050: joint32
+    400052: joint33
+    400054: joint4
+    400056: joint5
+    400058: joint6
+    400060: joint7
+    400062: joint8
+    400064: joint9
+    400066: pCylinder1
+    400068: polySurface1
+    400070: pPlane10
+    400072: pPlane11
+    400074: pPlane4
+    400076: pPlane5
+    400078: pPlane6
+    400080: pPlane7
+    400082: pPlane8
+    400084: pPlane9
+    400086: transform1
+    400088: transform2
+    400090: transform3
+    400092: transform4
+    400094: transform5
+    400096: transform6
+    400098: transform7
+    400100: transform8
+    400102: transform9
+    400104: //RootNode
     4300000: polySurface1
-    7400000: animation
+    7400000: Tree+UV_animation
+    7400002: animation
     9500000: //RootNode
     11100000: //RootNode
     13700000: polySurface1
@@ -127,10 +126,10 @@ ModelImporter:
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
-    animationWrapMode: 2
+    animationWrapMode: 0
     clipAnimations:
     - name: animation
-      takeName: Tree+UV_animation
+      takeName: Take 001
       firstFrame: 1
       lastFrame: 100
       wrapMode: 0
@@ -154,7 +153,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .75
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
