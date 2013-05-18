@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private static int score;
 
     public static int combo;
+	public int shells;
 	
 	//currently we're just gonna 1 hit anything. If we want to add in multihits later, adjust this appropriately
 	private int tongueDamage = 1000;

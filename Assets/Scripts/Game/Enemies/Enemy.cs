@@ -10,10 +10,12 @@ public class Enemy : MonoBehaviour {
 	private int health = 100;
 	
 	private EnemyState state;
+	private ShellDrop shellDrop;
 	
 	// Use this for initialization
 	void Start () {
-	state = EnemyState.IDLE;
+		shellDrop = GetComponent<ShellDrop>();
+		state = EnemyState.IDLE;
 	}
 	
 	// Update is called once per frame
@@ -52,7 +54,11 @@ public class Enemy : MonoBehaviour {
 			//this current method works in like hertz or something, so I just guessed this number...
 			GetComponent<AudioSource>().Play(25000);	
 			state = EnemyState.DYING;
-			Debug.Log ("attacked");
+			
+			//spawn some shells
+			//ShellDrop.spawnShells(this.rigidbody.position, 5);
+			GameObject spawner = GameObject.Find ("ShellShardSpawner");
+			spawner.GetComponent<ShellDrop>().spawnShells(rigidbody.position, 5);
 		}
 	}
 			
