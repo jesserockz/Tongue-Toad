@@ -53,6 +53,7 @@ public class ShellShard : MonoBehaviour {
 		
 		if (o.tag == "Player") {
 			Destroy (gameObject);
+			o.GetComponent<Player>().addShell();
 		}
 	}
 	
@@ -61,6 +62,7 @@ public class ShellShard : MonoBehaviour {
 		
 		if (o.tag == "Player") {
 			Destroy (gameObject);
+			o.GetComponent<Player>().addShell();
 		}
 	}
 }

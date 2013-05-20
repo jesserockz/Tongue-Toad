@@ -101,6 +101,14 @@ public class Player : MonoBehaviour
         //nothing currently
     }
 	
+		public void addShell() {
+		shells++;
+	}
+	
+	public void addShell(int amount) {
+		shells += amount;
+	}
+	
 	public int getTongueDamage()
 	{
 		return tongueDamage;
@@ -173,6 +181,13 @@ public class Player : MonoBehaviour
 	public int getCombo()
 	{
 		return combo;
+	}
+	
+
+	
+	public int getShells()
+	{
+		return shells;
 	}
 
 }

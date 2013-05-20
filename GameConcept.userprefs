@@ -1,11 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Enemies\ShellShard.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\PlayerStatsGui.cs">
     <Files>
-      <File FileName="Assets\Scripts\Game\Enemies\ShellDrop.cs" Line="8" Column="2" />
-      <File FileName="Assets\Scripts\Game\Enemies\Enemy.cs" Line="61" Column="73" />
-      <File FileName="Assets\Scripts\Game\Player\Player.cs" Line="159" Column="6" />
-      <File FileName="Assets\Scripts\Game\Enemies\ShellShard.cs" Line="62" Column="10" />
+      <File FileName="Assets\Scripts\Game\PlayerStatsGui.cs" Line="38" Column="72" />
+      <File FileName="Assets\Scripts\Game\InstructionsOverlay.cs" Line="37" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
