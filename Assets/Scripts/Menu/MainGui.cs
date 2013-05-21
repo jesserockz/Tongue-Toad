@@ -5,6 +5,9 @@ using System;
 public class MainGui : MonoBehaviour
 {
 	
+	public GUISkin guiSkin;
+	public Texture tex;
+	
 	private List<ButtonItem> buttons = new List<ButtonItem> ();
 	
 	private Mode mode;
@@ -72,6 +75,8 @@ public class MainGui : MonoBehaviour
 	
 	void OnGUI ()
 	{
+		if (guiSkin != null) GUI.skin = guiSkin;
+		
 		switch (mode) {
 		case Mode.Menu: drawMenu(); break;
 		case Mode.Highscore: drawHighscore(); break;
@@ -187,6 +192,7 @@ public class MainGui : MonoBehaviour
 		
 		if(GUI.Button(new Rect(x, y + iy * (i + 3), w, h), "Return to menu")) {
 			mode = Mode.Menu;
+			
 		}
 	}
 }
