@@ -152,7 +152,7 @@ public class MainGui : MonoBehaviour
 			SoundManager.toggleMusic();
 		}
 		
-		SoundManager.setMusic(GUI.HorizontalSlider(new Rect(x, y + iy * i++, w, h), SoundManager.musicLevel, 0, 1));
+		SoundManager.setMusic(GUI.HorizontalSlider(new Rect(x, y + iy * i++, w, h + 20), SoundManager.musicLevel, 0, 1));
 		
 		//sound effects
 		
