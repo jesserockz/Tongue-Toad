@@ -25,6 +25,9 @@ public class ShellShard : MonoBehaviour {
 			Destroy (gameObject);
 		}
 		
+        if(transform.position.z <-5f)
+            Destroy(gameObject);
+
 		float y = rigidbody.position.y;
 		y = Mathf.Max (y, 1.0f);
 		

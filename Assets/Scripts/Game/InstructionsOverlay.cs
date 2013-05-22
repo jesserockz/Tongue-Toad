@@ -40,6 +40,8 @@ public class InstructionsOverlay : MonoBehaviour {
 			pause.enabled = true;
 			Time.timeScale = 1;
 			Destroy (this);
+            Screen.showCursor = false;
+            Screen.lockCursor = true;
 		}
 	}
 }

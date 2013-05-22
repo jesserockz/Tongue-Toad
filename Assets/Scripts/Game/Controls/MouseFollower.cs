@@ -37,6 +37,11 @@ public class MouseFollower : MonoBehaviour
 		//Get tongue object script to control rotation
 		//tongue = GameObject.FindGameObjectWithTag ("Tongue").GetComponent<Tongue> ();
 		tongue = GameObject.Find ("TongueTip").GetComponent<Tongue> ();
+
+        
+        //Starts with old control style
+        follow = false;
+        
 	}
 	
 	

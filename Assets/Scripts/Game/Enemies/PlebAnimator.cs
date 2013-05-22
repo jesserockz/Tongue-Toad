@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Class handles animations for the snails.
 /// </summary>
-public class SnailAnimator : MonoBehaviour {
+public class PlebAnimator : MonoBehaviour {
 	
 	private Enemy enemy;
 	

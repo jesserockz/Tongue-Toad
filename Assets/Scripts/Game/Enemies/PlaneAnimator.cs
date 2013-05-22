@@ -2,26 +2,28 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Class handles animations for the flying snails.
+/// Class handles animations for the snails.
 /// </summary>
-public class FlyingSnailAnimator : MonoBehaviour {
-
+public class PlaneAnimator : MonoBehaviour {
+	
 	private Enemy enemy;
 	
 	private AnimationState idle, death;
     private string idleAnim = "";
-	private string[] idleString = {"flyingIdle1","flyingIdle2"};
-	//private string deathString = "Death1";
+    private string deathAnim = "";
+	private string[] idleString = {};
+	private string[] deathString = {};
 	
 	bool playedDeath = false;
 	// Use this for initialization
 	void Start () {
 		enemy = GetComponent<Enemy>();
-        idleAnim = idleString[Random.Range(0,idleString.Length)];
-		idle = animation[idleAnim];
-		//death = animation[deathString];
-		//idle.time = Random.Range(0.0f, idle.length);
+        //idleAnim = idleString[Random.Range(0, idleString.Length)];
+        //deathAnim = deathString[Random.Range(0, deathString.Length)];
 
+		//idle = animation[idleAnim];
+		//death = animation[deathAnim];
+		
 		//death.wrapMode = WrapMode.Once;
 	}
 	
@@ -29,12 +31,13 @@ public class FlyingSnailAnimator : MonoBehaviour {
 	void Update () {
 		if (enemy.getState() == Enemy.EnemyState.IDLE)
 		{
-            animation.Play(idleAnim);
+			//animation.Play (idleAnim);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-            animation.Play(idleString[Random.Range(0, idleString.Length)]);	
+			//animation.Play (deathAnim);	
 			playedDeath = true;
 		}
 	}
-		
+	
+	
 }

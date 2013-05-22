@@ -5,8 +5,10 @@ public class EnemySpawn : MonoBehaviour {
 	//public GameObject enemy;
     public GameObject friendly;
     //public GameObject snail;
-	public GameObject[] leafSnail;
-    public GameObject[] flyingSnail;
+	public GameObject[] plebSnail;
+    public GameObject[] copterSnail;
+    public GameObject[] planeSnail;
+    public GameObject[] tetsudoSnail;
 	
 	public GameObject[] lineSpawnPoint;
 	
@@ -20,30 +22,29 @@ public class EnemySpawn : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Time.time - lastSpawn > between) {
-			//Instantiate(enemyPrefab);
-			
-			int val = Random.Range (0, 100);
-			
-			
-			//get a new between value
-			between  = Random.Range (0.1f, 3.0f);
+    void Update()
+    {
+        if (Time.time - lastSpawn > between)
+        {
+            //Instantiate(enemyPrefab);
 
-			if(val <= 10) {
-				spawnGood();
-			}
-			else {
-				int whatBad = Random.Range (0, 100);
-				
-				if (whatBad <= 75) spawnPleb();
-				else spawnCopter();
-			}
-			
-			
+            int val = Random.Range(0, 110);
+
+
+            //get a new between value
+            between = Random.Range(0.1f, 2.0f);
+
+            if (val < 20) spawnGood();
+            else if (val < 70) spawnPleb();
+            else if (val < 90) spawnCopter();
+            else if (val < 100) spawnPlane();
+            else spawnTetsudo();
+
+
+
             lastSpawn = Time.time;
-		}
-	}
+        }
+    }
 	
 	private void spawnGood()
 	{ 
@@ -58,7 +59,7 @@ public class EnemySpawn : MonoBehaviour {
 	
 	private void spawnPleb()
 	{
-		GameObject snail = getRandomSnail();
+		GameObject snail = getRandomPleb();
 		Vector3 point = getLinePosition();
 		
 		Instantiate(snail, point, Quaternion.Euler(0, -180, 0));
@@ -72,22 +73,33 @@ public class EnemySpawn : MonoBehaviour {
 		Instantiate(copter, point, Quaternion.Euler(0, -180, 0));
 		
 	}
-	
-	private void spawnRandom()
-	{
-		GameObject snail = getRandomSnail();
-		Vector3 middle = getLinePosition();
-		
-		
-		Instantiate(snail, middle, Quaternion.Euler(0, -180, 0));
-	}
-	
+
+    private void spawnPlane()
+    {
+        GameObject plane = getRandomPlane();
+        Vector3 point = getLinePosition();
+        point = new Vector3(point.x, 0.6f, point.z);
+
+        Instantiate(plane, point, Quaternion.Euler(0, -180, 0));
+
+    }
+
+    private void spawnTetsudo()
+    {
+        GameObject tetsudo = getRandomTetsudo();
+        Vector3 point = getLinePosition();
+        point = new Vector3(point.x, 0f, point.z);
+
+        Instantiate(tetsudo, point, Quaternion.Euler(0, -180, 0));
+
+    }
+
 	//spawns a few monsters in an abreast formation
 	private void spawnAbreast() 
 	{
 		Vector3 middle = this.transform.position;
 		Vector3 offset = new Vector3(1.5f, 0, 0);
-		GameObject snail = getRandomSnail();
+		GameObject snail = getRandomPleb();
 		
 		Instantiate(snail, middle, Quaternion.Euler(0, -180, 0));
 		Instantiate(snail, middle - offset, Quaternion.Euler(0, -180, 0));
@@ -100,7 +112,7 @@ public class EnemySpawn : MonoBehaviour {
 		Vector3 middle = getLinePosition();
 		Vector3 offset = new Vector3(0, 0, 5);
 		
-		GameObject snail = getRandomSnail();
+		GameObject snail = getRandomPleb();
 		
 		Instantiate(snail, middle - offset, Quaternion.Euler(0, -180, 0));
 		Instantiate(snail, middle, Quaternion.Euler(0, -180, 0));
@@ -119,7 +131,7 @@ public class EnemySpawn : MonoBehaviour {
 		int range = Random.Range (5, 15);
 		for (int i = 0; i < range; i++)
 		{
-            GameObject snail = getRandomSnail();
+            GameObject snail = getRandomPleb();
 			//float xOffset = Random.Range(0.0f, 5.0f);
 			Instantiate(snail, transform.position, Quaternion.Euler(0, -180, 0));
 		}
@@ -127,7 +139,7 @@ public class EnemySpawn : MonoBehaviour {
 	
 	private void spawnDiagonal()
 	{
-		GameObject snail = getRandomSnail();
+		GameObject snail = getRandomPleb();
 		
 		//multipler will make the diagonal go from left to right, or right to left
 		//with either be -1, 1, 
@@ -142,15 +154,25 @@ public class EnemySpawn : MonoBehaviour {
 	}
 	
 	
-	private GameObject getRandomSnail()
+	private GameObject getRandomPleb()
 	{
-         return leafSnail[Random.Range(0, leafSnail.Length)];
+        return plebSnail[Random.Range(0, plebSnail.Length)];
 	}
 	
 	private GameObject getRandomCopter()
 	{
-		return flyingSnail[Random.Range(0, flyingSnail.Length)];
+        return copterSnail[Random.Range(0, copterSnail.Length)];
 	}
+
+    private GameObject getRandomPlane()
+    {
+        return planeSnail[Random.Range(0, planeSnail.Length)];
+    }
+
+    private GameObject getRandomTetsudo()
+    {
+        return tetsudoSnail[Random.Range(0, tetsudoSnail.Length)];
+    }
 	
 	//returns a random vector of one of the positions of a line formation spawn point 
 	private Vector3 getLinePosition()

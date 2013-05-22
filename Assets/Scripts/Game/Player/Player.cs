@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         score = 0;
         combo = 0;
         controller = GetComponent<CharacterController>();
-        Pause.setPause(false);
+        //Pause.setPause(false);
         
         //cheat detect
         hasCheated = false;

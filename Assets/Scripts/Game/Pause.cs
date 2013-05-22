@@ -42,8 +42,8 @@ public class Pause : MonoBehaviour
     {
         isPaused = pause;
 		
-		//Screen.lockCursor = !pause;
-		//Screen.showCursor = pause;
+		Screen.lockCursor = !pause;
+		Screen.showCursor = pause;
 		
         Time.timeScale = isPaused ? 0 : 1.0f;
     }
