@@ -30,16 +30,19 @@ public class PlayerStatsGui : MonoBehaviour {
 	//these variables are needed to know where to start drawing the score numbers from
 	//the following numbers are the draw positions from topleft corner of number
 	//note: these will be normalized in Start() because the textures aren't drawn at the same size they are saved as
-	//38 pixels in, 41 down
 	//height is the height in pixels we want the tallest thing to be drawn at. We can figure the width out from this
+	//38 pixels in, 41 down, 0 pixel gap between letters
 	private Vector2 scoreDrawPoint = new Vector2(35, 30);
 	private float scoreHeight = 40;
-	//87 pixels in, 80 down
+	private float scoreGap = 0;
+	//87 pixels in, 80 down, -4 pixel gap between letters (draw them closer)
 	private Vector2 shellDrawPoint = new Vector2(75, 75);
 	private float shellHeight = 25;
-	//188 pixels in, 118 down
-	private float comboHeight = 33;
+	private float shellGap = -4;
+	//188 pixels in, 118 down, 0 pixel gap between letters
 	private Vector2 comboDrawPoint = new Vector2(180, 115);
+	private float comboHeight = 33;
+	private float comboGap = 0;
 	
 	//this rect can be used during drawing so a new one doesn't need to constantly be created
 	private Rect workRect = new Rect(0, 0, 0, 0);
@@ -111,12 +114,12 @@ public class PlayerStatsGui : MonoBehaviour {
 		string shells = player.getShells ().ToString();
 		string combo = player.getCombo ().ToString();
 		
-		drawString (score, scoreNumbers, scoreDrawPoint, scoreHeight);
-		drawString (shells, shellNumbers, shellDrawPoint, shellHeight);
-		drawString (combo, scoreNumbers, comboDrawPoint, comboHeight);
+		drawString (score, scoreNumbers, scoreDrawPoint, scoreHeight, scoreGap);
+		drawString (shells, shellNumbers, shellDrawPoint, shellHeight, shellGap);
+		drawString (combo, scoreNumbers, comboDrawPoint, comboHeight, comboGap);
 		
 		
-        int lX = 25;
+        int lX = 25; 
         int lY = 350;
         int i = 0; 
         /*
@@ -145,7 +148,7 @@ public class PlayerStatsGui : MonoBehaviour {
         }
     }
 	
-	private void drawString(string str, Texture2D[] numTexs, Vector2 origin, float neededHeight) {
+	private void drawString(string str, Texture2D[] numTexs, Vector2 origin, float neededHeight, float horozontalGap) {
 		
 		float width = 0;
 		
@@ -160,13 +163,13 @@ public class PlayerStatsGui : MonoBehaviour {
 			yS = (tex.height * yScale) / scoreHeight;
 			xS = yS / xScale;
 			
-			workRect.x = origin.x + width;
+			workRect.x = origin.x + width + horozontalGap;
 			workRect.y = origin.y;
 			workRect.width = tex.width;
 			workRect.height = tex.height;
 			GUI.DrawTexture (workRect, tex);
 			
-			width += tex.width;
+			width += tex.width + horozontalGap;
 		}
 		
 	}
