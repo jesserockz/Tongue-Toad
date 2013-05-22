@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour {
 		if (health <= 0) {
 			//disable collider and forward movement so they stop and don't screw with other physics bodie
 			disableCollider();
-			GetComponent<ForwardMovement>().enabled = false;
+			disableMovement();
 			//delay playing to wait for animation to hit water
 			//NOTE: there should be a method PlayDelay() which works in seconds, but my editor can't find it
 			//this current method works in like hertz or something, so I just guessed this number...
@@ -72,6 +72,16 @@ public class Enemy : MonoBehaviour {
 		DEAD,
 		IDLE
 	};
+	
+	private void disableMovement(){
+		ForwardMovement fm = GetComponent<ForwardMovement>();
+		if(fm!=null) fm.enabled = false;
+		PlaneMovement pm = GetComponent<PlaneMovement>();
+		if(pm!=null) {
+			pm.enabled = false;
+			Destroy (pm.gameObject);
+		}
+	}
 	
 	private void disableCollider() {
 		//CapsuleCollider cc = GetComponent<CapsuleCollider>();

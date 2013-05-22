@@ -80,7 +80,6 @@ public class PlayerStatsGui : MonoBehaviour {
 		xScale = 279.0f / backboardLocation.width;
 		yScale = 189.0f / backboardLocation.height;
 		
-		Debug.Log (xScale);
 	}
 	
     //draws health/ energy/ score

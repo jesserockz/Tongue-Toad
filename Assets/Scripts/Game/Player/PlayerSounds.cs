@@ -43,7 +43,6 @@ public class PlayerSounds : MonoBehaviour
 		if (moving && !movementtSource.isPlaying)
 		{
 			movementtSource.Play();
-			Debug.Log ("playing movenet");
 		}
 	}
 }

@@ -127,15 +127,16 @@ public class Tongue : MonoBehaviour
 		return toad.position + new Vector3 (0f, 0.5f, 0f);
 	}
 	
-	void OnTriggerEnter (Collider other)
-	{
+	void OnCollisionEnter(Collision other) {
+         print("Points colliding: " + other.contacts.Length);
+        print("First normal of the point that collide: " + other.contacts[0].normal);
 		GameObject o = other.gameObject;
 		
         if (o.tag == "Enemy")
         {
 			//get the enemy
 			Enemy enemy = o.GetComponent<Enemy>();
-			
+			//print("First normal of the point that collide: " + other.contacts[0].normal);
 			//direction of impact
 			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
 			
@@ -153,7 +154,39 @@ public class Tongue : MonoBehaviour
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
             Destroy(o);
         }
-        else if (other.tag == "Terrain")
+        else if (o.tag == "Terrain")
+        {
+			tongueRetracting = true;
+		}
+    }
+	
+	void OnTriggerEnter (Collider other)
+	{
+		GameObject o = other.gameObject;
+		
+        if (o.tag == "Enemy")
+        {
+			//get the enemy
+			Enemy enemy = o.GetComponent<Enemy>();
+			//print("First normal of the point that collide: " + other.contacts[0].normal);
+			//direction of impact
+			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
+			
+			//fling the enemy back
+			o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
+			
+			//attack the enemy... death, animations, etc, are handled there.
+			enemy.attack(player.getTongueDamage());
+            tongueRetracting = true;
+			//now tell the player they've attacked an enemy. That stuff is handled there
+            player.attackEnemy(enemy);
+        }
+        else if (o.tag == "Friendly")
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
+            Destroy(o);
+        }
+        else if (o.tag == "Terrain")
         {
 			tongueRetracting = true;
 		}
