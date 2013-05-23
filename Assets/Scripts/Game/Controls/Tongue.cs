@@ -171,7 +171,7 @@ public class Tongue : MonoBehaviour
 			//print("First normal of the point that collide: " + other.contacts[0].normal);
 			//direction of impact
 			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
-			
+			Debug.Log ("Hit snail: "+dir);
 			//fling the enemy back
 			o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
 			

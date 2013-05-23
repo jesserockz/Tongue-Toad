@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
 	
 	public string DEATH_SOUND = "death";
 	private int health = 100;
+	public int healthDamage = 5;
 	
 	private EnemyState state;
 	private ShellDrop shellDrop;
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour {
 		}
 		
 		if(transform.position.z < -5f) {
-			Player.currentHealth -= 10;
+			Player.currentHealth -= healthDamage;
 			Player.combo = 0;
 			Destroy(gameObject);
 		}

@@ -19,7 +19,7 @@ public class PlaneMovement : MonoBehaviour {
 	void Update () {
 		//if (rigidbody.velocity.z > -5) rigidbody.AddForce (Random.Range(-5, 5), 0, -5);
 		//rigidbody.AddForce (0, 0, -2);
-		accel+=0.1f;
+		accel+=0.07f;
 		rigidbody.AddForce(0f,0f,-accel);
 	}
 }

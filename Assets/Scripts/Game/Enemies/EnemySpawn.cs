@@ -88,7 +88,7 @@ public class EnemySpawn : MonoBehaviour {
     {
         GameObject tetsudo = getRandomTetsudo();
         Vector3 point = getLinePosition();
-        point = new Vector3(point.x, 0f, point.z);
+        point = new Vector3(point.x, 0.03f, point.z);
 
         Instantiate(tetsudo, point, Quaternion.Euler(0, -180, 0));
 

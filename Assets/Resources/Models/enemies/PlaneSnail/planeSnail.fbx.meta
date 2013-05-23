@@ -11,6 +11,7 @@ ModelImporter:
     100010: snail_uv:pSphere2
     100012: snail_uv:transform1
     100014: snail_uv:transform2
+    100016: polySurface20
     400000: //RootNode
     400002: polySurface10
     400004: snail_uv:_UNKNOWN_REF_NODE_fosterParent1
@@ -19,9 +20,13 @@ ModelImporter:
     400010: snail_uv:pSphere2
     400012: snail_uv:transform1
     400014: snail_uv:transform2
+    400016: polySurface20
     2300000: polySurface10
+    2300002: polySurface20
     3300000: polySurface10
+    3300002: polySurface20
     4300000: polySurface10
+    4300002: polySurface20
     9500000: //RootNode
   materials:
     importMaterials: 1
