@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemySpawn : MonoBehaviour {
 	//public GameObject enemy;
     public GameObject friendly;
+    public GameObject craftCarrier;
     //public GameObject snail;
 	public GameObject[] plebSnail;
     public GameObject[] copterSnail;
@@ -12,8 +13,11 @@ public class EnemySpawn : MonoBehaviour {
 	
 	public GameObject[] lineSpawnPoint;
 	
-	private float between = 4.0f;
+	private float between = 2.0f;
 	private float lastSpawn = 0;
+    private bool boss = false;
+
+    private int spawnCount = 5;
 	
 	private Quaternion spawnAngle = Quaternion.Euler(0, 180, 0);
 	
@@ -24,6 +28,7 @@ public class EnemySpawn : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+        if (boss) return;
         if (Time.time - lastSpawn > between)
         {
             //Instantiate(enemyPrefab);
@@ -34,16 +39,30 @@ public class EnemySpawn : MonoBehaviour {
             //get a new between value
             between = Random.Range(0.1f, 2.0f);
 
+            if (spawnCount == 0)
+            {
+                spawnCraftCarrier();
+                boss = true;
+                return;
+            }
+
+
             if (val < 20) spawnGood();
             else if (val < 70) spawnPleb();
             else if (val < 90) spawnCopter();
             else if (val < 100) spawnPlane();
             else spawnTetsudo();
 
-
+            spawnCount--;
 
             lastSpawn = Time.time;
         }
+    }
+
+    private void spawnCraftCarrier()
+    {
+        Vector3 pos = new Vector3(2f, -1f, 52f);
+        Instantiate(craftCarrier, pos, Quaternion.Euler(0, 90, 0));
     }
 	
 	private void spawnGood()
@@ -78,7 +97,7 @@ public class EnemySpawn : MonoBehaviour {
     {
         GameObject plane = getRandomPlane();
         Vector3 point = getLinePosition();
-        point = new Vector3(point.x, 0.6f, point.z);
+        point.y = 0.6f;
 
         Instantiate(plane, point, Quaternion.Euler(0, -180, 0));
 
@@ -88,7 +107,7 @@ public class EnemySpawn : MonoBehaviour {
     {
         GameObject tetsudo = getRandomTetsudo();
         Vector3 point = getLinePosition();
-        point = new Vector3(point.x, 0.03f, point.z);
+        point.y = 0.03f;
 
         Instantiate(tetsudo, point, Quaternion.Euler(0, -180, 0));
 
