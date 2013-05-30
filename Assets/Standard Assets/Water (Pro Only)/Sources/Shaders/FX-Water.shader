@@ -8,6 +8,7 @@ Properties {
 	_BumpMap ("Normalmap ", 2D) = "bump" {}
 	WaveSpeed ("Wave speed (map1 x,y; map2 x,y)", Vector) = (19,9,-16,-7)
 	_ReflectiveColor ("Reflective color (RGB) fresnel (A) ", 2D) = "" {}
+	_ReflectionStrength ("Reflection strength", Range(0.0,1.0)) = 0.5
 	_ReflectiveColorCube ("Reflective color cube (RGB) fresnel (A)", Cube) = "" { TexGen CubeReflect }
 	_HorizonColor ("Simple water horizon color", COLOR)  = ( .172, .463, .435, 1)
 	_MainTex ("Fallback texture", 2D) = "" {}
@@ -92,10 +93,9 @@ v2f vert(appdata v)
 
 #if defined (WATER_REFLECTIVE) || defined (WATER_REFRACTIVE)
 sampler2D _ReflectionTex;
+uniform float _ReflectionStrength;
 #endif
-#if defined (WATER_REFLECTIVE) || defined (WATER_SIMPLE)
 sampler2D _ReflectiveColor;
-#endif
 #if defined (WATER_REFRACTIVE)
 sampler2D _Fresnel;
 sampler2D _RefractionTex;
@@ -132,16 +132,18 @@ half4 frag( v2f i ) : COLOR
 	// final color is between refracted and reflected based on fresnel	
 	half4 color;
 	
-	#if defined(WATER_REFRACTIVE)
-	half fresnel = UNITY_SAMPLE_1CHANNEL( _Fresnel, float2(fresnelFac,fresnelFac) );
-	color = lerp( refr, refl, fresnel );
-	#endif
-	
-	#if defined(WATER_REFLECTIVE)
-	half4 water = tex2D( _ReflectiveColor, float2(fresnelFac,fresnelFac) );
-	color.rgb = lerp( water.rgb, refl.rgb, water.a );
-	color.a = refl.a * water.a;
-	#endif
+	#if defined (WATER_REFRACTIVE)
+    half fresnel = tex2D( _Fresnel, float2(fresnelFac,fresnelFac) ).a;
+    half4 water = tex2D( _ReflectiveColor, float2(fresnelFac,fresnelFac) );
+    color.rgb = lerp( water.rgb, refl.rgb, _ReflectionStrength );
+    color = lerp( refr, color, fresnel );
+    #endif
+     
+    #if defined (WATER_REFLECTIVE)
+    half4 water = tex2D( _ReflectiveColor, float2(fresnelFac,fresnelFac) );
+    color.rgb = lerp( water.rgb, refl.rgb, _ReflectionStrength );
+    color.a = refl.a * water.a;
+    #endif
 	
 	#if defined(WATER_SIMPLE)
 	half4 water = tex2D( _ReflectiveColor, float2(fresnelFac,fresnelFac) );

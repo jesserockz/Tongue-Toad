@@ -25,27 +25,31 @@ public class CraftCarrierControl : MonoBehaviour {
             transform.position = pos;
             return;
         }
-        else if (emerging && transform.position.y < 3.5f)
+        else if (emerging && transform.position.y < 3.8f)
         {
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShake>().Shake();
             Vector3 pos = transform.position;
             pos.y += 1f * Time.deltaTime;
             transform.position = pos;
             return;
         }
+		else if (submerging && transform.position.y <= -1f){
+			submerging = false;
+			GameObject.FindGameObjectWithTag("EnemySpawn").GetComponent<EnemySpawn>().resumeSpawning();
+		}
         else
         {
             emerging = false;
-            submerging = false;
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShake>().ending = true;
         }
 
         if (planesLeft == 0)
         {
             submerging = true;
-        }
-
-        if (Time.time - lastTime > between)
+			
+        }else if (Time.time - lastTime > between)
         {
-            Vector3 point = new Vector3(2.5f, 1.9f, 56f);
+            Vector3 point = new Vector3(Random.Range(-0.74f,5f), 2f, 40.5f);
             GameObject o = (GameObject)Instantiate(planeSnail, point, Quaternion.Euler(0, -180, 0));
             o.GetComponent<PlaneMovement>().carrier = true;
             lastTime = Time.time;

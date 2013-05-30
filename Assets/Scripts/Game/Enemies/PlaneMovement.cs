@@ -10,6 +10,7 @@ public class PlaneMovement : MonoBehaviour {
 	float accel = 2;
     public bool carrier = false;
     public float xpos = 0f;
+	public float accelIncrement = 0.04f;
 	
 	// Use this for initialization
 	void Start () {
@@ -17,8 +18,9 @@ public class PlaneMovement : MonoBehaviour {
 		rigidbody.AddForce(0f,0f,-accel);
         if (carrier)
         {
-            xpos = Random.Range(-2f, 5f);
+            //xpos = Random.Range(-2f, 5f);
             Debug.Log("XPos: " + xpos);
+			accelIncrement = 0.06f;
         }
 	}
 	
@@ -28,25 +30,25 @@ public class PlaneMovement : MonoBehaviour {
 		//rigidbody.AddForce (0, 0, -2);
         if (!Pause.isPaused)
         {
-            accel += 0.07f;
+            accel += accelIncrement;
             rigidbody.AddForce(0f, 0f, -accel);
             if (carrier)
             {
                 //-2 to 5
-                if (transform.position.z < 46f)
+                if (transform.position.z < 39f)
                 {
                     Vector3 pos = transform.position;
                     if(transform.position.y > 0.6f){
-                    pos.y -= 1.5f * Time.deltaTime;
+                    pos.y -= 1f * Time.deltaTime;
                     }
-                    if (xpos < 2.5f && transform.position.x > xpos)
-                    {
-                        pos.x -= 4f * Time.deltaTime;
-                    }
-                    else if (xpos > 2.5f && transform.position.x < xpos)
-                    {
-                        pos.x += 4f * Time.deltaTime;
-                    }
+                    //if (xpos < 2.5f && transform.position.x > xpos)
+                    //{
+                    //    pos.x -= 4f * Time.deltaTime;
+                    //}
+                    //else if (xpos > 2.5f && transform.position.x < xpos)
+                    //{
+                    //    pos.x += 4f * Time.deltaTime;
+                    //}
                     transform.position = pos;
                 }
             }

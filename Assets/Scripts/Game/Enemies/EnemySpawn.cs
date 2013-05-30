@@ -13,11 +13,13 @@ public class EnemySpawn : MonoBehaviour {
 	
 	public GameObject[] lineSpawnPoint;
 	
+	private GameObject currentBoss;
+	
 	private float between = 2.0f;
 	private float lastSpawn = 0;
     private bool boss = false;
 
-    private int spawnCount = 5;
+    private int spawnCount = 20;
 	
 	private Quaternion spawnAngle = Quaternion.Euler(0, 180, 0);
 	
@@ -58,11 +60,17 @@ public class EnemySpawn : MonoBehaviour {
             lastSpawn = Time.time;
         }
     }
+	
+	public void resumeSpawning(){
+		boss = false;
+		Destroy (currentBoss);
+		spawnCount = 20;
+	}
 
     private void spawnCraftCarrier()
     {
-        Vector3 pos = new Vector3(2f, -1f, 52f);
-        Instantiate(craftCarrier, pos, Quaternion.Euler(0, 90, 0));
+        Vector3 pos = new Vector3(1f, -1f, 41f);
+        currentBoss =  (GameObject)Instantiate(craftCarrier, pos, Quaternion.Euler(0, 180, 0));
     }
 	
 	private void spawnGood()

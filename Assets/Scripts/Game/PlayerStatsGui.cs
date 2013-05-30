@@ -26,6 +26,10 @@ public class PlayerStatsGui : MonoBehaviour {
 	
 	private int scoreAni;
 	
+	float timeA;
+        public int fps;
+        public int lastFPS;
+	
 	
 	//these variables are needed to know where to start drawing the score numbers from
 	//the following numbers are the draw positions from topleft corner of number
@@ -80,7 +84,23 @@ public class PlayerStatsGui : MonoBehaviour {
 		xScale = 279.0f / backboardLocation.width;
 		yScale = 189.0f / backboardLocation.height;
 		
+		timeA = Time.timeSinceLevelLoad;
+            DontDestroyOnLoad (this);
 	}
+	
+	void Update () {
+            //Debug.Log(Time.timeSinceLevelLoad+" "+timeA);
+            if(Time.timeSinceLevelLoad  - timeA <= 1)
+            {
+                fps++;
+            }
+            else
+            {
+                lastFPS = fps + 1;
+                timeA = Time.timeSinceLevelLoad;
+                fps = 0;
+            }
+        }
 	
     //draws health/ energy/ score
     void OnGUI()
@@ -89,7 +109,7 @@ public class PlayerStatsGui : MonoBehaviour {
 		int hi = Screen.height;
 		
 		// -- draw health texture
-		
+		GUI.Label(new Rect(250 ,5, 30,30),""+lastFPS);
 		//get health, then adjust the animation index
 		int health = Mathf.Clamp(player.getHealth(), 0, 100);
 		
