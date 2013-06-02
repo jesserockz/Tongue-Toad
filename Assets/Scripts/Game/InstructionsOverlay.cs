@@ -5,7 +5,7 @@ using System.Collections;
 public class InstructionsOverlay : MonoBehaviour {
 	public bool enabled = true;
 	
-	public Texture2D overlayTexture;
+	public Texture2D overlayTexture; 
 
 	private Pause pause; 
 	

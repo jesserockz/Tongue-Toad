@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 63c02ece8650cb540986b8b9c190a800
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - plebTexture: {fileID: 2800000, guid: d884a39df89938d42ab50ab0464e3f89, type: 3}
+  - testudoTexture: {fileID: 2800000, guid: 16c62727cc207f8478bd9123247c8448, type: 3}
+  - helicopterTexture: {fileID: 2800000, guid: ba1531626255d03478ac8ce8764e3cec, type: 3}
+  - planeTexture: {fileID: 2800000, guid: eacca31460657524382fa244bda75597, type: 3}
+  - aircraftCarrierTexture: {fileID: 2800000, guid: bdba9b4cb173ad64e8e4fe3a00759afc,
+      type: 3}
+  - toadTexture: {fileID: 2800000, guid: fa940a4bb06f8864097972130bf8d072, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
