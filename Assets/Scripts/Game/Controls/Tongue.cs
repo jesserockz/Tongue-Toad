@@ -136,7 +136,7 @@ public class Tongue : MonoBehaviour
 
 	Vector3 toadPosition ()
 	{
-		return toad.position + new Vector3 (0f, 0.5f, 0f);
+		return toad.position + new Vector3 (0f, 0.25f, 0f);
 	}
 	
 	void OnCollisionEnter(Collision other) {
