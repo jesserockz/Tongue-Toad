@@ -14,8 +14,13 @@ public class EnemySpawn : MonoBehaviour
 	public GameObject[] tetsudoSnail;
 	public GameObject[] lineSpawnPoint;
 	
+	//formations contains exact wave formations up to wave 10
 	private List<List<System.Action>> formations;
 	private List<System.Action> currentFormation;
+	
+	private Dictionary<int, System.Action> informationDisplays;
+	
+	private EnemyInfoPanels enemyInfoPanels;
 	
 	private GameObject currentBoss;
 	
@@ -29,6 +34,10 @@ public class EnemySpawn : MonoBehaviour
 	
 	void Start ()
 	{
+		//cache enemy info panel
+		GameObject gui = GameObject.FindGameObjectWithTag("Gui");
+		enemyInfoPanels = gui.GetComponent<EnemyInfoPanels>();
+		
 		// Create the waves
 		
 		currentFormation = new List<System.Action> ();
@@ -90,6 +99,38 @@ public class EnemySpawn : MonoBehaviour
 		
 		//set our current formation to the first formation
 		currentFormation = formations [0];
+		
+		initEnemyInfoPanels();
+	}
+	
+	private void initEnemyInfoPanels() {
+		Dictionary<System.Action, System.Action> displayMethods = new Dictionary<System.Action, System.Action>();
+		
+		//add methods for each monster type
+		displayMethods.Add (spawnPleb, enemyInfoPanels.displayPleb);
+		displayMethods.Add (spawnTetsudo, enemyInfoPanels.displayTestudo);
+		displayMethods.Add (spawnCopter, enemyInfoPanels.displayHelicopter);
+		displayMethods.Add (spawnPlane, enemyInfoPanels.displayPlane);
+		displayMethods.Add (spawnCraftCarrier, enemyInfoPanels.displayAircraftCarrier);
+		displayMethods.Add (spawnGood, enemyInfoPanels.displayToad);
+		
+		//now go over all the different monsters and set up when our info panels display
+		List<System.Action> used = new List<System.Action>();
+		informationDisplays = new Dictionary<int, System.Action>();
+		
+		for (int i = 0; i < formations.Count; i++) {
+			foreach (System.Action a in formations[i]) {
+				//already added this, so skip
+				if (used.Contains(a)) continue;
+				
+				//otherwise add it
+				informationDisplays.Add (i, displayMethods[a]);
+				used.Add (a);
+				
+				//only 1 new type is every introduced per round
+				break;
+			}
+		}
 	}
 	
 	private void addObject (List<System.Action> addTo, int toAdd, System.Action method)
@@ -102,10 +143,20 @@ public class EnemySpawn : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		
+		
 		if (true && !boss) {
 			//not enough time has elapsed to spawn a new monster. Return
 			if (Time.time - lastSpawn <= between)
 				return;
+			
+			//hack cause no other easy way to do it
+		if ( currentWave == 0 && informationDisplays.ContainsKey(0)) {
+			System.Action a = informationDisplays[0];
+			a.Invoke();
+			
+			informationDisplays.Remove(0);
+		}
 			
 			//get a random spawn method from list...
 			int i = Random.Range (0, currentFormation.Count);
@@ -142,6 +193,12 @@ public class EnemySpawn : MonoBehaviour
 			//spawning from predetermined lists...
 				
 			currentFormation = formations [currentWave];
+			
+			//check if we need to display an info panel
+			if (informationDisplays.ContainsKey(currentWave)) {
+				Debug.Log ("should be displaying...");
+				informationDisplays[currentWave].Invoke();
+			}
 				
 		} else {
 			if (currentWave + 1 % 5 == 0) {

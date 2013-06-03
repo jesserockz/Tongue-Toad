@@ -26,9 +26,15 @@ public class MouseFollower : MonoBehaviour
 	private Vector3 vector = Vector3.zero;
 	bool cursorVisible = true;
 	
+	private Pause pause;
+	
 	// Use this for initialization
 	void Start ()
 	{
+		//used to know when to allow movement
+		GameObject gui = GameObject.FindGameObjectWithTag("Gui");
+		pause = gui.GetComponent<Pause>();
+		
 		//constructs a plane facing up that is the same level as the water
 		//GameObject water = GameObject.Find ("Water");
 		horoPlane = new Plane (Vector3.up, new Vector3(0, 0.5f, 0));
@@ -72,7 +78,10 @@ public class MouseFollower : MonoBehaviour
 			sensitivity -= 0.2f;
 		}
 		
-		if (!follow && !Pause.isPaused) {
+		//don't allow movement in any of these situations
+		if (Time.timeScale == 0 || Pause.isPaused || !pause.enabled) return;
+		
+		if (!follow) {
 			rotationY += Input.GetAxis("Mouse X") * sensitivity * distanceMult;
 			rotationY = Mathf.Clamp (rotationY, -60f, 60f);
 			
