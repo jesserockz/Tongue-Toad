@@ -18,7 +18,20 @@ public class Player : MonoBehaviour
 
     public static int combo;
 	public int shells;
-	
+
+    private static PlayerAnimator.PlayerState _state = PlayerAnimator.PlayerState.TongueIn;
+    public static PlayerAnimator.PlayerState State
+    {
+        get { return _state; }
+        set
+        {
+            LastState = _state;
+            _state = value;
+        }
+    }
+            
+    public static PlayerAnimator.PlayerState LastState = PlayerAnimator.PlayerState.TongueIn;
+
 	//currently we're just gonna 1 hit anything. If we want to add in multihits later, adjust this appropriately
 	private int tongueDamage = 1000;
 
@@ -62,6 +75,7 @@ public class Player : MonoBehaviour
         scoreCheck = cheatOffset;
         numTimesIncrementScore = 0;
         changingScore = false;
+        tongue = GameObject.Find("TongueTip").GetComponent<Tongue>();
     }
 
     void OnTriggerEnter(Collider c)
@@ -76,7 +90,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth <= 0) initiateGameOver();
+        if (currentHealth <= 0 && State != PlayerAnimator.PlayerState.Dying && State != PlayerAnimator.PlayerState.Dead)
+        {
+            State = PlayerAnimator.PlayerState.Dying;
+            GetComponent<MouseFollower>().enabled = false;
+            tongue.enabled = false;
+            controller.enabled = false;
+            tongue.tongue.renderer.enabled = false;
+        }
+        if (currentHealth <= 0 && State == PlayerAnimator.PlayerState.Dead)
+        {
+            Debug.Log("GameOver");
+            initiateGameOver();
+        }
         //currently not using this as it's not tested thoroughly and don't want to accuse users of cheating when they're not
         //detectCheating();
 

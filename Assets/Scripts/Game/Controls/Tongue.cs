@@ -36,14 +36,24 @@ public class Tongue : MonoBehaviour
 
         bool shoot = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);
 
-        if (shoot && !tongueOut)
+        if (shoot && !tongueOut && Player.State == PlayerAnimator.PlayerState.TongueIn)
+        {
+            Player.State = PlayerAnimator.PlayerState.TongueStarting;
+            Debug.Log("Start Shooting");
+        }
+        else if (!shoot && Player.State == PlayerAnimator.PlayerState.TongueStarting)
+        {
+            Player.State = PlayerAnimator.PlayerState.TongueEnding;
+            Debug.Log("Give up shooting");
+        }
+        else if (shoot && !tongueOut && Player.State == PlayerAnimator.PlayerState.TongueOut)
         { //User has started tongue extension
             //toad.GetComponent<MouseFollower> ().enabled = false;
             transform.rotation = toad.rotation;
             tongue.rotation = toad.rotation;
             tongueOut = true;
-			playerSounds.tongueStartSource.Play();
-			playerSounds.tongueStretchSource.Play ();
+            playerSounds.tongueStartSource.Play();
+            playerSounds.tongueStretchSource.Play();
         }
         else if (tongueOut && !tongueRetracting && shoot)
         { //Tongue extension continuing out
@@ -73,17 +83,17 @@ public class Tongue : MonoBehaviour
             //}
 
         }
-        else if (tongueOut && (tongueRetracting || !shoot ))
+        else if (tongueOut && (tongueRetracting || !shoot))
         {
             //Tongue retracting back into mouth
             tongueRetracting = true;
-			
-			
-			float mult = (maxExtension  - Vector3.Distance(transform.position, toadPosition())) / maxExtension;
-			//keeps the speed between 0.5-0.9, the tongue getting faster as it approaches
-            tongueSpeed = Mathf.Min (Mathf.Max (0.6f, mult * 1.5f), 1f);
+
+
+            float mult = (maxExtension - Vector3.Distance(transform.position, toadPosition())) / maxExtension;
+            //keeps the speed between 0.5-0.9, the tongue getting faster as it approaches
+            tongueSpeed = Mathf.Min(Mathf.Max(0.6f, mult * 1.5f), 1f);
             //tongueSpeed = 0.8f;
-			transform.LookAt(toadPosition());
+            transform.LookAt(toadPosition());
             transform.position += transform.forward * tongueSpeed;
 
             float newX = ((toad.position.x - transform.position.x) / 2) + transform.position.x;
@@ -94,8 +104,8 @@ public class Tongue : MonoBehaviour
             tongue.position = newTonguePos;
             tongue.localScale = new Vector3(0.1f, 0.1f, distance);
             tongue.LookAt(transform);
-			
-			//if the distance is less tha
+
+            //if the distance is small, just reset position
             if (transform.position.z < toadPosition().z || Vector3.Distance(transform.position, toadPosition()) <= 0.2)
             {
                 tongueRetracting = false;
@@ -104,13 +114,15 @@ public class Tongue : MonoBehaviour
                 tongue.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 tongue.position = toadPosition();
                 tongueSpeed = tongueNormalSpeed;
+                Player.State = PlayerAnimator.PlayerState.TongueEnding;
+                Debug.Log("Finished Shooting");
             }
 
             toad.LookAt(new Vector3(transform.position.x, 0f, transform.position.z));
         }
         else if (!tongueOut && !shoot)
         {
-						playerSounds.tongueStretchSource.Stop ();
+            playerSounds.tongueStretchSource.Stop();
 
             //Tongue dormant inside mouth waiting to ATTACK!!!
             tongueRetracting = false;
