@@ -17,26 +17,21 @@ public class EnemySpawn : MonoBehaviour
 	//formations contains exact wave formations up to wave 10
 	private List<List<System.Action>> formations;
 	private List<System.Action> currentFormation;
-	
 	private Dictionary<int, System.Action> informationDisplays;
-	
 	private EnemyInfoPanels enemyInfoPanels;
-	
 	private GameObject currentBoss;
-	
 	private int currentWave;
 	private float between = 2.0f;
 	private float lastSpawn = 0;
 	private bool boss = false;
-	
 	private int spawnCount = 20;
 	private Quaternion spawnAngle = Quaternion.Euler (0, 180, 0);
 	
 	void Start ()
 	{
 		//cache enemy info panel
-		GameObject gui = GameObject.FindGameObjectWithTag("Gui");
-		enemyInfoPanels = gui.GetComponent<EnemyInfoPanels>();
+		GameObject gui = GameObject.FindGameObjectWithTag ("Gui");
+		enemyInfoPanels = gui.GetComponent<EnemyInfoPanels> ();
 		
 		// Create the waves
 		
@@ -100,11 +95,12 @@ public class EnemySpawn : MonoBehaviour
 		//set our current formation to the first formation
 		currentFormation = formations [0];
 		
-		initEnemyInfoPanels();
+		initEnemyInfoPanels ();
 	}
 	
-	private void initEnemyInfoPanels() {
-		Dictionary<System.Action, System.Action> displayMethods = new Dictionary<System.Action, System.Action>();
+	private void initEnemyInfoPanels ()
+	{
+		Dictionary<System.Action, System.Action> displayMethods = new Dictionary<System.Action, System.Action> ();
 		
 		//add methods for each monster type
 		displayMethods.Add (spawnPleb, enemyInfoPanels.displayPleb);
@@ -115,16 +111,17 @@ public class EnemySpawn : MonoBehaviour
 		displayMethods.Add (spawnGood, enemyInfoPanels.displayToad);
 		
 		//now go over all the different monsters and set up when our info panels display
-		List<System.Action> used = new List<System.Action>();
-		informationDisplays = new Dictionary<int, System.Action>();
+		List<System.Action> used = new List<System.Action> ();
+		informationDisplays = new Dictionary<int, System.Action> ();
 		
 		for (int i = 0; i < formations.Count; i++) {
 			foreach (System.Action a in formations[i]) {
 				//already added this, so skip
-				if (used.Contains(a)) continue;
+				if (used.Contains (a))
+					continue;
 				
 				//otherwise add it
-				informationDisplays.Add (i, displayMethods[a]);
+				informationDisplays.Add (i, displayMethods [a]);
 				used.Add (a);
 				
 				//only 1 new type is every introduced per round
@@ -143,20 +140,18 @@ public class EnemySpawn : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
-		
 		if (true && !boss) {
 			//not enough time has elapsed to spawn a new monster. Return
 			if (Time.time - lastSpawn <= between)
 				return;
 			
-			//hack cause no other easy way to do it
-		if ( currentWave == 0 && informationDisplays.ContainsKey(0)) {
-			System.Action a = informationDisplays[0];
-			a.Invoke();
+			//display the information of a wave when wave first starts
+			if (informationDisplays.ContainsKey (currentWave)) {
+				System.Action a = informationDisplays [currentWave];
+				a.Invoke ();
 			
-			informationDisplays.Remove(0);
-		}
+				informationDisplays.Remove (currentWave);
+			}
 			
 			//get a random spawn method from list...
 			int i = Random.Range (0, currentFormation.Count);
@@ -168,11 +163,16 @@ public class EnemySpawn : MonoBehaviour
 			currentFormation.RemoveAt (i);
 			
 			//if we've exhausted that list, call to populate new wave
-			if (currentFormation.Count == 0)
+			if (currentFormation.Count == 0) {
 				populateNextSpawnWave ();
+				lastSpawn = Time.time + 7;
+			} else {
+				//set last spawn time
+				lastSpawn = Time.time;
+			}
+				
 			
-			//set last spawn time
-			lastSpawn = Time.time;
+			
 			
 			return;
 		}
@@ -190,17 +190,10 @@ public class EnemySpawn : MonoBehaviour
 		currentWave++;
 		
 		if (currentWave < formations.Count) {
-			//spawning from predetermined lists...
-				
-			currentFormation = formations [currentWave];
-			
-			//check if we need to display an info panel
-			if (informationDisplays.ContainsKey(currentWave)) {
-				Debug.Log ("should be displaying...");
-				informationDisplays[currentWave].Invoke();
-			}
-				
+			//spawning from predetermined lists
+			currentFormation = formations [currentWave];	
 		} else {
+			//spawning procedurally generated
 			if (currentWave + 1 % 5 == 0) {
 				//spawn boss
 				addObject (currentFormation, 1, spawnCraftCarrier);
@@ -216,8 +209,6 @@ public class EnemySpawn : MonoBehaviour
 				addObject (currentFormation, 2 + y, spawnPlane);
 			}
 		}
-		
-		Debug.Log ("wave:" + currentWave);
 	}
 	
 	private void spawnCraftCarrier ()
