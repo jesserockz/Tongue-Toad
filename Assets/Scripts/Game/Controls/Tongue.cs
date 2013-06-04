@@ -17,9 +17,13 @@ public class Tongue : MonoBehaviour
 	private Player player;
 	private PlayerSounds playerSounds;
 	
+	private Vector3 initialPosition;
+	
 	// Use this for initialization
 	void Start ()
 	{
+		initialPosition = tongue.position;
+		
 		GameObject p = GameObject.FindGameObjectWithTag("Player");
 		player = p.GetComponent<Player>();
 		playerSounds = p.GetComponent<PlayerSounds>();
@@ -134,7 +138,8 @@ public class Tongue : MonoBehaviour
 
 	Vector3 toadPosition ()
 	{
-		return toad.position + new Vector3 (0f, 0.25f, 0f);
+		//return initialPosition;
+		return toad.position + new Vector3 (0f, 0.4f, 0f);
 	}
 	
 	void OnTriggerEnter (Collider other)

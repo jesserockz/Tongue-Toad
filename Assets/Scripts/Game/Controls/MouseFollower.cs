@@ -54,8 +54,8 @@ public class MouseFollower : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		
 		float distanceMult = (tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension;
+		distanceMult = Mathf.Clamp(distanceMult, 0.1f, 1f);
 		
 		if (Input.GetKeyDown (KeyCode.F1)) {
 			//change the mode
@@ -122,8 +122,7 @@ public class MouseFollower : MonoBehaviour
 				normalized.z = -Mathf.Clamp (normalized.z, -2f, 0f);
 			Quaternion targetRotation = Quaternion.LookRotation (normalized, Vector3.up);
 			transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, 
-            Time.deltaTime * rotationSpeed *
-            ((tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension));
+            Time.deltaTime * rotationSpeed * distanceMult);
 		}
 	}
 }
