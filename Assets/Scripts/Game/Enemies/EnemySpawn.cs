@@ -153,20 +153,20 @@ public class EnemySpawn : MonoBehaviour
 				informationDisplays.Remove (currentWave);
 			}
 			
-			//get a random spawn method from list...
-			int i = Random.Range (0, currentFormation.Count);
-			System.Action action = currentFormation [i];
-			
-			//spawn them, then delete it from list
-			action.Invoke ();
-			
-			currentFormation.RemoveAt (i);
-			
 			//if we've exhausted that list, call to populate new wave
 			if (currentFormation.Count == 0) {
 				populateNextSpawnWave ();
 				lastSpawn = Time.time + 7;
 			} else {
+				//otherwise spawn. Get a random spawn method from list...
+				int i = Random.Range (0, currentFormation.Count);
+				System.Action action = currentFormation [i];
+			
+				//spawn them, then delete it from list
+				action.Invoke ();
+			
+				currentFormation.RemoveAt (i);
+				
 				//set last spawn time
 				lastSpawn = Time.time;
 			}
@@ -176,6 +176,14 @@ public class EnemySpawn : MonoBehaviour
 			
 			return;
 		}
+	}
+	
+	//hack method to go straight to boss wave
+	//will simple skip whatever is left in current wave and go on to boss
+	public void gotoBoss ()
+	{
+		currentWave = 8;
+		populateNextSpawnWave ();
 	}
 	
 	public void resumeSpawning ()
