@@ -19,6 +19,7 @@ public class PlayerAnimator : MonoBehaviour {
         animation["ShootEnd"].wrapMode = WrapMode.Once;
         animation["Death"].wrapMode = WrapMode.Once;
         animation["ShootEnd"].speed = 3f;
+		animation["ShootStart"].speed = 2f;
 	}
 	
 	// Update is called once per frame
@@ -58,10 +59,10 @@ public class PlayerAnimator : MonoBehaviour {
             animation.CrossFade("ShootStart");
             shooting = true;
         }
-        else if (Player.State == PlayerState.TongueStarting && !animation.isPlaying)
+        else if (Player.State == PlayerState.TongueStarting && animation["ShootStart"].time>=0.3f)
         {
             Player.State = PlayerState.TongueOut;
-            animation.Play("ShootHold");
+            animation.CrossFade("ShootHold");
             shooting = true;
         }
         else if (Player.State == PlayerState.TongueEnding && !animation.isPlaying)

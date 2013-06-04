@@ -7,6 +7,7 @@ public class FriendlyMovement : MonoBehaviour {
 	public float speed = 0.05f;
 	float lastChange = 0f;
 	float nextChange = 0f;
+	public int regenerateHealth = 5;
 
 	void Start () {
 		float xPos = Random.Range(-3.5f,3.5f);
@@ -27,6 +28,7 @@ public class FriendlyMovement : MonoBehaviour {
 		}
 		
 		if(false && transform.position.z < -20f) {
+			Player.currentHealth += regenerateHealth;
 			Player.addScore(50);
 			Player.combo++;
 			Destroy(gameObject);

@@ -1,14 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Water (Pro Only)/Sources/Shaders/FX-Water.shader">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Game/Player/PlayerAnimator.cs">
     <Files>
       <File FileName="Assets/Scripts/Game/Enemies/EnemySpawn.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Game/Enemies/ForwardMovement.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Game/Enemies/PlaneMovement.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Game/Enemies/CraftCarrierControl.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Game/CameraShake.cs" Line="38" Column="21" />
+      <File FileName="Assets/Scripts/Game/CameraShake.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Game/Controls/TongueBody.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Water (Pro Only)/Sources/Shaders/FX-Water.shader" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/windowsWater.shader" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game/Player/PlayerAnimator.cs" Line="62" Column="97" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
