@@ -4,9 +4,13 @@ using System;
 
 public class MainGui : MonoBehaviour
 {
+	//main heading
+	public Texture2D titleTex;
 	
+	//individual buttons
+	public Texture2D newGameTex, instructionsTex, highScoreTex, optionsTex, creditsTex, exitGameTex;
+
 	public GUISkin guiSkin;
-	public Texture tex;
 	
 	private List<ButtonItem> buttons = new List<ButtonItem> ();
 	
@@ -14,15 +18,12 @@ public class MainGui : MonoBehaviour
 	
 	private TestHtml hs;
 	
-	
 	private enum Mode {
 		Menu,
 		Options,
 		Highscore,
 		Credits
 	};
-	
-	
 	
 	// Use this for initialization
 	void Start ()
@@ -32,11 +33,11 @@ public class MainGui : MonoBehaviour
 		hs = (TestHtml)o.GetComponent("TestHtml");
 		
 		mode = Mode.Menu;
-		ButtonItem b1 = new ButtonItem("New Game", newGame);
-		ButtonItem b2 = new ButtonItem("Highscores", highScore);
-		ButtonItem b3 = new ButtonItem("Options", options);
-		ButtonItem b4 = new ButtonItem("Credits", credits);
-		ButtonItem b5 = new ButtonItem("Exit", exit);
+		ButtonItem b1 = new ButtonItem("New Game", newGameTex, newGame);
+		ButtonItem b2 = new ButtonItem("Highscores", highScoreTex, highScore);
+		ButtonItem b3 = new ButtonItem("Options", optionsTex, options);
+		ButtonItem b4 = new ButtonItem("Credits", creditsTex, credits);
+		ButtonItem b5 = new ButtonItem("Exit", exitGameTex, exit);
 		
 		buttons.Add (b1);
 		buttons.Add (b2);
@@ -86,18 +87,26 @@ public class MainGui : MonoBehaviour
 	}
 	
 	private void drawMenu() {
-		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "Main Menu");
-		
 		float w = 120;
 		float h = 20;
 		float x = (Screen.width - w) / 2.0f;
-		float y = Screen.width * 0.3f;
+		float y = Screen.height * 0.03f;
 		float iy = 40;
 		//float dx = h + 10;
 		
+		float scale = 0.7f;
+		
+		GUI.DrawTexture(new Rect((Screen.width - titleTex.width * scale) / 2, y, titleTex.width * scale, titleTex.height * scale), titleTex);
+		
+		y += titleTex.height * scale;
+		
 		for (int i = 0; i < buttons.Count; i++) {
 			ButtonItem bi = buttons[i];
-			if (GUI.Button(new Rect(x, y + iy * i, w, h), bi.name)) bi.action();
+			Texture2D tex = bi.texture;
+			
+			if (GUI.Button(new Rect((Screen.width - tex.width) / 2, y, tex.width, tex.height), tex)) bi.action();
+			
+			y += tex.height;
 		}
 	}
 	
@@ -201,10 +210,12 @@ struct ButtonItem
 {
 	public String name;
 	public Action action;
+	public Texture2D texture;
 			
-	public ButtonItem (String name, Action action)
+	public ButtonItem (String name, Texture2D texture, Action action)
 	{
 		this.name = name;
+		this.texture = texture;
 		this.action = action;
 	}
 }
