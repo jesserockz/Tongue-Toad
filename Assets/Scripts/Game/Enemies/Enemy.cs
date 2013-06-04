@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour {
 	private int health = 100;
 	public int healthDamage = 5;
 	
+	//the number of points the player gets for killing this monster
+	public int basePoints = 0;
+	
 	private EnemyState state;
 	private ShellDrop shellDrop;
 	
@@ -29,10 +32,10 @@ public class Enemy : MonoBehaviour {
 			}
 			break;
 		case EnemyState.DEAD: break;
-		case EnemyState.IDLE:break;
+		case EnemyState.IDLE: break;
 		}
 		
-		if(transform.position.z < -5f) {
+		if(transform.position.z < -5f && state == EnemyState.IDLE) {
 			Player.currentHealth -= healthDamage;
 			Player.combo = 0;
 			Destroy(gameObject);
@@ -47,14 +50,7 @@ public class Enemy : MonoBehaviour {
 		health -= damage;
 		//if their health is 0 or below, they are now dying
 		if (health <= 0) {
-			//disable collider and forward movement so they stop and don't screw with other physics bodie
-			disableCollider();
-			disableMovement();
-			//delay playing to wait for animation to hit water
-			//NOTE: there should be a method PlayDelay() which works in seconds, but my editor can't find it
-			//this current method works in like hertz or something, so I just guessed this number...
-			GetComponent<AudioSource>().Play(25000);	
-			state = EnemyState.DYING;
+			killThis ();
 			
 			//spawn some shells
 			//ShellDrop.spawnShells(this.rigidbody.position, 5);
@@ -62,10 +58,35 @@ public class Enemy : MonoBehaviour {
 			spawner.GetComponent<ShellDrop>().spawnShells(rigidbody.position, 5);
 		}
 	}
+	
+	public void collideWithRocky()
+	{
+		if (state != EnemyState.IDLE) return;
+		
+		killThis ();
+	}
+	
+	//kills the object, making it play a sound, but doesn't drop any items, etc.
+	private void killThis()
+	{
+		//disable collider and forward movement so they stop and don't screw with other physics bodie
+			disableCollider();
+			disableMovement();
+			//delay playing to wait for animation to hit water
+			//NOTE: there should be a method PlayDelay() which works in seconds, but my editor can't find it
+			//this current method works in like hertz or something, so I just guessed this number...
+			GetComponent<AudioSource>().Play(25000);	
+			state = EnemyState.DYING;
+	}
 			
 	public EnemyState getState() 
 	{
 		return state;
+	}
+	
+	public int getBasePoints()
+	{
+		return basePoints;
 	}
 	
 	public enum EnemyState {

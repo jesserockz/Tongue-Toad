@@ -39,12 +39,10 @@ public class Tongue : MonoBehaviour
         if (shoot && !tongueOut && Player.State == PlayerAnimator.PlayerState.TongueIn)
         {
             Player.State = PlayerAnimator.PlayerState.TongueStarting;
-            Debug.Log("Start Shooting");
         }
         else if (!shoot && Player.State == PlayerAnimator.PlayerState.TongueStarting)
         {
             Player.State = PlayerAnimator.PlayerState.TongueEnding;
-            Debug.Log("Give up shooting");
         }
         else if (shoot && !tongueOut && Player.State == PlayerAnimator.PlayerState.TongueOut)
         { //User has started tongue extension
@@ -139,39 +137,6 @@ public class Tongue : MonoBehaviour
 		return toad.position + new Vector3 (0f, 0.25f, 0f);
 	}
 	
-	void OnCollisionEnter(Collision other) {
-         print("Points colliding: " + other.contacts.Length);
-        print("First normal of the point that collide: " + other.contacts[0].normal);
-		GameObject o = other.gameObject;
-		
-        if (o.tag == "Enemy")
-        {
-			//get the enemy
-			Enemy enemy = o.GetComponent<Enemy>();
-			//print("First normal of the point that collide: " + other.contacts[0].normal);
-			//direction of impact
-			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
-			
-			//fling the enemy back
-			o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
-			
-			//attack the enemy... death, animations, etc, are handled there.
-			enemy.attack(player.getTongueDamage());
-            tongueRetracting = true;
-			//now tell the player they've attacked an enemy. That stuff is handled there
-            player.attackEnemy(enemy);
-        }
-        else if (o.tag == "Friendly")
-        {
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
-            Destroy(o);
-        }
-        else if (o.tag == "Terrain")
-        {
-			tongueRetracting = true;
-		}
-    }
-	
 	void OnTriggerEnter (Collider other)
 	{
 		GameObject o = other.gameObject;
@@ -180,7 +145,9 @@ public class Tongue : MonoBehaviour
         {
 			//get the enemy
 			Enemy enemy = o.GetComponent<Enemy>();
-			//print("First normal of the point that collide: " + other.contacts[0].normal);
+			
+			if (enemy.getState() != Enemy.EnemyState.IDLE) return;
+			
 			//direction of impact
 			Vector3 dir = Vector3.Normalize(-(toadPosition() - transform.position));
 			Debug.Log ("Hit snail: "+dir);
@@ -189,7 +156,7 @@ public class Tongue : MonoBehaviour
 			
 			//attack the enemy... death, animations, etc, are handled there.
 			enemy.attack(player.getTongueDamage());
-            tongueRetracting = true;
+
 			//now tell the player they've attacked an enemy. That stuff is handled there
             player.attackEnemy(enemy);
         }

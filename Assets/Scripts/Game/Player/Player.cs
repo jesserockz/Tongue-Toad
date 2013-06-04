@@ -76,6 +76,9 @@ public class Player : MonoBehaviour
         numTimesIncrementScore = 0;
         changingScore = false;
         tongue = GameObject.Find("TongueTip").GetComponent<Tongue>();
+		
+		LastState = PlayerAnimator.PlayerState.TongueIn;
+		_state = PlayerAnimator.PlayerState.TongueIn;
     }
 
     void OnTriggerEnter(Collider c)
@@ -84,6 +87,7 @@ public class Player : MonoBehaviour
         if (tag == "Enemy")
         {
             //currentHealth = Mathf.Max(currentHealth - 10, 0);
+			c.gameObject.GetComponent<Enemy>().collideWithRocky();
         }
     }
 
@@ -143,7 +147,7 @@ public class Player : MonoBehaviour
 	//Called when the player attacks an enemy. Only do stuff related to the player here, enemy stuff is handled by the enemy
 	public void attackEnemy(Enemy enemy)
 	{
-		Player.addScore(10 + Player.combo);
+		Player.addScore(enemy.getBasePoints());
         Player.currentEnergy += 5;
         Player.combo++;
 	}
@@ -208,8 +212,6 @@ public class Player : MonoBehaviour
 	{
 		return combo;
 	}
-	
-
 	
 	public int getShells()
 	{

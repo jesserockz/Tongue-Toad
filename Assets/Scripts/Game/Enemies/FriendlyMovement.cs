@@ -27,10 +27,9 @@ public class FriendlyMovement : MonoBehaviour {
 			rigidbody.AddForce(randomForceX,0f,randomForceZ);
 		}
 		
-		if(false && transform.position.z < -20f) {
+		if(transform.position.z < -5f) {
 			Player.currentHealth += regenerateHealth;
-			Player.addScore(50);
-			Player.combo++;
+			Player.addScore(10);
 			Destroy(gameObject);
 		}
 	}
