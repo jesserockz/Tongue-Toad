@@ -5,7 +5,7 @@ public class PlayerStatsGui : MonoBehaviour
 {
 
     //resource location
-    private string healthBase = "GUI/health/Health";
+    private string healthBase = "GUI/health/healthbar_";
     private string numberBase = "GUI/numbers/";
 
     //health bar variables
@@ -26,11 +26,6 @@ public class PlayerStatsGui : MonoBehaviour
     private float yScale;
 
     private int scoreAni;
-
-    float timeA;
-    public int fps;
-    public int lastFPS;
-
 
     //these variables are needed to know where to start drawing the score numbers from
     //the following numbers are the draw positions from topleft corner of number
@@ -70,8 +65,9 @@ public class PlayerStatsGui : MonoBehaviour
 
         for (int i = 0; i <= 100; i++)
         {
-            string imageIndex = (i < 10) ? "0" + i : i.ToString();
-            healthBarImages[i] = Resources.Load(healthBase + imageIndex) as Texture2D;
+			//images are labeled backwards for some reason
+			int index = 100 - i;
+            healthBarImages[i] = Resources.Load(healthBase + index) as Texture2D;
         }
 
         for (int i = 0; i < 10; i++)
@@ -87,24 +83,6 @@ public class PlayerStatsGui : MonoBehaviour
 
         xScale = 279.0f / backboardLocation.width;
         yScale = 189.0f / backboardLocation.height;
-
-        timeA = Time.timeSinceLevelLoad;
-        //DontDestroyOnLoad (this);
-    }
-
-    void Update()
-    {
-        //Debug.Log(Time.timeSinceLevelLoad+" "+timeA);
-        if (Time.timeSinceLevelLoad - timeA <= 1)
-        {
-            fps++;
-        }
-        else
-        {
-            lastFPS = fps + 1;
-            timeA = Time.timeSinceLevelLoad;
-            fps = 0;
-        }
     }
 
     //draws health/ energy/ score
@@ -114,7 +92,6 @@ public class PlayerStatsGui : MonoBehaviour
         int hi = Screen.height;
 
         // -- draw health texture
-        GUI.Label(new Rect(250, 5, 30, 30), "" + lastFPS);
         //get health, then adjust the animation index
         int health = Mathf.Clamp(player.getHealth(), 0, 100);
 
