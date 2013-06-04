@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
         string tag = c.gameObject.tag;
         if (tag == "Enemy")
         {
-            currentHealth = Mathf.Max(currentHealth - 10, 0);
+            //currentHealth = Mathf.Max(currentHealth - 10, 0);
         }
     }
 
