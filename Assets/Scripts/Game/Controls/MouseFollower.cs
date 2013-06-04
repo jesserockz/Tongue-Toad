@@ -46,7 +46,7 @@ public class MouseFollower : MonoBehaviour
 
         
         //Starts with old control style
-        follow = false;
+        follow = true;
         
 	}
 	
@@ -106,7 +106,6 @@ public class MouseFollower : MonoBehaviour
 				//toad.LookAt (vector);
 			}
 		
-			//Debug.DrawLine(toad.position, vector,Color.red);
 			Vector3 angle = toad.rotation.eulerAngles;
 			float y = angle.y;
 		
