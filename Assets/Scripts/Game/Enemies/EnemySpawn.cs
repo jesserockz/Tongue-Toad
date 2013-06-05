@@ -21,7 +21,7 @@ public class EnemySpawn : MonoBehaviour
 	private EnemyInfoPanels enemyInfoPanels;
 	private GameObject currentBoss;
 	private int currentWave;
-	private float between = 2.0f;
+	private float between = 1.4f;
 	private float lastSpawn = 0;
 	private bool boss = false;
 	private int spawnCount = 20;
@@ -161,7 +161,7 @@ public class EnemySpawn : MonoBehaviour
 			//if we've exhausted that list, call to populate new wave
 			if (currentFormation.Count == 0) {
 				populateNextSpawnWave ();
-				lastSpawn = Time.time + 7;
+				lastSpawn = Time.time + 5;
 			} else {
 				//otherwise spawn. Get a random spawn method from list...
 				int i = Random.Range (0, currentFormation.Count);
@@ -169,8 +169,14 @@ public class EnemySpawn : MonoBehaviour
 			
 				//spawn them, then delete it from list
 				action.Invoke ();
-			
 				currentFormation.RemoveAt (i);
+				
+				if (currentFormation.Count > 0) {
+					i = Random.Range (0, currentFormation.Count);
+					if (Random.Range(0.0f, 1.0f) < 0.3) currentFormation[i].Invoke ();
+					currentFormation.RemoveAt (i);
+				}
+				
 				
 				//set last spawn time
 				lastSpawn = Time.time;
@@ -299,9 +305,18 @@ public class EnemySpawn : MonoBehaviour
 		return tetsudoSnail [Random.Range (0, tetsudoSnail.Length)];
 	}
 	
+	private int lastIndex = -1;
+	
 	//returns a random vector of one of the positions of a line formation spawn point 
 	private Vector3 getLinePosition ()
 	{
-		return lineSpawnPoint [Random.Range (0, lineSpawnPoint.Length)].transform.position;
+		int current = -10;
+		do {
+			current = Random.Range (0, lineSpawnPoint.Length);
+		} while (current == lastIndex);
+		
+		lastIndex = current;
+		
+		return lineSpawnPoint [current].transform.position;
 	}
 }

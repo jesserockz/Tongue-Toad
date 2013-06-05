@@ -71,7 +71,10 @@ public class NewTongue : MonoBehaviour {
     }
 	
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 50af0066d3ced214e4defa912b6faab6284cd54f
 
     void OnTriggerEnter(Collider other)
     {
@@ -85,11 +88,19 @@ public class NewTongue : MonoBehaviour {
             if (enemy.getState() != Enemy.EnemyState.IDLE) return;
 
             //direction of impact
+<<<<<<< HEAD
 			if(enemy.GetComponent<TetsudoAnimator>()==null){
             	Vector3 dir = Vector3.Normalize(-(toad.position - transform.position));
             	//fling the enemy back
             	o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
 			}
+=======
+			//if(enemy.GetComponent<TetsudoAnimator>()==null){
+            	Vector3 dir = Vector3.Normalize(-(toad.position - transform.position));
+            	//fling the enemy back
+            	o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
+			//}
+>>>>>>> 50af0066d3ced214e4defa912b6faab6284cd54f
 
             //attack the enemy... death, animations, etc, are handled there.
             enemy.attack(player.getTongueDamage());
