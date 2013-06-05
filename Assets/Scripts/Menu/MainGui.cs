@@ -95,7 +95,7 @@ public class MainGui : MonoBehaviour
 		float w = 120;
 		float h = 20;
 		float x = (Screen.width - w) / 2.0f;
-		float y = Screen.height * 0.03f;
+		float y = Screen.height * 0.05f;
 		float iy = 40;
 		//float dx = h + 10;
 		
@@ -104,6 +104,7 @@ public class MainGui : MonoBehaviour
 		GUI.DrawTexture(new Rect((Screen.width - titleTex.width * scale) / 2, y, titleTex.width * scale, titleTex.height * scale), titleTex);
 		
 		y += titleTex.height * scale;
+		y = (Screen.height - buttons.Count * buttons[0].texture.height) / 2;
 		
 		for (int i = 0; i < buttons.Count; i++) {
 			ButtonItem bi = buttons[i];
@@ -111,7 +112,7 @@ public class MainGui : MonoBehaviour
 			
 			if (GUI.Button(new Rect((Screen.width - tex.width) / 2, y, tex.width, tex.height), tex)) bi.action();
 			
-			y += tex.height;
+			y += tex.height + 20;
 		}
 	}
 	

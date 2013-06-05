@@ -18,7 +18,7 @@ public class NewTongue : MonoBehaviour {
         player = p.GetComponent<Player>();
         playerSounds = p.GetComponent<PlayerSounds>();
         tongue = animation["Tongue"];
-        //tongue.speed = 
+        tongue.speed = 3f;
         tongue.wrapMode = WrapMode.Once;
 	}
 	
@@ -69,6 +69,8 @@ public class NewTongue : MonoBehaviour {
         }
 
     }
+	
+	
 
     void OnTriggerEnter(Collider other)
     {
@@ -82,9 +84,11 @@ public class NewTongue : MonoBehaviour {
             if (enemy.getState() != Enemy.EnemyState.IDLE) return;
 
             //direction of impact
-            Vector3 dir = Vector3.Normalize(-(toad.position - transform.position));
-            //fling the enemy back
-            o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
+			//if(enemy.GetComponent<TetsudoAnimator>()==null){
+            	Vector3 dir = Vector3.Normalize(-(toad.position - transform.position));
+            	//fling the enemy back
+            	o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
+			//}
 
             //attack the enemy... death, animations, etc, are handled there.
             enemy.attack(player.getTongueDamage());
