@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TransitionCamera : MonoBehaviour
 {
+	//tells us if we went through main menu, and are transitioning
 	public static bool isTransitioning = false;
 	public static Vector3 originalCameraLocation;
 	public static Quaternion originalCameraRotation;
@@ -47,6 +48,8 @@ public class TransitionCamera : MonoBehaviour
 			}
 			
 			//reenable spawner after moving camera
+			InstructionsOverlay overlay = GameObject.Find ("Gui").GetComponent<InstructionsOverlay>();
+			if (overlay != null) overlay.displayInstructions();
 			spawner.enabled = true;
 		}
 	}
