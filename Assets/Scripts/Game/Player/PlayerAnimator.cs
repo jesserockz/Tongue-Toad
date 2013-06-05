@@ -18,8 +18,8 @@ public class PlayerAnimator : MonoBehaviour {
         animation["ShootStart"].wrapMode = WrapMode.Once;
         animation["ShootEnd"].wrapMode = WrapMode.Once;
         animation["Death"].wrapMode = WrapMode.Once;
-        animation["ShootEnd"].speed = 3f;
-		animation["ShootStart"].speed = 3f;
+        animation["ShootEnd"].speed = 4f;
+		animation["ShootStart"].speed = 4f;
 	}
 	
 	// Update is called once per frame

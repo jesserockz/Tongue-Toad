@@ -20,7 +20,9 @@ public class TetsudoAnimator : MonoBehaviour {
 		enemy = GetComponent<Enemy>();
         //idleAnim = idleString[Random.Range(0, idleString.Length)];
         deathAnim = deathString[Random.Range(0, deathString.Length)];
-
+		
+		animation["Death1"].speed = 2.0f;
+		
 		//idle = animation[idleAnim];
 		death = animation[deathAnim];
 		
