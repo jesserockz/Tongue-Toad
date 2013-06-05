@@ -6,7 +6,7 @@ public class TransitionCamera : MonoBehaviour
 	public static bool isTransitioning = false;
 	public static Vector3 originalCameraLocation;
 	public static Quaternion originalCameraRotation;
-	public float transitionDuration = 10.0f;
+	private float transitionDuration = 2.0f;
 	private Vector3 mainLocation;
 	private Quaternion mainRotation;
 	
@@ -38,6 +38,7 @@ public class TransitionCamera : MonoBehaviour
 		
 			while (t < 1.0f) {
 				t += Time.deltaTime * (Time.timeScale / transitionDuration);
+				//t += 0.01f;
  
 				Camera.mainCamera.transform.position = Vector3.Lerp (originalCameraLocation, mainLocation, t);
 				Camera.mainCamera.transform.rotation = Quaternion.Lerp (originalCameraRotation, mainRotation, t);
