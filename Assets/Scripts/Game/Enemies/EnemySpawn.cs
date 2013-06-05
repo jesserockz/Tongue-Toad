@@ -27,11 +27,14 @@ public class EnemySpawn : MonoBehaviour
 	private int spawnCount = 20;
 	private Quaternion spawnAngle = Quaternion.Euler (0, 180, 0);
 	
+	private WaveDisplay waveDisplay;
+	
 	void Start ()
 	{
 		//cache enemy info panel
 		GameObject gui = GameObject.FindGameObjectWithTag ("Gui");
 		enemyInfoPanels = gui.GetComponent<EnemyInfoPanels> ();
+		waveDisplay = gui.GetComponent<WaveDisplay>();
 		
 		// Create the waves
 		
@@ -107,7 +110,7 @@ public class EnemySpawn : MonoBehaviour
 		displayMethods.Add (spawnTetsudo, enemyInfoPanels.displayTestudo);
 		displayMethods.Add (spawnCopter, enemyInfoPanels.displayHelicopter);
 		displayMethods.Add (spawnPlane, enemyInfoPanels.displayPlane);
-		displayMethods.Add (spawnCraftCarrier, enemyInfoPanels.displayAircraftCarrier);
+		//displayMethods.Add (spawnCraftCarrier, enemyInfoPanels.displayAircraftCarrier);
 		displayMethods.Add (spawnGood, enemyInfoPanels.displayToad);
 		
 		//now go over all the different monsters and set up when our info panels display
@@ -119,6 +122,8 @@ public class EnemySpawn : MonoBehaviour
 				//already added this, so skip
 				if (used.Contains (a))
 					continue;
+				
+				if (!displayMethods.ContainsKey(a)) continue;
 				
 				//otherwise add it
 				informationDisplays.Add (i, displayMethods [a]);
@@ -196,6 +201,7 @@ public class EnemySpawn : MonoBehaviour
 	private void populateNextSpawnWave ()
 	{
 		currentWave++;
+		waveDisplay.displaySign();
 		
 		if (currentWave < formations.Count) {
 			//spawning from predetermined lists
