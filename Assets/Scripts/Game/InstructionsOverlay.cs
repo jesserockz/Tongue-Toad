@@ -15,7 +15,7 @@ public class InstructionsOverlay : MonoBehaviour
 	{
 		if (!enabled) {
 			Destroy (this);
-			return;
+			return; 
 		}
 		
 		if (!TransitionCamera.isTransitioning) displayInstructions();

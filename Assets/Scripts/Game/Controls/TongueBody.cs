@@ -19,7 +19,7 @@ public class TongueBody : MonoBehaviour {
 
     void OnTriggerEnter(Collider c)
     {
-		//return;
+		return;
         GameObject o = c.gameObject;
         //Debug.Log("TongueBody collided with " + o.tag);
         if (o.tag == "Enemy" )
