@@ -36,7 +36,7 @@ public class Pause : MonoBehaviour
 			
 			if (GUI.Button(new Rect(x + 20, y + h - 90, w - 40, 20), "Unpause")) setPause (false);
 			if (GUI.Button(new Rect(x + 20, y + h - 60, w - 40, 20), (startedBoss ? "Be prepared.." : "BOSS!"))) startBoss();
-            if (GUI.Button(new Rect(x + 20, y + h - 30, w - 40, 20), "Exit")) Application.LoadLevel("Menu");
+            if (GUI.Button(new Rect(x + 20, y + h - 30, w - 40, 20), "Exit")) gotoMenu();
         }
     }
 	
@@ -46,6 +46,12 @@ public class Pause : MonoBehaviour
 			startedBoss = true;
 			GameObject.Find ("EnemySpawn").GetComponent<EnemySpawn>().gotoBoss();
 		}
+	}
+	
+	private void gotoMenu() 
+	{
+		setPause (false);
+		Application.LoadLevel("Menu");
 	}
 	
     //use this function to pause/ unpause the game because it sets variables
