@@ -86,7 +86,8 @@ public class Player : MonoBehaviour
         string tag = c.gameObject.tag;
         if (tag == "Enemy")
         {
-            //currentHealth = Mathf.Max(currentHealth - 10, 0);
+			Enemy e = c.gameObject.GetComponent<Enemy>();
+            currentHealth = Mathf.Max(currentHealth - e.getDamage(), 0);
 			c.gameObject.GetComponent<Enemy>().collideWithRocky();
         }
     }

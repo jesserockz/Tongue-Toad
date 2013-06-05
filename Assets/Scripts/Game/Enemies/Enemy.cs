@@ -89,6 +89,17 @@ public class Enemy : MonoBehaviour {
 		return basePoints;
 	}
 	
+	/// <summary>
+	/// Returns the damage this monster does to rocky.
+	/// </summary>
+	/// <returns>
+	/// The damage.
+	/// </returns>
+	public int getDamage()
+	{
+		return healthDamage;
+	}
+	
 	public enum EnemyState {
 		DYING,
 		DEAD,
