@@ -3,10 +3,16 @@ using System.Collections;
 
 public class Pause : MonoBehaviour
 {
-
     public static bool isPaused = false;
 	
+	public Texture2D background;
+	public Texture2D resumeTex, exitTex;
+	
+	public GUISkin skin;
+	
+	
 	private bool startedBoss = false;
+	
 	
     void Start()
     {
@@ -27,16 +33,22 @@ public class Pause : MonoBehaviour
     {
         if (isPaused)
         {
-            float w = 200;
-            float h = 130;
-            float x = (Screen.width - w) / 2.0f;
-            float y = (Screen.height - h) / 2.0f;
-			 
-            GUI.Box(new Rect(x, y, w, h), "Paused!");
+			GUI.skin = skin;
 			
-			if (GUI.Button(new Rect(x + 20, y + h - 90, w - 40, 20), "Unpause")) setPause (false);
-			if (GUI.Button(new Rect(x + 20, y + h - 60, w - 40, 20), (startedBoss ? "Be prepared.." : "BOSS!"))) startBoss();
-            if (GUI.Button(new Rect(x + 20, y + h - 30, w - 40, 20), "Exit")) gotoMenu();
+            float w = Screen.width;
+            float h = Screen.height;
+            float x = Screen.width / 2.0f;
+            float y = Screen.height / 2.0f;
+			
+			float bgX = (w - background.width) / 2;
+			float bgY = (h - background.height) / 2;
+			
+            //GUI.Box(new Rect(w , y, w, h), "Paused!");
+			GUI.DrawTexture (new Rect( bgX, bgY, background.width, background.height), background);
+			
+			if (GUI.Button(new Rect((w - resumeTex.width) / 2, h  / 2 - 15, resumeTex.width, resumeTex.height), resumeTex)) setPause (false);
+			if (GUI.Button(new Rect(x - 30, h / 2 - 35, 60, 20), (startedBoss ? "Be prepared.." : "BOSS!"))) startBoss();
+            if (GUI.Button(new Rect((w - exitTex.width) / 2, h / 2 + 20, exitTex.width, exitTex.height), exitTex)) gotoMenu();
         }
     }
 	
