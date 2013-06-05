@@ -12,11 +12,16 @@ public class MainGui : MonoBehaviour
 
 	public GUISkin guiSkin;
 	
+	public Font otherFont, hssFont, hssUnderfont;
+	public Texture2D hsNumbers;
+	public Texture2D hsRefresh, hsReturn;
+	
 	private List<ButtonItem> buttons = new List<ButtonItem> ();
 	
 	private Mode mode;
 	
 	private TestHtml hs;
+	
 	
 	private enum Mode {
 		Menu,
@@ -111,36 +116,68 @@ public class MainGui : MonoBehaviour
 	}
 	
 	private void drawHighscore() {
-		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "Highscore");
+		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
 		
 		//highscore drawing code goes here
 		
 		float w = 200;
-		float h = 20;
 		float x = (Screen.width - w) / 2.0f;
 		float y = Screen.height * 0.7f;
 		//float iy = 40;
 		//float dx = h + 10;
 		
-		if (TestHtml.loading) GUI.Label (new Rect(x, Screen.height * 0.4f, w, h), "Loading from highscore server...");
-		else if (TestHtml.error) GUI.Label (new Rect(x, Screen.height * 0.4f, w, h), "Couldn't connect to highscore server");
+		//Font oldFont = GUI.skin.font;
+		//GUI.skin.font = hsFont;
+		GUIStyle style = new GUIStyle();
+		style.font = hssFont;
+		
+		Vector2 loadLen = GUI.skin.GetStyle("label").CalcSize (new GUIContent("Loading from highscore server..."));
+		float loadLength = loadLen.x;
+		
+		Vector2 loadLen2 = GUI.skin.GetStyle("label").CalcSize (new GUIContent("Couldn't connect to highscore server"));
+		float conLength = loadLen2.x;
+		
+		if (TestHtml.loading) GUI.Label (new Rect((Screen.width - loadLength) / 2, Screen.height * 0.4f, loadLength, 50), "Loading from highscore server...");
+		else if (TestHtml.error) GUI.Label (new Rect((Screen.width - conLength) / 2, Screen.height * 0.4f, conLength, 50), "Couldn't connect to highscore server");
 		else {
 			string[] names = TestHtml.contents.Split('\n');
+
 			
 			for (int i = 2; i < names.Length && i < 12 && names[i].Length != 0; i++) {
 				string[] info = names[i].Split(' ');
 				string name = info[0].Split('=')[1];
 				string score = info[1].Split('=')[1];
-				GUI.Label (new Rect(Screen.width / 2 - 100, 50 + 20 * i, 200, 30), (i - 1) + ": " + name);
-				GUI.Label (new Rect(Screen.width / 2, 50 + 20 * i, 200, 30), "Score: " + score);
+				
+				//GUI.skin.font = oldFont;
+				GUI.Label (new Rect(Screen.width / 2 - 100, 50 + 25 * i, 200, 35), (i - 1) + ". ");
+				
+				Vector2 size = GUI.skin.GetStyle("label").CalcSize (new GUIContent((i - 1) + ". "));
+				
+				
+				
+				
+				//green underlay
+				style.normal.textColor = Color.green;
+				GUI.TextArea (new Rect(Screen.width / 2 - 100 + 40, 50 + 25 * i - 1 + 5, 200, 30), name, style);
+				
+				//yellow overtop
+				style.normal.textColor = Color.yellow;
+				GUI.Label (new Rect(Screen.width / 2 - 100 + 40, 50 + 25 * i + 5, 200, 30), name, style);
+				
+				
+				
+				//GUI.skin.font = oldFont;
+				GUI.Label (new Rect(Screen.width / 2 + 100, 50 + 25 * i, 200, 35), score);
 			}
 		}
 		
-		if(GUI.Button(new Rect(x, y - 30, w, h), "Refresh scores...")) {
+		//GUI.skin.font = oldFont;
+		
+		if(GUI.Button(new Rect((Screen.width - hsRefresh.width) / 2, y - 30, hsRefresh.width, hsRefresh.height), hsRefresh)) {
 			hs.reloadCoroutine();
 		}
 		
-		if(GUI.Button(new Rect(x, y, w, h), "Return to menu")) {
+		if(GUI.Button(new Rect((Screen.width - hsReturn.width) / 2, y - 30 + hsRefresh.height, hsReturn.width, hsReturn.height), hsReturn)) {
 			mode = Mode.Menu;
 		}
 	}
