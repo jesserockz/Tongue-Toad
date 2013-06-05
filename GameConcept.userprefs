@@ -2,7 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Enemies\EnemySpawn.cs">
     <Files>
-      <File FileName="Assets\Scripts\Game\Enemies\EnemySpawn.cs" Line="204" Column="7" />
+      <File FileName="Assets\Scripts\Game\Enemies\EnemySpawn.cs" Line="204" Column="29" />
+      <File FileName="Assets\Scripts\Game\WaveDisplay.cs" Line="44" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
