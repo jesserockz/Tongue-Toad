@@ -10,7 +10,7 @@ public class ForwardMovement : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		float randSpeed = Random.Range (-2.0f, 2.0f);
+		float randSpeed = Random.Range (-1.0f, 1.0f);
 		rigidbody.velocity = new Vector3(0, 0, -baseSpeed + randSpeed);
 	}
 	

@@ -18,6 +18,7 @@ public class NewTongue : MonoBehaviour {
         player = p.GetComponent<Player>();
         playerSounds = p.GetComponent<PlayerSounds>();
         tongue = animation["Tongue"];
+        //tongue.speed = 
         tongue.wrapMode = WrapMode.Once;
 	}
 	

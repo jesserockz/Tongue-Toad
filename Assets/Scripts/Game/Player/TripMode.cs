@@ -22,7 +22,8 @@ public class TripMode : MonoBehaviour {
         {
             toadsLicked++;
             int i = Random.Range(0, bonuses.Length);
-            timesLeft[i] = 2.0f;
+            bonuses[i] = 2.0f;
+            timesLeft[i] = 10.0f;
         }
     }
 
