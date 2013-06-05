@@ -9,8 +9,8 @@ public class PlaneAnimator : MonoBehaviour {
 	private Enemy enemy;
 	
 	private AnimationState idle, death;
-    private string idleAnim = "";
-    private string deathAnim = "";
+    private string idleAnim = "Idle";
+    private string deathAnim = "Death";
 	private string[] idleString = {};
 	private string[] deathString = {};
 	
@@ -22,19 +22,19 @@ public class PlaneAnimator : MonoBehaviour {
         //deathAnim = deathString[Random.Range(0, deathString.Length)];
 
 		//idle = animation[idleAnim];
-		//death = animation[deathAnim];
+		death = animation[deathAnim];
 		
-		//death.wrapMode = WrapMode.Once;
+		death.wrapMode = WrapMode.Once;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (enemy.getState() == Enemy.EnemyState.IDLE)
 		{
-			//animation.Play (idleAnim);
+			animation.Play (idleAnim);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-			//animation.Play (deathAnim);	
+			animation.Play (deathAnim);	
 			playedDeath = true;
 		}
 	}

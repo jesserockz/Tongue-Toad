@@ -10,8 +10,8 @@ public class CopterAnimator : MonoBehaviour {
 	
 	private AnimationState idle, death;
     private string idleAnim = "";
-	private string[] idleString = {"flyingIdle1","flyingIdle2"};
-	//private string deathString = "Death1";
+	private string[] idleString = {"Idle1","flyingIdle2"};
+	private string deathString = "Death";
 	
 	bool playedDeath = false;
 	// Use this for initialization
@@ -19,10 +19,10 @@ public class CopterAnimator : MonoBehaviour {
 		enemy = GetComponent<Enemy>();
         idleAnim = idleString[Random.Range(0,idleString.Length)];
 		idle = animation[idleAnim];
-		//death = animation[deathString];
+		death = animation[deathString];
 		//idle.time = Random.Range(0.0f, idle.length);
 
-		//death.wrapMode = WrapMode.Once;
+		death.wrapMode = WrapMode.Once;
 	}
 	
 	// Update is called once per frame
@@ -32,7 +32,7 @@ public class CopterAnimator : MonoBehaviour {
             animation.Play(idleAnim);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-            animation.Play(idleString[Random.Range(0, idleString.Length)]);	
+            animation.Play(deathString);	
 			playedDeath = true;
 		}
 	}

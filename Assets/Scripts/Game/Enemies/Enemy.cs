@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour {
 			//delay playing to wait for animation to hit water
 			//NOTE: there should be a method PlayDelay() which works in seconds, but my editor can't find it
 			//this current method works in like hertz or something, so I just guessed this number...
-			GetComponent<AudioSource>().Play(25000);	
+			//GetComponent<AudioSource>().Play(25000);	
 			state = EnemyState.DYING;
 	}
 			
