@@ -233,7 +233,7 @@ public class EnemySpawn : MonoBehaviour
 		
 		GameObject o = (GameObject)Instantiate (friendly, middle, Quaternion.Euler (0, -180, 0));
 		//quick hack to make it loop animation
-		o.GetComponent<Animation> () ["friendly toad animation"].wrapMode = WrapMode.Loop;
+		//o.GetComponent<Animation> () ["friendly toad animation"].wrapMode = WrapMode.Loop;
 	}
 	
 	private void spawnPleb ()
