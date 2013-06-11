@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 
 public class SubmitHighscore : MonoBehaviour
 {
-
 	public static bool loading;
 	public static bool error = true;
 	public static string placing;
