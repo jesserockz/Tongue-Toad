@@ -39,8 +39,7 @@ public class TransitionCamera : MonoBehaviour
 		
 			while (t < 1.0f) {
 				t += Time.deltaTime * (Time.timeScale / transitionDuration);
-				//t += 0.01f;
- 
+  
 				Camera.mainCamera.transform.position = Vector3.Lerp (originalCameraLocation, mainLocation, t);
 				Camera.mainCamera.transform.rotation = Quaternion.Lerp (originalCameraRotation, mainRotation, t);
 

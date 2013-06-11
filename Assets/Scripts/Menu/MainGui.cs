@@ -9,12 +9,15 @@ public class MainGui : MonoBehaviour
 	
 	//individual buttons
 	public Texture2D newGameTex, instructionsTex, highScoreTex, optionsTex, creditsTex, exitGameTex;
-
+	
 	public GUISkin guiSkin;
 	
 	public Font otherFont, hssFont, hssUnderfont;
 	public Texture2D hsNumbers;
 	public Texture2D hsRefresh, hsReturn;
+	
+	//options menu textures
+	public Texture2D playMusic, muteMusic, playSFX, muteSFX, returnToMenu; 
 	
 	private List<ButtonItem> buttons = new List<ButtonItem> ();
 	
@@ -93,26 +96,26 @@ public class MainGui : MonoBehaviour
 	
 	private void drawMenu() {
 		float w = 120;
-		float h = 20;
 		float x = (Screen.width - w) / 2.0f;
-		float y = Screen.height * 0.05f;
-		float iy = 40;
-		//float dx = h + 10;
-		
+		float y = Screen.height * 0.03f;
+
 		float scale = 0.7f;
 		
-		GUI.DrawTexture(new Rect((Screen.width - titleTex.width * scale) / 2, y, titleTex.width * scale, titleTex.height * scale), titleTex);
-		
+		GUI.DrawTexture(new Rect(centerX(titleTex.width * scale), y, titleTex.width * scale, titleTex.height * scale), titleTex);
+
 		y += titleTex.height * scale;
-		y = (Screen.height - buttons.Count * buttons[0].texture.height) / 2;
+
+		float padding = 7;
+		
+		float current = y + (( Screen.height - y) - buttons.Count * (buttons[0].texture.height + padding)) / 2 - padding * 2;
 		
 		for (int i = 0; i < buttons.Count; i++) {
 			ButtonItem bi = buttons[i];
 			Texture2D tex = bi.texture;
 			
-			if (GUI.Button(new Rect((Screen.width - tex.width) / 2, y, tex.width, tex.height), tex)) bi.action();
+			if (GUI.Button(new Rect(centerX (tex.width), current, tex.width, tex.height), tex)) bi.action();
 			
-			y += tex.height + 20;
+			current += tex.height + padding;
 		}
 	}
 	
@@ -124,8 +127,6 @@ public class MainGui : MonoBehaviour
 		float w = 200;
 		float x = (Screen.width - w) / 2.0f;
 		float y = Screen.height * 0.7f;
-		//float iy = 40;
-		//float dx = h + 10;
 		
 		//Font oldFont = GUI.skin.font;
 		//GUI.skin.font = hsFont;
@@ -184,45 +185,56 @@ public class MainGui : MonoBehaviour
 	}
 	
 	private void drawOptions() {
-		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "Options");
+		//firstPadding goes between music slider and sfx button
+		float firstPadding = 10;
 		
-		float w = 120;
-		float h = 20;
-		float x = (Screen.width - w) / 2.0f;
-		float y = Screen.width * 0.3f;
-		float iy = 30;
-		//float dx = h + 10;
-		int i = 0;
-		//music
+		//secondPadding goes after sfx slider
+		float secondPadding = 20;
 		
-		if(GUI.Button(new Rect(x, y + iy * i++, w, h), SoundManager.muteMusic ? "Play Music" : "Mute Music")) {
-			SoundManager.toggleMusic();
-		}
+		//slider dimensions
+		float sliderHeight = 20;
+		float sliderWidth = 120;
 		
-		SoundManager.setMusic(GUI.HorizontalSlider(new Rect(x, y + iy * i++, w, h + 20), SoundManager.musicLevel, 0, 1));
+		//used for centering components
+		float totalHeight = playMusic.height + playSFX.height + sliderHeight * 2 + returnToMenu.height + firstPadding + secondPadding;
+		float current = (Screen.height - totalHeight) / 2;
 		
-		//sound effects
+		//music items
+		Rect musicR = new Rect(centerX(playMusic.width), current, playMusic.width, playMusic.height);
+		current += playMusic.height;
 		
-		if(GUI.Button(new Rect(x, y + iy * i++, w, h), SoundManager.muteEffects ? "Play Effects" : "Mute Effects")) {
-			SoundManager.toggleEffects();
-		}
+		Rect musicSliderR = new Rect(centerX(sliderWidth), current, sliderWidth, sliderHeight);
+		current += sliderHeight + firstPadding;
 		
-		SoundManager.setEffects(GUI.HorizontalSlider(new Rect(x, y + iy * i++, w, h), SoundManager.effectsLevel, 0, 1));
+		//sfx items
+		Rect sfxR = new Rect(centerX(playMusic.width), current, playSFX.width, playSFX.height);
+		current += playSFX.height;
 		
-		if(GUI.Button(new Rect(x, y + iy * i++, w, h), "Return to menu")) {
-			mode = Mode.Menu;
-		}
+		Rect sfxSliderR = new Rect(centerX(sliderWidth), current, sliderWidth, sliderHeight);
+		current += sliderHeight + secondPadding;
+		
+		//menu button
+		Rect menuR = new Rect(centerX(returnToMenu.width), current, returnToMenu.width, returnToMenu.height);
+		
+		//now draw them
+		
+		if(GUI.Button(musicR, SoundManager.muteMusic ? playMusic : muteMusic)) SoundManager.toggleMusic();
+		
+		SoundManager.setMusic(GUI.HorizontalSlider(musicSliderR, SoundManager.musicLevel, 0, 1));
+		
+		if(GUI.Button(sfxR, SoundManager.muteEffects ? playSFX : muteSFX)) SoundManager.toggleEffects();
+		
+		SoundManager.setEffects(GUI.HorizontalSlider(sfxSliderR, SoundManager.effectsLevel, 0, 1));
+		
+		if(GUI.Button(menuR, returnToMenu)) mode = Mode.Menu;
 	}
 	
 	private void drawCredits() {
-		GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "Credits");
-		
-		float w = 200;
-		float h = 25;
+		float w = 350;
+		float h = 40;
 		float x = (Screen.width - w) / 2.0f;
-		float y = Screen.width * 0.2f;
-		float iy = 20;
-		//float dx = h + 10;
+		float y = Screen.height * 0.2f;
+		float iy = h;
 		int i = 0;
 		
 		List<string> credits = new List<string>();
@@ -237,10 +249,14 @@ public class MainGui : MonoBehaviour
 			GUI.Label (new Rect(x, y + i * iy, w, h), credits[i]);
 		}
 		
-		if(GUI.Button(new Rect(x, y + iy * (i + 3), w, h), "Return to menu")) {
+		if(GUI.Button(new Rect(centerX (returnToMenu.width), y + iy * (i + 2), returnToMenu.width, returnToMenu.height), returnToMenu)) {
 			mode = Mode.Menu;
-			
 		}
+	}
+	
+	// Returns the X value that is the left of object with given width
+	private float centerX(float width) {
+		return (Screen.width - width) / 2.0f;
 	}
 }
 
