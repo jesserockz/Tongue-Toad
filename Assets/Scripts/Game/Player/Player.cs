@@ -16,8 +16,12 @@ public class Player : MonoBehaviour
 
     private static int score;
 
-    public static int combo;
+    public static int streak;
 	public int shells;
+	
+	//the current value the combo is at
+	private int enemyCombo;
+	private Combo comboScript;
 
     private static PlayerAnimator.PlayerState _state = PlayerAnimator.PlayerState.TongueIn;
     public static PlayerAnimator.PlayerState State
@@ -57,7 +61,7 @@ public class Player : MonoBehaviour
 
     CharacterController controller;
 
-    Tongue tongue;
+    private NewTongue tongue;
 
     // Use this for initialization
     void Start()
@@ -66,16 +70,18 @@ public class Player : MonoBehaviour
         currentEnergy = maxEnergy;
         aCalib = Input.acceleration;
         score = 0;
-        combo = 0;
+        streak = 0;
         controller = GetComponent<CharacterController>();
         //Pause.setPause(false);
         
+		comboScript = GetComponent<Combo>();
+		
         //cheat detect
         hasCheated = false;
         scoreCheck = cheatOffset;
         numTimesIncrementScore = 0;
         changingScore = false;
-        tongue = GameObject.Find("TongueTip").GetComponent<Tongue>();
+        tongue = GameObject.Find("Tongue").GetComponent<NewTongue>();
 		
 		LastState = PlayerAnimator.PlayerState.TongueIn;
 		_state = PlayerAnimator.PlayerState.TongueIn;
@@ -101,7 +107,7 @@ public class Player : MonoBehaviour
             GetComponent<MouseFollower>().enabled = false;
             tongue.enabled = false;
             controller.enabled = false;
-            tongue.tongue.renderer.enabled = false;
+            //tongue.tongue.renderer.enabled = false;
         }
         if (currentHealth <= 0 && State == PlayerAnimator.PlayerState.Dead)
         {
@@ -148,9 +154,26 @@ public class Player : MonoBehaviour
 	//Called when the player attacks an enemy. Only do stuff related to the player here, enemy stuff is handled by the enemy
 	public void attackEnemy(Enemy enemy)
 	{
-		Player.addScore(enemy.getBasePoints());
-        Player.currentEnergy += 5;
-        Player.combo++;
+		enemyCombo++;
+		
+		if (enemyCombo > 1) 
+		{
+			comboScript.spawnCombo(enemy, enemyCombo);
+		}
+		
+		float points = (float) enemy.getBasePoints() * Mathf.Pow (1.5f, enemyCombo);
+		
+		Debug.Log (points);
+		
+		Player.addScore((int) points);
+		
+        Player.streak++;
+	}
+	
+	//resets the combo back to 0
+	public void resetCombo()
+	{
+		enemyCombo = 0;
 	}
 	
     //method adds to highscore, also incrementing our scorecheck value to ensure no cheating happens
@@ -211,7 +234,7 @@ public class Player : MonoBehaviour
 	
 	public int getCombo()
 	{
-		return combo;
+		return streak;
 	}
 	
 	public int getShells()

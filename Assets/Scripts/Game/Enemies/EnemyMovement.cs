@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour {
 		if(transform.position.z < -5f && !inUtoadpia) {
 			//Destroy(gameObject);
             inUtoadpia = true;
-			Player.combo = 0;
+			Player.streak = 0;
 			Player.currentHealth -= 10;
 		}
         if(transform.position.z< -20f)

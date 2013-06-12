@@ -25,7 +25,6 @@ public class PlayerAnimator : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-
         if (!dying && !shooting)
         {
             float x = Input.GetAxis("Horizontal");
@@ -42,7 +41,6 @@ public class PlayerAnimator : MonoBehaviour {
         {
             animation.CrossFade("Death");
             deathTime = Time.time + 6.05f;
-            //Debug.Log("Dying at: " + deathTime);
             dying = true;
         }
         else if (dying)
@@ -50,7 +48,6 @@ public class PlayerAnimator : MonoBehaviour {
             //Debug.Log("Time till death: " + (deathTime - Time.time));
             if (deathTime <= Time.time)
             {
-                //Debug.Log("Dead");
                 Player.State = PlayerState.Dead;
             }
         }
@@ -59,7 +56,7 @@ public class PlayerAnimator : MonoBehaviour {
             animation.CrossFade("ShootStart");
             shooting = true;
         }
-        else if (Player.State == PlayerState.TongueStarting && animation["ShootStart"].time>=0.3f)
+        else if (Player.State == PlayerState.TongueStarting && animation["ShootStart"].time >= 0.3f)
         {
             Player.State = PlayerState.TongueOut;
             animation.CrossFade("ShootHold");
@@ -67,16 +64,19 @@ public class PlayerAnimator : MonoBehaviour {
         }
         else if (Player.State == PlayerState.TongueEnding && !animation.isPlaying)
         {
-            animation.Play("Idle1");
+            //tongue just came in
+			//stop any combos
+			player.resetCombo();
+			animation.Play("Idle1");
             Player.State = PlayerState.TongueIn;
             shooting = false;
+			
         }
         else if (Player.State == PlayerState.TongueEnding)
         {
             if (Player.LastState == PlayerState.TongueStarting)
             {
                 animation["ShootEnd"].time = 0.5f * animation["ShootEnd"].length;
-                Debug.Log("Give up time " + animation["ShootEnd"].time);
                 Player.State = PlayerState.TongueEnding;
             }
             animation.CrossFade("ShootEnd");

@@ -15,7 +15,7 @@ public class MouseFollower : MonoBehaviour
 	
 	public float rotationSpeed = 4.0f;
 	public Transform toad;
-	Tongue tongue;
+	private NewTongue tongue;
 	
 	//plane on the level of the water
 	private Plane horoPlane;
@@ -42,7 +42,7 @@ public class MouseFollower : MonoBehaviour
 
 		//Get tongue object script to control rotation
 		//tongue = GameObject.FindGameObjectWithTag ("Tongue").GetComponent<Tongue> ();
-		tongue = GameObject.Find ("TongueTip").GetComponent<Tongue> ();
+		tongue = GameObject.Find ("Tongue").GetComponent<NewTongue> ();
 
         
         //Starts with old control style
@@ -54,7 +54,8 @@ public class MouseFollower : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		float distanceMult = (tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension;
+		float distanceMult = 1.0f;
+		//float distanceMult = (tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension;
 		distanceMult = Mathf.Clamp(distanceMult, 0.1f, 1f);
 		
 		if (Input.GetKeyDown (KeyCode.F1)) {
@@ -96,14 +97,12 @@ public class MouseFollower : MonoBehaviour
 				//we got it, so look at it
 				vector = ray.GetPoint (distance);
 				vector.y = 0f;
-				//toad.LookAt(vector);
 			} else {
 				//otherwise we have to use vertical plane
 				verticalPlane.Raycast (ray, out distance);
 				vector = ray.GetPoint (distance);
 				//make sure we don't make the toad look up/ down
 				vector.y = 0;
-				//toad.LookAt (vector);
 			}
 		
 			Vector3 angle = toad.rotation.eulerAngles;

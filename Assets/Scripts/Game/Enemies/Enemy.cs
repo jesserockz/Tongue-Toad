@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour {
 		
 		if(transform.position.z < -5f && state == EnemyState.IDLE) {
 			Player.currentHealth -= healthDamage;
-			Player.combo = 0;
+			Player.streak = 0;
 			Destroy(gameObject);
 		}
 	}
