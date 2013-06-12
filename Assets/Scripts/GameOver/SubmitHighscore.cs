@@ -25,7 +25,6 @@ public class SubmitHighscore : MonoBehaviour
 		WWW w = new WWW (url + "name=" + name + "&score=" + score + "&checksum=" + checksum);
 		yield return w;
 		
-		Debug.Log (w.error);
 		loading = false;
 		error = w.error != null;
 		placing = null;
@@ -33,6 +32,11 @@ public class SubmitHighscore : MonoBehaviour
 		if (!error) {
 			placing = w.text;
 		}
+	}
+	
+	public static bool wasError()
+	{
+		return SubmitHighscore.placing == null || SubmitHighscore.placing.StartsWith ("error");
 	}
 	
 	public  string Md5Sum (string strToEncrypt)
