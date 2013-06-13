@@ -33,6 +33,8 @@ public class InstructionsOverlay : MonoBehaviour
 		int w = Screen.width;
 		int h = Screen.height;
 		
+		GUI.depth = -1;
+		
 		GUI.DrawTexture (new Rect (w * 0.1f, h * 0.1f, w * 0.8f, h * 0.8f), instructions [currentIndex]);
 		
 		Rect r = new Rect ((w - 100) / 2.0f, h * 0.75f, 100.0f, 30.0f);

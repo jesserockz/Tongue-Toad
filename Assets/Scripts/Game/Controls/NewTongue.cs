@@ -25,7 +25,6 @@ public class NewTongue : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		Debug.Log (this.transform.position.z);
         if (Pause.isPaused || Time.timeScale == 0)
             return;
         bool shoot = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);
