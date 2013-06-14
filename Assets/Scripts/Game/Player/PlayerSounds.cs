@@ -31,7 +31,7 @@ public class PlayerSounds : MonoBehaviour
 		AudioSource newAudio = gameObject.AddComponent<AudioSource>();
 		newAudio.clip = clip;
 		newAudio.loop = false;
-		newAudio.volume = 1.0f;
+		newAudio.volume = 0.7f;
 		return newAudio;
 	}
 	

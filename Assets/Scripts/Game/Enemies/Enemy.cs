@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class Enemy : MonoBehaviour {
 	
-	public string DEATH_SOUND = "death";
+	public AudioClip[] deathSounds;
 	private int health = 100;
 	public int healthDamage = 5;
 	
@@ -72,10 +72,7 @@ public class Enemy : MonoBehaviour {
 		//disable collider and forward movement so they stop and don't screw with other physics bodie
 			disableCollider();
 			disableMovement();
-			//delay playing to wait for animation to hit water
-			//NOTE: there should be a method PlayDelay() which works in seconds, but my editor can't find it
-			//this current method works in like hertz or something, so I just guessed this number...
-			//GetComponent<AudioSource>().Play(25000);	
+			playDeathSound();	
 			state = EnemyState.DYING;
 	}
 			
@@ -121,5 +118,16 @@ public class Enemy : MonoBehaviour {
 		Collider bx = GetComponent<Collider>();
 		
 		if (bx != null) bx.enabled = false;
+	}
+	
+	//Plays a random sound from the monsters death audio list
+	//if they don't have one, simply returns
+	private void playDeathSound()
+	{
+		//won't make it compulsary to have sound effects
+		if (deathSounds == null || deathSounds.Length == 0) return;
+		
+		AudioClip c = deathSounds[Random.Range (0, deathSounds.Length)];
+		AudioSource.PlayClipAtPoint(c, transform.position);
 	}
 }
