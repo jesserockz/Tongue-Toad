@@ -45,7 +45,10 @@ public class TongueBody : MonoBehaviour {
         {
             //Debug.Log("TongueBody collided with " + o.tag);
 
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
+            //GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
+
+            player.tripMode.lickToad();
+
             Destroy(o);
         }
     }

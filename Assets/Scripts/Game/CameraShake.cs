@@ -30,11 +30,15 @@ public class CameraShake : MonoBehaviour {
 		}
 		
 	}
-	
-	public void Shake(){
-		originPosition = transform.position;
-		originRotation = transform.rotation;
-		shake_intensity = 0.01f;
-		shake_decay = 0.002f;
-	}
+
+    public void Shake()
+    {
+        if (!GetComponent<CameraControl>().rotating)
+        {
+            originPosition = transform.position;
+            originRotation = transform.rotation;
+            shake_intensity = 0.01f;
+            shake_decay = 0.002f;
+        }
+    }
 }

@@ -4,11 +4,11 @@ using System.Collections;
 //class handles doing the overlay at the start for game instructions
 public class InstructionsOverlay : MonoBehaviour
 {
-	public bool enabled = true;
+	//public bool enabled = true; 
 	public Texture2D[] instructions;
 	private int currentIndex;
 	private Pause pause;
-	private bool display;
+	private bool display; 
 	
 	// Use this for initialization
 	void Start ()

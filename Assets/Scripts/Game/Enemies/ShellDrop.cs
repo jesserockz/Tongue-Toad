@@ -9,7 +9,7 @@ public class ShellDrop : MonoBehaviour {
 	
 	//Spawns the shells
 	public void spawnShells(Vector3 position, int numShells) {
-		
+        numShells *= (int)TripMode.bonuses[TripMode.shellDropMultiplier];
 		for (int i = 0; i < numShells; i++) {
 			//iterate over number, and fire some new shells around
 			int val = Random.Range (0, shells.Length);

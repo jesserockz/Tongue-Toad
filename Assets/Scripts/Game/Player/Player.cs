@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 	private bool tripping;
 	private static PlayerAnimator.PlayerState _state = PlayerAnimator.PlayerState.TongueIn;
 
+    public TripMode tripMode;
+
 	public static PlayerAnimator.PlayerState State {
 		get { return _state; }
 		set {
@@ -76,6 +78,7 @@ public class Player : MonoBehaviour
 		
 		LastState = PlayerAnimator.PlayerState.TongueIn;
 		_state = PlayerAnimator.PlayerState.TongueIn;
+        tripMode = GetComponent<TripMode>();
 	}
 
 	void OnTriggerEnter (Collider c)
@@ -113,7 +116,7 @@ public class Player : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		controller.Move (new Vector3 (accel.x * speed * Time.deltaTime, 0f, 0f));
+		controller.Move (new Vector3 (accel.x * speed *TripMode.bonuses[TripMode.movementMultiplier] * Time.deltaTime, 0f, 0f));
 		transform.position = new Vector3 (transform.position.x, 0f, 0f);
 	}
 
@@ -147,9 +150,9 @@ public class Player : MonoBehaviour
 			comboScript.spawnCombo (enemy, enemyCombo);
 		}
 		
-		float points = (float)enemy.getBasePoints () * Mathf.Pow (1.5f, enemyCombo);
+		float points = (float)enemy.getBasePoints () * Mathf.Pow (1.5f * TripMode.bonuses[TripMode.comboMultiplier], enemyCombo) * TripMode.bonuses[TripMode.pointsMultiplier];
 		
-		Debug.Log (points);
+		//Debug.Log (points);
 		
 		Player.addScore ((int)points);
 		

@@ -4,12 +4,13 @@ using System.Collections;
 public class CameraControl : MonoBehaviour
 {
 	
+
 	public float countToRotate;
 	public float timeToRotate;
 	public float rotateAcceleration;
 	public float cameraZoomSpeed;
 	public float maxCameraZoomOut;
-	bool rotating = false;
+	public bool rotating = false;
 	public float curRotation = 0;
 	public bool slidingOut = false;
 	public bool slidingIn = false;
@@ -55,7 +56,7 @@ public class CameraControl : MonoBehaviour
 	private void checkCameraEffects ()
 	{
 
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<MotionBlur> ().enabled = (rotating || slidingIn);
+		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<MotionBlur> ().enabled = (rotating || slidingIn || player.tripMode.blur);
 
 	}
 	
@@ -64,8 +65,6 @@ public class CameraControl : MonoBehaviour
 		if (!rotating && !slidingIn) {
 			rotating = true;
 			slidingOut = true;
-			
-			player.setTripping(true);
 		}
 	}
 	
@@ -122,7 +121,8 @@ public class CameraControl : MonoBehaviour
 					transform.RotateAround (new Vector3 (0, 2, 2), Vector3.left, (curRotation - countToRotate * 360));
 					curRotation = 0;
 					rotating = false;
-					player.setTripping(false);
+					//player.setTripping(false);
+                    player.tripMode.finishCameraSpin();
 				}
 			} else if (currentRotationMode == BARRELROLLMODE) {
 				if (curRotation < countToRotate * 360 / 2)
@@ -140,8 +140,9 @@ public class CameraControl : MonoBehaviour
 					curRotation = 0;
 					transform.rotation = new Quaternion (transform.rotation.x, transform.rotation.y, curRotation, transform.rotation.w);
 					rotating = false;
-					
-					player.setTripping(false);
+                    
+					//player.setTripping(false);
+                    player.tripMode.finishCameraSpin();
 				}
 			}
 		}

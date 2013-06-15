@@ -10,6 +10,8 @@ public class NewTongue : MonoBehaviour {
     AnimationState tongue;
     Transform toad;
 
+    float tongueSpeed = 2f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +20,7 @@ public class NewTongue : MonoBehaviour {
         player = p.GetComponent<Player>();
         playerSounds = p.GetComponent<PlayerSounds>();
         tongue = animation["Tongue"];
-        tongue.speed = 3f;
+        tongue.speed = tongueSpeed;
         tongue.wrapMode = WrapMode.Once;
 	}
 	
@@ -46,12 +48,12 @@ public class NewTongue : MonoBehaviour {
         }
         else if (tongueOut && !tongueRetractingEarly && shoot)
         {
-            tongue.speed = 1;
+            tongue.speed = tongueSpeed * TripMode.bonuses[TripMode.attackSpeed];
         }
         else if (tongueOut && !tongueRetractingEarly && !shoot && tongue.time<=1.00f)
         {
             //Tongue back in early
-            tongue.speed = -1;
+            tongue.speed = -tongueSpeed * TripMode.bonuses[TripMode.attackSpeed];
             tongueRetractingEarly = true;
         }
         else if (tongueOut && !animation.isPlaying)
@@ -72,7 +74,6 @@ public class NewTongue : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         GameObject o = other.gameObject;
-
         if (o.tag == "Enemy")
         {
             //get the enemy
@@ -95,13 +96,14 @@ public class NewTongue : MonoBehaviour {
         }
         else if (o.tag == "Friendly")
         {
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
+            //GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
+            player.tripMode.lickToad();
             Destroy(o);
         }
         else if (o.tag == "Terrain")
         {
             tongueRetractingEarly = true;
-            tongue.speed = -1;
+            tongue.speed = -tongueSpeed * TripMode.bonuses[TripMode.attackSpeed];
         }
     }
 }

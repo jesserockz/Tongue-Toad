@@ -23,7 +23,7 @@ public class CraftCarrierAnimator : MonoBehaviour {
         spawn.speed = 0.6f;
         
         animation.Play("Spawn");
-        animation.PlayQueued("IdleMain");
+        animation.PlayQueued("Idle1");
     }
 
     // Update is called once per frame

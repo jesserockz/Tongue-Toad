@@ -30,8 +30,8 @@ public class PlaneMovement : MonoBehaviour {
 		//rigidbody.AddForce (0, 0, -2);
         if (!Pause.isPaused)
         {
-            accel += accelIncrement;
-            rigidbody.AddForce(0f, 0f, -accel);
+            accel += accelIncrement; 
+            rigidbody.AddForce(0f, 0f, -accel * TripMode.bonuses[TripMode.enemySpeed]);
             if (carrier)
             {
                 //-2 to 5
