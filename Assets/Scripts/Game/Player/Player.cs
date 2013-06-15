@@ -149,8 +149,6 @@ public class Player : MonoBehaviour
 		
 		float points = (float)enemy.getBasePoints () * Mathf.Pow (1.5f, enemyCombo);
 		
-		Debug.Log (points);
-		
 		Player.addScore ((int)points);
 		
 		Player.streak++;
