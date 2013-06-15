@@ -27,6 +27,8 @@ public class InstructionsOverlay : MonoBehaviour
 		if (!display)
 			return;
 		
+		
+		GUI.depth = -1;
 		Time.timeScale = 0;
 		//display the instructions texture and a button
 		//when the button is clicked, enable Pause script, destroy this, then set timestep back to 1
@@ -49,9 +51,15 @@ public class InstructionsOverlay : MonoBehaviour
 			if (GUI.Button (r, "Next..."))
 				currentIndex++;
 			else if (GUI.Button (r2, "Skip to Game!"))
-				gotoGame ();
+				skipToGame();
 		}
 		
+	}
+	
+	private void skipToGame()
+	{
+		GameObject.FindWithTag("EnemySpawn").GetComponent<EnemySpawn>().skipTutorial();
+		gotoGame ();
 	}
 	
 	private void gotoGame ()
@@ -59,10 +67,7 @@ public class InstructionsOverlay : MonoBehaviour
 		pause.enabled = true;
 		Time.timeScale = 1;
 		
-		GameObject.FindWithTag("EnemySpawn").GetComponent<EnemySpawn>().skipTutorial();
-		
 		Destroy (this);
-		
 	}
 	
 	public void displayInstructions ()

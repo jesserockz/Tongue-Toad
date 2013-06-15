@@ -59,8 +59,7 @@ public class EnemyInfoPanels : MonoBehaviour {
 		pause.enabled = false;
 		Time.timeScale = 0;
 		
-		//Screen.showCursor = true;
-        //Screen.lockCursor = false;
+		GUI.depth = -1;
 		
 		//display the instructions texture and a button
 		//when the button is clicked, enable Pause script, destroy this, then set timestep back to 1
