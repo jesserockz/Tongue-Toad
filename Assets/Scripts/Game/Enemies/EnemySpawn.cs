@@ -189,10 +189,25 @@ public class EnemySpawn : MonoBehaviour
 		}
 	}
 	
+	public void skipTutorial()
+	{
+		//remove info panels so we don't display them
+		informationDisplays.Clear();
+		
+		//then go to wave 10 (procedural waves start here)
+		currentWave = 9;
+		populateNextSpawnWave();
+	}
+	
+	private bool goneToBoss = false;
+	
 	//hack method to go straight to boss wave
 	//will simple skip whatever is left in current wave and go on to boss
 	public void gotoBoss ()
 	{
+		if (currentWave >= 9 || goneToBoss) return;
+		
+		goneToBoss = true;
 		currentWave = 8;
 		populateNextSpawnWave ();
 	}
@@ -214,8 +229,9 @@ public class EnemySpawn : MonoBehaviour
 			currentFormation = formations [currentWave];	
 		} else {
 			//spawning procedurally generated
-			if (currentWave + 1 % 5 == 0) {
+			if ((currentWave + 1) % 5 == 0) {
 				//spawn boss
+				Debug.Log ("spawning boss");
 				addObject (currentFormation, 1, spawnCraftCarrier);
 			} else {
 				//spawning based on pattern
@@ -227,6 +243,7 @@ public class EnemySpawn : MonoBehaviour
 				addObject (currentFormation, 1 + y, spawnCopter);
 				addObject (currentFormation, 2 + y, spawnTetsudo);
 				addObject (currentFormation, 2 + y, spawnPlane);
+				addObject (currentFormation, 3 + y, spawnGood);
 			}
 		}
 	}

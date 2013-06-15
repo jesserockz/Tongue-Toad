@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ShellShard : MonoBehaviour {
 	
+	public AudioClip pickupSound;
+	
 	//time before the shard disappears, safeguard to ensure they don't stay around forever
 	public float timeToDisappear = 15;
 	private float currentlyAround;
@@ -57,6 +59,7 @@ public class ShellShard : MonoBehaviour {
 		if (o.tag == "Player") {
 			Destroy (gameObject);
 			o.GetComponent<Player>().addShell();
+			playSound();
 		}
 	}
 	
@@ -66,6 +69,12 @@ public class ShellShard : MonoBehaviour {
 		if (o.tag == "Player") {
 			Destroy (gameObject);
 			o.GetComponent<Player>().addShell();
+			playSound();
 		}
+	}
+	
+	private void playSound()
+	{
+		AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.3f);	
 	}
 }
