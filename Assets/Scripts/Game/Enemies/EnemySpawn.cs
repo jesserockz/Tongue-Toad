@@ -189,6 +189,16 @@ public class EnemySpawn : MonoBehaviour
 		}
 	}
 	
+	public void skipTutorial()
+	{
+		//remove info panels so we don't display them
+		informationDisplays.Clear();
+		
+		//then go to wave 10 (procedural waves start here)
+		currentWave = 9;
+		populateNextSpawnWave();
+	}
+	
 	//hack method to go straight to boss wave
 	//will simple skip whatever is left in current wave and go on to boss
 	public void gotoBoss ()

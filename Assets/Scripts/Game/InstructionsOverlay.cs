@@ -58,6 +58,9 @@ public class InstructionsOverlay : MonoBehaviour
 	{
 		pause.enabled = true;
 		Time.timeScale = 1;
+		
+		GameObject.FindWithTag("EnemySpawn").GetComponent<EnemySpawn>().skipTutorial();
+		
 		Destroy (this);
 		
 	}
