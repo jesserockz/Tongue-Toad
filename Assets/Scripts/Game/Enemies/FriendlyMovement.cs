@@ -28,7 +28,7 @@ public class FriendlyMovement : MonoBehaviour {
 		}
 		
 		if(transform.position.z < -5f) {
-			Player.currentHealth = Mathf.Min(100, Player.currentEnergy + regenerateHealth);
+			Player.currentHealth = Mathf.Min(100, Player.currentHealth + regenerateHealth);
 			Player.addScore(10);
 			Destroy(gameObject);
 		}
