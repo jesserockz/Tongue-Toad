@@ -150,8 +150,8 @@ public class MainGui : MonoBehaviour
 			for (int i = 0; i < 10; i++) {
 				string name = "-";
 				string score = "0";
-				
-				if ((i + 2) < names.Length && names [i + 2].Length != 0) {
+				Debug.Log (names);
+				if ((i + 2) < (names.Length - 5) && names [i + 2].Length != 0) {
 					string[] info = names [i + 2].Split (' ');
 					name = info [0].Split ('=') [1];
 					score = info [1].Split ('=') [1];

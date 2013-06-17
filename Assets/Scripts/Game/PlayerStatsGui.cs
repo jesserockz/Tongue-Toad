@@ -12,7 +12,7 @@ public class PlayerStatsGui : MonoBehaviour
     public Texture2D healthBaseImage;
     Texture2D[] healthBarImages = new Texture2D[101];
     private Rect healthLocation = new Rect(Screen.width * 0.8f, 0, Screen.width * 0.2f, Screen.width * 0.2f);
-    private float healthAnimationIndex = 100;
+    private float healthAnimationIndex = 0;
 
     //stat variables
     public Texture2D statBackboardTexture;
@@ -95,8 +95,8 @@ public class PlayerStatsGui : MonoBehaviour
         //get health, then adjust the animation index
         int health = Mathf.Clamp(player.getHealth(), 0, 100);
 
-        if (health < healthAnimationIndex) healthAnimationIndex -= 0.5f;
-        else if (health > healthAnimationIndex) healthAnimationIndex += 0.5f;
+        if (health < healthAnimationIndex) healthAnimationIndex -= 0.5f * Time.timeScale;
+        else if (health > healthAnimationIndex) healthAnimationIndex += 0.5f * Time.timeScale;
 
         //draw the actual image
         GUI.DrawTexture(healthLocation, healthBaseImage);
