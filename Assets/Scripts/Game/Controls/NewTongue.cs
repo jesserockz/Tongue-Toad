@@ -44,13 +44,13 @@ public class NewTongue : MonoBehaviour {
             tongueOut = true;
             playerSounds.tongueStartSource.Play();
             playerSounds.tongueStretchSource.Play();
-            animation.Play("Tongue");
+            animation.Play("Tongue");    
         }
         else if (tongueOut && !tongueRetractingEarly && shoot)
         {
             tongue.speed = tongueSpeed * TripMode.bonuses[TripMode.attackSpeed];
         }
-        else if (tongueOut && !tongueRetractingEarly && !shoot && tongue.time<=1.00f)
+        else if (tongueOut && !tongueRetractingEarly  && !shoot && tongue.time<=1.00f)
         {
             //Tongue back in early
             tongue.speed = -tongueSpeed * TripMode.bonuses[TripMode.attackSpeed];

@@ -22,6 +22,8 @@ public class TripMode : MonoBehaviour {
 
     private Player player;
 
+    public bool showGUI = false;
+
     public void Start()
     {
         player = GetComponent<Player>();
@@ -69,13 +71,16 @@ public class TripMode : MonoBehaviour {
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(400, 5, 300, 30),  " Attack Speed: " + bonuses[0] + " Time: " + timesLeft[0]);
-        GUI.Label(new Rect(400, 35, 300, 30), "   Shell Drop: " + bonuses[1] + " Time: " + timesLeft[1]);
-        GUI.Label(new Rect(400, 65, 300, 30), " Points Multi: " + bonuses[2] + " Time: " + timesLeft[2]);
-        GUI.Label(new Rect(400, 95, 300, 30), "  Combo Multi: " + bonuses[3] + " Time: " + timesLeft[3]);
-        GUI.Label(new Rect(400, 125, 300, 30), "   Move Multi: " + bonuses[4] + " Time: " + timesLeft[4]);
-        GUI.Label(new Rect(400, 155, 300, 30), "  Enemy Speed: " + bonuses[5] + " Time: " + timesLeft[5]);
-        GUI.Label(new Rect(400, 185, 300 , 30), "Toads Licked : " + toadsLicked);
+        if (showGUI)
+        {
+            GUI.Label(new Rect(400, 5, 300, 30), " Attack Speed: " + bonuses[0] + " Time: " + timesLeft[0]);
+            GUI.Label(new Rect(400, 35, 300, 30), "   Shell Drop: " + bonuses[1] + " Time: " + timesLeft[1]);
+            GUI.Label(new Rect(400, 65, 300, 30), " Points Multi: " + bonuses[2] + " Time: " + timesLeft[2]);
+            GUI.Label(new Rect(400, 95, 300, 30), "  Combo Multi: " + bonuses[3] + " Time: " + timesLeft[3]);
+            GUI.Label(new Rect(400, 125, 300, 30), "   Move Multi: " + bonuses[4] + " Time: " + timesLeft[4]);
+            GUI.Label(new Rect(400, 155, 300, 30), "  Enemy Speed: " + bonuses[5] + " Time: " + timesLeft[5]);
+            GUI.Label(new Rect(400, 185, 300, 30), "Toads Licked : " + toadsLicked);
+        }
     }
 
     public void finishCameraSpin()

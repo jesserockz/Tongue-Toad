@@ -168,7 +168,8 @@ public class Player : MonoBehaviour
 	//method adds to highscore, also incrementing our scorecheck value to ensure no cheating happens
 	public static void addScore (int value)
 	{
-		changingScore = true;
+
+        changingScore = true;
 
 		score += value;
 

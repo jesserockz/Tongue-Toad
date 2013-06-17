@@ -23,6 +23,7 @@ public class CraftCarrierAnimator : MonoBehaviour {
         spawn.speed = 0.6f;
         
         animation.Play("Spawn");
+        animation.PlayQueued("Idle2");
         animation.PlayQueued("Idle1");
     }
 

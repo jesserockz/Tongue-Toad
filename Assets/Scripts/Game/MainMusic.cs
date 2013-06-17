@@ -32,7 +32,7 @@ public class MainMusic : MonoBehaviour
 		tripSource.volume = 0;
 		
 		songPart = SongPart.intro;
-		Debug.Log (normalSource.clip.length);
+
 		normalSource.Play ();
 		//normalSource.time = 30;
 		tripSource.Play ();

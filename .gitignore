@@ -13,3 +13,9 @@ Assembly-UnityScript-firstpass.pidb
 *.csproj
 *.unityproj
 *.sln
+/Tongue Toad-csharp.suo
+/Assembly-CSharp-Editor.pidb
+/Assembly-UnityScript.pidb
+/Assembly-UnityScript-Editor.pidb
+/Game Concept.suo
+/Tongue Toad - Copy-csharp.suo

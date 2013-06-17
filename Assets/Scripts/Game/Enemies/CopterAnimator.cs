@@ -10,7 +10,7 @@ public class CopterAnimator : MonoBehaviour {
 	
 	private AnimationState idle, death;
     private string idleAnim = "";
-	private string[] idleString = {"Idle1","flyingIdle2"};
+	private string[] idleString = {"FlyingIdleNew","flyingIdle2"};
 	private string deathString = "Death";
 	
 	bool playedDeath = false;
@@ -32,7 +32,7 @@ public class CopterAnimator : MonoBehaviour {
             animation.Play(idleAnim);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-            animation.Play(deathString);	
+            animation.CrossFade(deathString);	
 			playedDeath = true;
 		}
 	}

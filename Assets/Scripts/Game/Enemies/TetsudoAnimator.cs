@@ -36,8 +36,7 @@ public class TetsudoAnimator : MonoBehaviour {
 			animation.Play (idleString[Random.Range(0,idleString.Length)]);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-			Debug.Log ("Tetsudo death");
-			animation.Play (deathAnim);	
+			animation.CrossFade (deathAnim);	
 			playedDeath = true;
 		}
 	}

@@ -34,7 +34,7 @@ public class PlaneAnimator : MonoBehaviour {
 			animation.Play (idleAnim);
 		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
-			animation.Play (deathAnim);	
+			animation.CrossFade (deathAnim);	
 			playedDeath = true;
 		}
 	}

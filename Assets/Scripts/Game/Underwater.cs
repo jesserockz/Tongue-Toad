@@ -14,10 +14,10 @@ public class Underwater : MonoBehaviour {
     private float defaultFogDensity;
     private Material defaultSkybox;
     private Material noSkybox;
-	public BlurEffect blur;
+	public  BlurEffect blur;
  
     void Start () {
-	    //Set the background color
+	    //Set the background color   
 	    //camera.backgroundColor = new Color(0, 0.4f, 0.7f, 1);
 		//defaultFog = RenderSettings.fog;
 		//defaultFogColor = RenderSettings.fogColor;
