@@ -30,7 +30,13 @@ public class SubmitHighscore : MonoBehaviour
 		placing = null;
 		
 		if (!error) {
-			placing = w.text;
+			//cause of lame webserver...
+			if (w.text.Contains("\n")) {
+				placing = w.text.Split('\n')[0];
+			} else {
+				placing = w.text;
+			}
+			
 		}
 	}
 	

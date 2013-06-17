@@ -115,7 +115,7 @@ public class GameOverGui : MonoBehaviour
 	
 	private void displayCenter(string s) 
 	{
-		float width = GUI.skin.GetStyle ("label").CalcSize (new GUIContent (s)).x;
+		float width = GUI.skin.GetStyle ("label").CalcSize (new GUIContent (s)).x + 5;
 		GUI.Label (new Rect (centerX(width), Screen.height * 0.4f, width, 40), s);
 	}
 	
