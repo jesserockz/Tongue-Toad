@@ -19,7 +19,6 @@ public class PlaneMovement : MonoBehaviour {
         if (carrier)
         {
             //xpos = Random.Range(-2f, 5f);
-            Debug.Log("XPos: " + xpos);
 			accelIncrement = 0.06f;
         }
 	}

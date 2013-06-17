@@ -8,7 +8,7 @@ using System.Collections;
 public class MouseFollower : MonoBehaviour
 {
 	
-	private bool follow = true;
+	public bool follow;
 	
 	float rotationY;
 	float sensitivity = 2.0f;
@@ -46,18 +46,19 @@ public class MouseFollower : MonoBehaviour
 
         
         //Starts with old control style
-        follow = true;
-        
+        follow = false;
 	}
 	
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		float distanceMult = 1.0f;
-		//float distanceMult = (tongue.maxExtension - tongue.transform.position.z) / tongue.maxExtension;
-		distanceMult = Mathf.Clamp(distanceMult, 0.1f, 1f);
-		
+		float timeMult = tongue.animation["Tongue"].time;
+        float maxTime = tongue.animation["Tongue"].length / 2;
+		timeMult = (maxTime - Mathf.Clamp(timeMult, 0.0f, maxTime))/maxTime;
+        //Restricts rotation based on how far tongue is out.
+
+
 		if (Input.GetKeyDown (KeyCode.F1)) {
 			//change the mode
 			follow = !follow;
@@ -83,7 +84,7 @@ public class MouseFollower : MonoBehaviour
 		if (Time.timeScale == 0 || Pause.isPaused || !pause.enabled) return;
 		
 		if (!follow) {
-			rotationY += Input.GetAxis("Mouse X") * sensitivity * distanceMult;
+            rotationY += Input.GetAxis("Mouse X") * sensitivity * timeMult;
 			rotationY = Mathf.Clamp (rotationY, -60f, 60f);
 			
 			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, rotationY, 0);
@@ -120,8 +121,8 @@ public class MouseFollower : MonoBehaviour
 			if (normalized.z < 0.2)
 				normalized.z = -Mathf.Clamp (normalized.z, -2f, 0f);
 			Quaternion targetRotation = Quaternion.LookRotation (normalized, Vector3.up);
-			transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, 
-            Time.deltaTime * rotationSpeed * distanceMult);
+			transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation,
+            Time.deltaTime * rotationSpeed * timeMult);
 		}
 	}
 }

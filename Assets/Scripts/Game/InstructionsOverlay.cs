@@ -61,14 +61,16 @@ public class InstructionsOverlay : MonoBehaviour
 		GameObject.FindWithTag("EnemySpawn").GetComponent<EnemySpawn>().skipTutorial();
 		gotoGame ();
 	}
-	
-	private void gotoGame ()
-	{
-		pause.enabled = true;
-		Time.timeScale = 1;
-		
-		Destroy (this);
-	}
+
+    private void gotoGame()
+    {
+        pause.enabled = true;
+        Time.timeScale = 1;
+
+        Destroy(this);
+        Screen.showCursor = false;
+        Screen.lockCursor = true;
+    }
 	
 	public void displayInstructions ()
 	{
