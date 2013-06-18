@@ -153,7 +153,7 @@ public class PlayerStatsGui : MonoBehaviour
 		//can't change once it's dead
 		if (currentFace == deadFace) return;
 		
-		if (lastHealth == 0) {
+		if (lastHealth <= 0) {
 			previousFace = currentFace;
 			currentFace = deadFace;
 			
