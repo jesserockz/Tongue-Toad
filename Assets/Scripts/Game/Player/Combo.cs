@@ -4,15 +4,11 @@ using System.Collections;
 public class Combo : MonoBehaviour {
 	
 	public GameObject[] comboSigns;
-	
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public Texture2D[] comboNumTextures;
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 	
 	public void spawnCombo(Enemy enemy, int combo)

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerStatsGui : MonoBehaviour
 {
-
 	//resource location
 	private string healthBase = "GUI/game/health/healthbar_";
 	private string numberBase = "GUI/game/score numbers/";
@@ -21,6 +20,7 @@ public class PlayerStatsGui : MonoBehaviour
 	//face textures
 	public Texture2D[] rockyFaces;
 	public Texture2D[] tripFaces;
+	public Texture2D deadFace;
 	
 	//current face variables
 	private Texture2D currentFace, previousFace;
@@ -60,7 +60,6 @@ public class PlayerStatsGui : MonoBehaviour
 
 	//the player
 	private Player player;
-
 
 	// Use this for initialization
 	void Start ()
@@ -151,6 +150,19 @@ public class PlayerStatsGui : MonoBehaviour
 		
 		//check if we need to change face
 		
+		//can't change once it's dead
+		if (currentFace == deadFace) return;
+		
+		if (lastHealth == 0) {
+			previousFace = currentFace;
+			currentFace = deadFace;
+			
+			previousAlpha = currentAlpha;
+			currentAlpha = 0.0f;
+			
+			return;
+		}
+		
 		int iCur = Mathf.Clamp (player.getHealth() * 3 / 100, 0, 2);
 		int iLast = Mathf.Clamp (lastHealth * 3 / 100, 0, 2);
 		
@@ -161,8 +173,6 @@ public class PlayerStatsGui : MonoBehaviour
 			
 			previousAlpha = currentAlpha;
 			currentAlpha = 0.0f;
-			
-			Debug.Log (iCur);
 		}
 		
 		//then cache health
