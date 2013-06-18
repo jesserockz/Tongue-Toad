@@ -11,7 +11,6 @@ public class MainGui : MonoBehaviour
 	public Texture2D newGameTex, tutTex, instructionsTex, highScoreTex, optionsTex, creditsTex, exitGameTex;
 	public GUISkin guiSkin;
 	public Font otherFont, hssFont, hssUnderfont;
-	public Texture2D hsNumbers;
 	public Texture2D hsRefresh, hsReturn;
 	
 	//options menu textures

@@ -5,8 +5,8 @@ public class PlayerStatsGui : MonoBehaviour
 {
 
     //resource location
-    private string healthBase = "GUI/health/healthbar_";
-    private string numberBase = "GUI/numbers/";
+    private string healthBase = "GUI/game/health/healthbar_";
+    private string numberBase = "GUI/game/score numbers/";
 
     //health bar variables
     public Texture2D healthBaseImage;
