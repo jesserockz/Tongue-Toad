@@ -8,7 +8,7 @@ public class MainGui : MonoBehaviour
 	public Texture2D titleTex;
 	
 	//individual buttons
-	public Texture2D newGameTex, instructionsTex, highScoreTex, optionsTex, creditsTex, exitGameTex;
+	public Texture2D newGameTex, tutTex, instructionsTex, highScoreTex, optionsTex, creditsTex, exitGameTex;
 	public GUISkin guiSkin;
 	public Font otherFont, hssFont, hssUnderfont;
 	public Texture2D hsNumbers;
@@ -16,6 +16,9 @@ public class MainGui : MonoBehaviour
 	
 	//options menu textures
 	public Texture2D playMusic, muteMusic, playSFX, muteSFX, returnToMenu;
+	
+	//panels texture
+	public Texture2D creditPanelTex, highscorePanelTex;
 	
 	//private stuff
 	private List<ButtonItem> buttons = new List<ButtonItem> ();
@@ -32,6 +35,7 @@ public class MainGui : MonoBehaviour
 		mode = Mode.Menu;
 		
 		buttons.Add (new ButtonItem (newGameTex, newGame));
+		buttons.Add (new ButtonItem (tutTex, tutorial));
 		buttons.Add (new ButtonItem (highScoreTex, highScore));
 		buttons.Add (new ButtonItem (optionsTex, options));
 		buttons.Add (new ButtonItem (creditsTex, credits));
@@ -43,6 +47,11 @@ public class MainGui : MonoBehaviour
 	private void newGame ()
 	{
 		Application.LoadLevel ("Game");
+	}
+	
+	private void tutorial()
+	{
+		
 	}
 		
 	private void highScore ()
@@ -102,13 +111,14 @@ public class MainGui : MonoBehaviour
 
 		float scale = 0.7f;
 		
-		GUI.DrawTexture (new Rect (centerX (titleTex.width * scale), y, titleTex.width * scale, titleTex.height * scale), titleTex);
+		float padding = 5;
+		
+		GUI.DrawTexture (new Rect (centerX (titleTex.width * scale), y - 3 * padding, titleTex.width * scale, titleTex.height * scale), titleTex);
 
 		y += titleTex.height * scale;
 
-		float padding = 7;
 		
-		float current = y + ((Screen.height - y) - buttons.Count * (buttons [0].texture.height + padding)) / 2 - padding * 2;
+		float current = y + ((Screen.height - y) - buttons.Count * (buttons [0].texture.height + padding)) / 2 - padding * 4;
 		
 		for (int i = 0; i < buttons.Count; i++) {
 			ButtonItem bi = buttons [i];
@@ -139,7 +149,14 @@ public class MainGui : MonoBehaviour
 			
 		float dy = 33;
 		float iy = y - 10 * dy - 50;
-			
+		
+		//location of the backing panel. Y coordinate of first name is 73 pixels down into panel 
+		Rect r = new Rect(centerX (highscorePanelTex.width * 0.9f), iy - 73, highscorePanelTex.width, highscorePanelTex.height);
+		r.width *= 0.9f;
+		r.height *= 0.8f; 
+		
+		GUI.DrawTexture(r, highscorePanelTex);
+		
 		for (int i = 0; i < 10; i++) {
 			string name = "-";
 			string score = "0";
@@ -165,11 +182,11 @@ public class MainGui : MonoBehaviour
 		}
 		
 		
-		if (GUI.Button (new Rect (centerX (hsRefresh.width), y - 30, hsRefresh.width, hsRefresh.height), hsRefresh)) {
+		if (GUI.Button (new Rect (centerX (hsRefresh.width), iy + dy * 11, hsRefresh.width, hsRefresh.height), hsRefresh)) {
 			//hs.reloadCoroutine ();
 		}
 		
-		if (GUI.Button (new Rect (centerX (hsReturn.width), y - 30 + hsRefresh.height, hsReturn.width, hsReturn.height), hsReturn)) {
+		if (GUI.Button (new Rect (centerX (hsReturn.width), iy + dy * 11 + hsRefresh.height, hsReturn.width, hsReturn.height), hsReturn)) {
 			mode = Mode.Menu;
 		}
 	}
@@ -183,8 +200,10 @@ public class MainGui : MonoBehaviour
 		float secondPadding = 20;
 		
 		//slider dimensions
-		float sliderHeight = 20;
-		float sliderWidth = 120;
+		float sliderWidth = 358;
+		float sliderHeight = 27;
+		
+		//sliderWidth = 
 		
 		//used for centering components
 		float totalHeight = playMusic.height + playSFX.height + sliderHeight * 2 + returnToMenu.height + firstPadding + secondPadding;
@@ -224,26 +243,15 @@ public class MainGui : MonoBehaviour
 	
 	private void drawCredits ()
 	{
-		float w = 350;
-		float h = 40;
-		float x = (Screen.width - w) / 2.0f;
-		float y = Screen.height * 0.2f;
-		float iy = h;
-		int i = 0;
+		float pad = 20;
+		float totalY = creditPanelTex.height + returnToMenu.height + pad;
 		
-		List<string> credits = new List<string> ();
-		credits.Add ("Programmer: Troy Shaw");
-		credits.Add ("Programmer: Jesse Hills");
-		credits.Add ("Artist: Kiran Matthews");
-		credits.Add ("Artist: Jordan Dai");
-		credits.Add ("Artist: Bat Mandoza");
-		credits.Add ("Artist: Loxy Reid");
+		Rect creditRect = new Rect(centerX (creditPanelTex.width), (Screen.height - totalY) / 2, creditPanelTex.width, creditPanelTex.height);
+		Rect buttonRect = new Rect (centerX (returnToMenu.width), (Screen.height - totalY) / 2 + creditPanelTex.height + pad, returnToMenu.width, returnToMenu.height);
 		
-		for (i = 0; i < credits.Count; i++) {
-			GUI.Label (new Rect (x, y + i * iy, w, h), credits [i]);
-		}
+		GUI.DrawTexture(creditRect, creditPanelTex);
 		
-		if (GUI.Button (new Rect (centerX (returnToMenu.width), y + iy * (i + 2), returnToMenu.width, returnToMenu.height), returnToMenu)) {
+		if (GUI.Button (buttonRect, returnToMenu)) {
 			mode = Mode.Menu;
 		}
 	}

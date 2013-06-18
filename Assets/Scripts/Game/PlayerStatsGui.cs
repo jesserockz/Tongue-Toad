@@ -16,7 +16,6 @@ public class PlayerStatsGui : MonoBehaviour
 
     //stat variables
     public Texture2D statBackboardTexture;
-    public Texture2D comboStringTexture;
     private Rect backboardLocation;
 
     private Texture2D[] scoreNumbers = new Texture2D[10];
@@ -105,8 +104,6 @@ public class PlayerStatsGui : MonoBehaviour
 
         // -- draw score/ combo/ shell texture 
         GUI.DrawTexture(backboardLocation, statBackboardTexture);
-        GUI.DrawTexture(backboardLocation, comboStringTexture);
-
 
         if (scoreAni < Player.getScore()) scoreAni++;
         else if (scoreAni > Player.getScore()) scoreAni--;
