@@ -106,11 +106,11 @@ public class Enemy : MonoBehaviour {
 	private void disableMovement(){
 		ForwardMovement fm = GetComponent<ForwardMovement>();
 		if(fm!=null) fm.enabled = false;
-		PlaneMovement pm = GetComponent<PlaneMovement>();
-		if(pm!=null) {
-			pm.enabled = false;
-			Destroy (pm.gameObject);
-		}
+		//PlaneMovement pm = GetComponent<PlaneMovement>();
+		//if(pm!=null) {
+		//	pm.enabled = false;
+			//Destroy (pm.gameObject);
+		//}
 	}
 	
 	private void disableCollider() {

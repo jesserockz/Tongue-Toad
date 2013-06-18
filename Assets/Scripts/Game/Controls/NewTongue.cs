@@ -85,7 +85,10 @@ public class NewTongue : MonoBehaviour {
 			if(enemy.GetComponent<TetsudoAnimator>()==null){
             	Vector3 dir = Vector3.Normalize(-(toad.position - transform.position));
             	//fling the enemy back
-            	o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
+                if (o.GetComponent<PlaneMovement>() == null)
+                    o.GetComponent<Rigidbody>().velocity = (1.0f * dir);
+                else
+                    o.GetComponent<Rigidbody>().AddForce(0, 0, 10f);
 			}
 
             //attack the enemy... death, animations, etc, are handled there.

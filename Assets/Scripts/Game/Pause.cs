@@ -70,9 +70,12 @@ public class Pause : MonoBehaviour
     public static void setPause(bool pause)
     {
         isPaused = pause;
-		
-		//Screen.lockCursor = !pause;
-		//Screen.showCursor = pause;
+
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<MouseFollower>().follow)
+        {
+            Screen.lockCursor = !pause;
+            Screen.showCursor = pause;
+        }
 		
         Time.timeScale = isPaused ? 0 : 1.0f;
     }
