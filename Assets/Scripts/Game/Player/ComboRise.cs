@@ -9,7 +9,6 @@ public class ComboRise : MonoBehaviour {
 	private Color c;
 	
 	void Start() {
-		Debug.Log (Time.timeScale);
 		c = renderer.material.color;
 	}
 	
@@ -18,7 +17,6 @@ public class ComboRise : MonoBehaviour {
 		if (Pause.isPaused || Time.timeScale == 0) return;
 		
 		c.a -= Time.deltaTime * (1.0f / visibleTime);
-		Debug.Log (c.a);
 		renderer.material.color = c;
 		
 		transform.Translate(0, 0, -Time.deltaTime * riseVelocity);

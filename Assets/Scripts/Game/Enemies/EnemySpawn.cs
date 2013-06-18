@@ -17,7 +17,7 @@ public class EnemySpawn : MonoBehaviour
 	//formations contains exact wave formations up to wave 10
 	private List<List<System.Action>> formations;
 	private List<System.Action> currentFormation;
-	private Dictionary<int, System.Action> informationDisplays;
+	private Dictionary<int, System.Action> informationDisplays = new Dictionary<int, System.Action> ();
 	private EnemyInfoPanels enemyInfoPanels;
 	private GameObject currentBoss;
 	private int currentWave;
@@ -26,7 +26,6 @@ public class EnemySpawn : MonoBehaviour
 	private bool boss = false;
 	private int spawnCount = 20;
 	private Quaternion spawnAngle = Quaternion.Euler (0, 180, 0);
-	
 	private WaveDisplay waveDisplay;
 	
 	void Start ()
@@ -34,7 +33,7 @@ public class EnemySpawn : MonoBehaviour
 		//cache enemy info panel
 		GameObject gui = GameObject.FindGameObjectWithTag ("Gui");
 		enemyInfoPanels = gui.GetComponent<EnemyInfoPanels> ();
-		waveDisplay = gui.GetComponent<WaveDisplay>();
+		waveDisplay = gui.GetComponent<WaveDisplay> ();
 		
 		// Create the waves
 		
@@ -98,7 +97,8 @@ public class EnemySpawn : MonoBehaviour
 		//set our current formation to the first formation
 		currentFormation = formations [0];
 		
-		initEnemyInfoPanels ();
+		if (MainGui.doTutorial) 
+			initEnemyInfoPanels ();
 	}
 	
 	private void initEnemyInfoPanels ()
@@ -115,7 +115,6 @@ public class EnemySpawn : MonoBehaviour
 		
 		//now go over all the different monsters and set up when our info panels display
 		List<System.Action> used = new List<System.Action> ();
-		informationDisplays = new Dictionary<int, System.Action> ();
 		
 		for (int i = 0; i < formations.Count; i++) {
 			foreach (System.Action a in formations[i]) {
@@ -123,7 +122,8 @@ public class EnemySpawn : MonoBehaviour
 				if (used.Contains (a))
 					continue;
 				
-				if (!displayMethods.ContainsKey(a)) continue;
+				if (!displayMethods.ContainsKey (a))
+					continue;
 				
 				//otherwise add it
 				informationDisplays.Add (i, displayMethods [a]);
@@ -173,7 +173,8 @@ public class EnemySpawn : MonoBehaviour
 				
 				if (currentFormation.Count > 0) {
 					i = Random.Range (0, currentFormation.Count);
-					if (Random.Range(0.0f, 1.0f) < 0.3) currentFormation[i].Invoke ();
+					if (Random.Range (0.0f, 1.0f) < 0.3)
+						currentFormation [i].Invoke ();
 					currentFormation.RemoveAt (i);
 				}
 				
@@ -189,14 +190,14 @@ public class EnemySpawn : MonoBehaviour
 		}
 	}
 	
-	public void skipTutorial()
+	public void skipTutorial ()
 	{
 		//remove info panels so we don't display them
-		informationDisplays.Clear();
+		informationDisplays.Clear ();
 		
 		//then go to wave 10 (procedural waves start here)
 		currentWave = 9;
-		populateNextSpawnWave();
+		populateNextSpawnWave ();
 	}
 	
 	private bool goneToBoss = false;
@@ -205,7 +206,8 @@ public class EnemySpawn : MonoBehaviour
 	//will simple skip whatever is left in current wave and go on to boss
 	public void gotoBoss ()
 	{
-		if (currentWave >= 9 || goneToBoss) return;
+		if (currentWave >= 9 || goneToBoss)
+			return;
 		
 		goneToBoss = true;
 		currentWave = 8;
@@ -222,7 +224,7 @@ public class EnemySpawn : MonoBehaviour
 	private void populateNextSpawnWave ()
 	{
 		currentWave++;
-		waveDisplay.displaySign();
+		waveDisplay.displaySign ();
 		
 		if (currentWave < formations.Count) {
 			//spawning from predetermined lists
@@ -231,7 +233,6 @@ public class EnemySpawn : MonoBehaviour
 			//spawning procedurally generated
 			if ((currentWave + 1) % 5 == 0) {
 				//spawn boss
-				Debug.Log ("spawning boss");
 				addObject (currentFormation, 1, spawnCraftCarrier);
 			} else {
 				//spawning based on pattern

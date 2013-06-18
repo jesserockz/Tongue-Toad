@@ -4,6 +4,12 @@ using System;
 
 public class MainGui : MonoBehaviour
 {
+	//set as the player transitions from menu to game
+	//if they click "play game" this is false, if they click "tutorial" it's true
+	//causes tutorial images/ help images to either be displayed or NOT be displayed
+	//also makes the player go straight to wave 10
+	public static bool doTutorial = false;
+	
 	//main heading
 	public Texture2D titleTex;
 	
@@ -45,12 +51,14 @@ public class MainGui : MonoBehaviour
 	
 	private void newGame ()
 	{
+		MainGui.doTutorial = false;
 		Application.LoadLevel ("Game");
 	}
 	
 	private void tutorial()
 	{
-		
+		MainGui.doTutorial = true;
+		Application.LoadLevel ("Game");
 	}
 		
 	private void highScore ()

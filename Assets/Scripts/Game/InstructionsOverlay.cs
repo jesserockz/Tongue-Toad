@@ -14,7 +14,7 @@ public class InstructionsOverlay : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		if (!enabled) {
+		if (!MainGui.doTutorial) {
 			Destroy (this);
 			return; 
 		}
