@@ -3,12 +3,13 @@ using System.Collections;
 
 public class ComboRise : MonoBehaviour {
 	
-	public float visibleTime = 10.0f;
-	public float riseVelocity = 1.0f;
+	private float visibleTime = 2f;
+	private float riseVelocity = 1.0f;
 	
 	private Color c;
 	
 	void Start() {
+		Debug.Log (Time.timeScale);
 		c = renderer.material.color;
 	}
 	
@@ -17,6 +18,7 @@ public class ComboRise : MonoBehaviour {
 		if (Pause.isPaused || Time.timeScale == 0) return;
 		
 		c.a -= Time.deltaTime * (1.0f / visibleTime);
+		Debug.Log (c.a);
 		renderer.material.color = c;
 		
 		transform.Translate(0, 0, -Time.deltaTime * riseVelocity);
