@@ -2,27 +2,25 @@ using UnityEngine;
 using System.Collections;
 
 public class ComboRise : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
 	
+	public float visibleTime = 10.0f;
+	public float riseVelocity = 1.0f;
+	
+	private Color c;
+	
+	void Start() {
+		c = renderer.material.color;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Pause.isPaused || Time.timeScale == 0) return;
 		
-		Color c = this.renderer.material.color;
-		
-		c.a -= Time.deltaTime * 1f;
-		
-		Vector3 pos = transform.position;
-		pos.y += Time.deltaTime * 1f;
-		
-		transform.position = pos;
-		
+		c.a -= Time.deltaTime * (1.0f / visibleTime);
 		renderer.material.color = c;
 		
-		if (this.renderer.material.color.a <= 0) Destroy(gameObject);
+		transform.Translate(0, 0, -Time.deltaTime * riseVelocity);
+		
+		if (c.a <= 0) Destroy(gameObject);
 	}
 }
