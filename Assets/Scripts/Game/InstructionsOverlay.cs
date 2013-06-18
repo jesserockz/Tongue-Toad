@@ -4,7 +4,8 @@ using System.Collections;
 //class handles doing the overlay at the start for game instructions
 public class InstructionsOverlay : MonoBehaviour
 {
-	//public bool enabled = true; 
+	public GUISkin skin;
+	
 	public Texture2D[] instructions;
 	private int currentIndex;
 	private Pause pause;
@@ -27,6 +28,7 @@ public class InstructionsOverlay : MonoBehaviour
 		if (!display)
 			return;
 		
+		GUI.skin = skin;
 		
 		GUI.depth = -1;
 		Time.timeScale = 0;

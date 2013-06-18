@@ -37,11 +37,9 @@ public class GameOverGui : MonoBehaviour
 				Application.LoadLevel ("Menu");
 			}
 			
-			if (SubmitHighscore.wasError()) {
-				displayCenter("Server error submitting score");
-			} else {
-				displayCenter("Congratulations, you've come in position " + SubmitHighscore.placing + "!");
-			}
+			
+			displayCenter("Congratulations, you've come in position " + SubmitHighscore.placing + "!");
+			
 		} else if (sending) {
 			string s = "Submitting highscore to server";
 			for (int j = 0; j < (sendTime % 3); j++)

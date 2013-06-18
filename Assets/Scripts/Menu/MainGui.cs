@@ -25,9 +25,9 @@ public class MainGui : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		GameObject o = GameObject.Find ("HighScoreInterface");
+		//GameObject o = GameObject.Find ("HighScoreInterface");
 		
-		hs = o.GetComponent<TestHtml>();
+		//hs = o.GetComponent<TestHtml>();
 		
 		mode = Mode.Menu;
 		
@@ -48,7 +48,7 @@ public class MainGui : MonoBehaviour
 	private void highScore ()
 	{
 		mode = Mode.Highscore;
-		hs.reloadCoroutine ();
+		//hs.reloadCoroutine ();
 	}
 	 
 	private void options ()
@@ -133,48 +133,40 @@ public class MainGui : MonoBehaviour
 		
 		Vector2 loadLen2 = GUI.skin.GetStyle ("label").CalcSize (new GUIContent ("Couldn't connect to highscore server"));
 		float conLength = loadLen2.x;
-		
-		if (TestHtml.loading)
-			GUI.Label (new Rect (centerX (loadLength), Screen.height * 0.4f, loadLength, 50), "Loading from highscore server...");
-		else if (TestHtml.error)
-			GUI.Label (new Rect (centerX (conLength), Screen.height * 0.4f, conLength, 50), "Couldn't connect to highscore server");
-		else {
-			string[] names = TestHtml.contents.Split ('\n');
 
-			float maxWidth = style.CalcSize (new GUIContent ("MMMMMMMMMMMM")).x;
-			float numWidth = GUI.skin.GetStyle ("label").CalcSize (new GUIContent ("10.")).x;
+		float maxWidth = style.CalcSize (new GUIContent ("MMMMMMMMMMMM")).x;
+		float numWidth = GUI.skin.GetStyle ("label").CalcSize (new GUIContent ("10.")).x;
 			
-			float dy = 33;
-			float iy = y - 10 * dy - 50;
+		float dy = 33;
+		float iy = y - 10 * dy - 50;
 			
-			for (int i = 0; i < 10; i++) {
-				string name = "-";
-				string score = "0";
-				Debug.Log (names);
-				if ((i + 2) < (names.Length - 5) && names [i + 2].Length != 0) {
-					string[] info = names [i + 2].Split (' ');
-					name = info [0].Split ('=') [1];
-					score = info [1].Split ('=') [1];
-				}
-				
-				//display the score number
-				GUI.Label (new Rect (centerX (maxWidth) - numWidth - 5, iy + dy * i, 200, 35), (i + 1) + ". ");
-				
-				//green underlay of name
-				style.normal.textColor = Color.green;
-				GUI.Label (new Rect (centerX (maxWidth), iy + dy * i + 8, 200, 30), name, style);
-				 
-				//yellow overtop of name
-				style.normal.textColor = Color.yellow;
-				GUI.Label (new Rect (centerX (maxWidth), iy + dy * i + 8 - 1, 200, 30), name, style);
-				
-				//display their score
-				GUI.Label (new Rect (centerX (maxWidth) + maxWidth + 5, iy + dy * i, 200, 35), score);
+		for (int i = 0; i < 10; i++) {
+			string name = "-";
+			string score = "0";
+
+			if (i < LocalHighscore.highscores.Count) {
+				name = LocalHighscore.highscores[i].name;
+				score = LocalHighscore.highscores[i].score.ToString();
 			}
+				
+			//display the score number
+			GUI.Label (new Rect (centerX (maxWidth) - numWidth - 5, iy + dy * i, 200, 35), (i + 1) + ". ");
+				
+			//green underlay of name
+			style.normal.textColor = Color.green;
+			GUI.Label (new Rect (centerX (maxWidth), iy + dy * i + 8, 200, 30), name, style);
+				 
+			//yellow overtop of name
+			style.normal.textColor = Color.yellow;
+			GUI.Label (new Rect (centerX (maxWidth), iy + dy * i + 8 - 1, 200, 30), name, style);
+				
+			//display their score
+			GUI.Label (new Rect (centerX (maxWidth) + maxWidth + 5, iy + dy * i, 200, 35), score);
 		}
 		
+		
 		if (GUI.Button (new Rect (centerX (hsRefresh.width), y - 30, hsRefresh.width, hsRefresh.height), hsRefresh)) {
-			hs.reloadCoroutine ();
+			//hs.reloadCoroutine ();
 		}
 		
 		if (GUI.Button (new Rect (centerX (hsReturn.width), y - 30 + hsRefresh.height, hsReturn.width, hsReturn.height), hsReturn)) {

@@ -10,11 +10,16 @@ public class SubmitHighscore : MonoBehaviour
 	private string url = "http://www.troyshaw.co.nz/toad/hs.php?mode=set&";
 	private string secretKey = "thisKeyIsSecret";
 	
+	
 	public void submitHighscore (string name, int score)
 	{
 		loading = true;
 		
-		StartCoroutine (WaitForRequest (name, score));
+		placing = LocalHighscore.addScore(name, score).ToString();
+		
+		loading = false;
+		
+		//StartCoroutine (WaitForRequest (name, score));
 	}
 	
 	private IEnumerator WaitForRequest (string name, int score)
@@ -45,7 +50,7 @@ public class SubmitHighscore : MonoBehaviour
 		return SubmitHighscore.placing == null || SubmitHighscore.placing.StartsWith ("error");
 	}
 	
-	public  string Md5Sum (string strToEncrypt)
+	private string Md5Sum (string strToEncrypt)
 	{
 		System.Text.UTF8Encoding ue = new System.Text.UTF8Encoding ();
 		byte[] bytes = ue.GetBytes (strToEncrypt);
