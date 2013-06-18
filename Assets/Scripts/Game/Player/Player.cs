@@ -101,6 +101,11 @@ public class Player : MonoBehaviour
 			controller.enabled = false;
 			//tongue.tongue.renderer.enabled = false;
 		}
+		
+		if (State == PlayerAnimator.PlayerState.Dying && this.collider.enabled) {
+			collider.enabled = false;
+		}
+		
 		if (currentHealth <= 0 && State == PlayerAnimator.PlayerState.Dead) {
 			initiateGameOver ();
 		}
