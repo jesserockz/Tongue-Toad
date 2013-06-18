@@ -17,7 +17,9 @@ public class PlayerStatsGui : MonoBehaviour
     //stat variables
     public Texture2D statBackboardTexture;
     private Rect backboardLocation;
-
+	
+	public Texture2D[] rockyFaces;
+	
     private Texture2D[] scoreNumbers = new Texture2D[10];
     private Texture2D[] shellNumbers = new Texture2D[10];
 
@@ -97,10 +99,10 @@ public class PlayerStatsGui : MonoBehaviour
         if (health < healthAnimationIndex) healthAnimationIndex -= 0.5f * Time.timeScale;
         else if (health > healthAnimationIndex) healthAnimationIndex += 0.5f * Time.timeScale;
 
-        //draw the actual image
+        //draw the health backing, current bar, then rocky's face
         GUI.DrawTexture(healthLocation, healthBaseImage);
         GUI.DrawTexture(healthLocation, healthBarImages[(int)healthAnimationIndex]);
-
+		GUI.DrawTexture (healthLocation, rockyFaces[0]);
 
         // -- draw score/ combo/ shell texture 
         GUI.DrawTexture(backboardLocation, statBackboardTexture);
@@ -115,35 +117,6 @@ public class PlayerStatsGui : MonoBehaviour
         drawString(score, scoreNumbers, scoreDrawPoint, scoreHeight, scoreGap);
         drawString(shells, shellNumbers, shellDrawPoint, shellHeight, shellGap);
         drawString(combo, scoreNumbers, comboDrawPoint, comboHeight, comboGap);
-
-
-        int lX = 25;
-        int lY = 350;
-        int i = 0;
-        /*
-        GUI.Box(new Rect(lX - 15, lY - 40, 100, 150), "Stats");
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "health: " + player.getHealth());
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "energy: " + player.getEnergy());
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "score: " + Player.getScore ());
-        GUI.Label(new Rect(lX, lY + i++ * 20, 100, 100), "combo: " + player.getCombo());
-        GUI.Label (new Rect(lX, lY + i++ * 20, 100, 100), "shells: " + player.getShells());
-         */
-
-        //anticheat box
-        if (Player.hasCheated) GUI.Box(new Rect(Screen.width - 150 - 10, lY, 150, 30), "Cheating was detected");
-
-        if (player.getEnergy() == 0)
-        {
-            float w = 220;
-            float h = 23;
-            float x = (float)(Screen.width - w) / 2;
-            float y = (float)(Screen.height * 0.75);
-#if UNITY_IPHONE || UNITY_ANDROID
-			GUI.Box(new Rect(x,y,w,h), "Shake to renew energy!");
-#else
-            GUI.Box(new Rect(x, y, w, h), "Hit Enter/ End to renew energy!");
-#endif
-        }
     }
 
     private void drawString(string str, Texture2D[] numTexs, Vector2 origin, float neededHeight, float horozontalGap)
