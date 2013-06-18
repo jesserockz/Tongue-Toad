@@ -18,7 +18,6 @@ public class CopterAnimator : MonoBehaviour {
 	void Start () {
 		enemy = GetComponent<Enemy>();
         idleAnim = idleString[Random.Range(0,idleString.Length)];
-		idle = animation[idleAnim];
 		death = animation[deathString];
 		//idle.time = Random.Range(0.0f, idle.length);
 
@@ -27,10 +26,11 @@ public class CopterAnimator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (enemy.getState() == Enemy.EnemyState.IDLE)
+		if (enemy.getState() == Enemy.EnemyState.IDLE && !animation.isPlaying)
 		{
-            animation.Play(idleAnim);
-		} else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
+            animation.CrossFade(idleAnim);
+		} 
+        else if (enemy.getState () == Enemy.EnemyState.DYING && !playedDeath)
 		{
             animation.CrossFade(deathString);	
 			playedDeath = true;

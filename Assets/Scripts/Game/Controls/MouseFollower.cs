@@ -53,7 +53,7 @@ public class MouseFollower : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		float timeMult = tongue.animation["Tongue"].time;
+		float timeMult = tongue.animation["Tongue"].time / 1.6f;
         float maxTime = tongue.animation["Tongue"].length / 2;
 		timeMult = (maxTime - Mathf.Clamp(timeMult, 0.0f, maxTime))/maxTime;
         //Restricts rotation based on how far tongue is out.

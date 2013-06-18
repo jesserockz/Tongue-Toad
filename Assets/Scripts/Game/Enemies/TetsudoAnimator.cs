@@ -12,7 +12,7 @@ public class TetsudoAnimator : MonoBehaviour {
     private string idleAnim = "";
     private string deathAnim = "";
 	private string[] idleString = {"HeadLeft","HeadRight","HeadSplit","HeadFront","HeadBack","Idle","Idle","Idle","Idle","Idle"};
-	private string[] deathString = {"Death1","Death2"};
+	private string[] deathString = {"Death1","Death2","Death2","Death2"};
 	
 	bool playedDeath = false;
 	// Use this for initialization
