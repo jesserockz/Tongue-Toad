@@ -203,6 +203,9 @@ public class PlayerStatsGui : MonoBehaviour
 		GUI.DrawTexture (r, gameoverTexture);
 	}
 	
+	private int tripMode = -1;
+	private bool wasTripping;
+	
 	//checks if we need to change face. If we do, changes the current to that face, and the previous to the correct face
 	//also updates the alpha values
 	private void updateFaces ()
@@ -237,10 +240,34 @@ public class PlayerStatsGui : MonoBehaviour
 			return;
 		}
 		
+		int tripCur = player.getTripMode();
+
+		if (player.isTripping()) {
+			if (tripMode == tripCur) return;
+			
+			int i = player.getTripMode();
+			
+			i = Mathf.Clamp (i - 1, 0, 2);
+			previousFace = currentFace;
+			currentFace = tripFaces[i];
+			
+			previousAlpha = currentAlpha;
+			currentAlpha = 0.0f;
+			
+			lastHealth = player.getHealth ();
+			
+			wasTripping = true;
+			tripMode = tripCur;
+			return;
+		}
+		
+		tripMode = -1;
+		
 		int iCur = Mathf.Clamp (player.getHealth () * 3 / 100, 0, 2);
 		int iLast = Mathf.Clamp (lastHealth * 3 / 100, 0, 2);
 		
-		if (iCur != iLast) {
+		if (iCur != iLast || wasTripping) {
+			wasTripping = false;
 			//we've transitioned
 			previousFace = currentFace;
 			currentFace = rockyFaces [iCur];

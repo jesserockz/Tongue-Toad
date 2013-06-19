@@ -264,6 +264,11 @@ public class Player : MonoBehaviour
 		return tripping;
 	}
 	
+	public int getTripMode() 
+	{
+		return tripMode.getTripMode();
+	}
+	
 	public void setTripping (bool tripping)
 	{
 		this.tripping = tripping;
