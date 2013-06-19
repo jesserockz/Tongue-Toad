@@ -1,9 +1,26 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\Player\Combo.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Game\Player\Combo.cs" Line="39" Column="26" />
+      <File FileName="Assets\Scripts\Game\PlayerStatsGui.cs" Line="54" Column="50" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Game" expanded="True">
+                  <Node name="Enemies" expanded="True" />
+                  <Node name="Player" expanded="True">
+                    <Node name="Combo.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

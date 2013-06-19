@@ -106,7 +106,7 @@ public class PlayerStatsGui : MonoBehaviour
 		previousAlpha = 0.0f;
 	}
 	
-	private float current, shellTime = 0.1f;
+	private float current, shellTime = 0.2f;
 	
 	//draws health/ energy/ score
 	void OnGUI ()

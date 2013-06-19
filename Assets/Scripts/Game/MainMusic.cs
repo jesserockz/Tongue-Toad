@@ -65,7 +65,7 @@ public class MainMusic : MonoBehaviour
 		}
 
 		
-		bool tripping = player.isTripping ();
+		bool tripping = player.isTripping () && player.getTripMode() >= 2;
 		
 		float mult = tripping ? -1 : 1;
 		float val = 0.01f;

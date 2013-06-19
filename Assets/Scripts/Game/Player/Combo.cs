@@ -36,7 +36,7 @@ public class Combo : MonoBehaviour
 		float h = comboNumTextures[0].height * 0.6f;
 		float w = comboNumTextures[0].width * 0.6f;
 		
-		Rect r = new Rect(5, 180, w, h);
+		Rect r = new Rect(35, 130, w, h);
 		GUI.DrawTexture(r, tex);
 	}
 	
