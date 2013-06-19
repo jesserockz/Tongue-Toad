@@ -119,7 +119,7 @@ public class PlayerStatsGui : MonoBehaviour
 			if (player.getShells () == 0) {
 				//we've finished moving shells
 				
-				if (Input.GetKeyDown (KeyCode.escape)) {
+				if (Input.GetKeyDown (KeyCode.Escape)) {
 					Application.LoadLevel ("GameOver");
 				}
 				
