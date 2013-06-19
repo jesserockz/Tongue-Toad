@@ -145,6 +145,11 @@ public class EnemySpawn : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		
+		if(Input.GetKeyDown(KeyCode.T)){
+			spawnGood();
+		}
+		
 		if (true && !boss) {
 			//not enough time has elapsed to spawn a new monster. Return
 			if (Time.time - lastSpawn <= between)

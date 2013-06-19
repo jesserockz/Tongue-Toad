@@ -15,6 +15,8 @@ public class TripMode : MonoBehaviour {
     float[] timesLeft = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     bool[] activated = new bool[] { false, false, false, false, false, false };
     public bool blur = false;
+	
+	CameraControl cam;
 
     bool cameraSpinning = false;
 
@@ -29,6 +31,7 @@ public class TripMode : MonoBehaviour {
     {
         player = GetComponent<Player>();
         bonuses = new float[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+		cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
     }
 	
 	//returns the players trip mode. Is either between 0-3
@@ -47,9 +50,15 @@ public class TripMode : MonoBehaviour {
 			
 			tripMode = toadsLicked;
 			
-            if (toadsLicked == 2)
+			
+			if(toadsLicked == 1){
+				cam.pulseDirection = 1;
+			}
+			
+            else if (toadsLicked == 2)
             {
                 blur = true;
+				
             }
             int i = Random.Range(0, bonuses.Length);
             switch (i)
@@ -74,6 +83,7 @@ public class TripMode : MonoBehaviour {
         }
         else if (toadsLicked == 2)
         {
+			cam.pulseDirection = 0;
 			tripMode = 3;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
             cameraSpinning = true;
@@ -97,6 +107,7 @@ public class TripMode : MonoBehaviour {
     public void finishCameraSpin()
     {
         cameraSpinning = false;
+		
     }
 
     public void Update()
@@ -128,7 +139,7 @@ public class TripMode : MonoBehaviour {
             player.setTripping(false);
             toadsLicked = 0;
 			tripMode = toadsLicked;
-
+	cam.pulseDirection = 0;
             blur = false;
 
         }

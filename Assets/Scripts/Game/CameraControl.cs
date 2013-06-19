@@ -20,6 +20,9 @@ public class CameraControl : MonoBehaviour
 	public static int UNDERWATERMODE = 0;
 	public static int BARRELROLLMODE = 1;
 	//public static fixed int NEWMODE= 2;
+	
+	public int pulseDirection = 0;
+	public float pulseSpeed = 1f;
 
 	int currentRotationMode = BARRELROLLMODE;
 	
@@ -51,6 +54,7 @@ public class CameraControl : MonoBehaviour
 		checkCameraEffects ();
 		zoom ();
 		rotate ();
+		pulse ();
 	}
 	
 	private void checkCameraEffects ()
@@ -77,6 +81,22 @@ public class CameraControl : MonoBehaviour
 			slidingOut = true;
 		}
 		lastaccel = accel;
+	}
+	
+	public void pulse(){
+		
+		/**if(camera.fieldOfView<27 && pulseDirection==1)
+			camera.fieldOfView += pulseSpeed * Time.deltaTime;
+			//camera.fieldOfView = Mathf.Lerp(26,27,pulseSpeed);
+		else if(camera.fieldOfView>26 && pulseDirection==2)
+			camera.fieldOfView -= pulseSpeed * Time.deltaTime;
+			//camera.fieldOfView = Mathf.Lerp(27,26,pulseSpeed);
+		else if(camera.fieldOfView>=27 && pulseDirection==1)
+			pulseDirection = 2;
+		else if(camera.fieldOfView>=26 && pulseDirection==2)
+			pulseDirection = 1;**/
+		//if(pulseDirection!=0)
+		//	camera.fieldOfView = (Mathf.Sin(Time.time * pulseSpeed) * 0.5f) +26.5f;
 	}
 	
 	void zoom ()
