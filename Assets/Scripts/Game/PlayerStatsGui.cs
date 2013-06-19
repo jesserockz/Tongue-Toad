@@ -28,6 +28,11 @@ public class PlayerStatsGui : MonoBehaviour
 	private float transitionTime = 1;
 	private int lastHealth = 100;
 	
+	//gameover stuff
+	public Texture2D gameoverTexture;
+	private float gameoverAlpha = 0;
+	private float speed = 2;
+	
 	//textures
 	private Texture2D[] scoreNumbers = new Texture2D[10];
 	private Texture2D[] shellNumbers = new Texture2D[10];
@@ -60,6 +65,8 @@ public class PlayerStatsGui : MonoBehaviour
 
 	//the player
 	private Player player;
+	
+	
 
 	// Use this for initialization
 	void Start ()
@@ -96,10 +103,33 @@ public class PlayerStatsGui : MonoBehaviour
 		currentAlpha = 1.0f;
 		previousAlpha = 0.0f;
 	}
-
+	
+	private float current, shellTime = 0.1f;
+	
 	//draws health/ energy/ score
 	void OnGUI ()
 	{
+		if (player.deadOrDying()) {
+			//transition down the shells
+			if (player.getShells() == 0) {
+				//we've finished moving shells
+				
+				//check if we've finished death animation/ fading
+				
+				
+				//fade out main gui components, fade in "game over"
+			} else {
+				//transition shells to score
+				
+				current += Time.deltaTime;
+				
+				if (current >= shellTime) {
+					player.transitionShell();
+				}
+				
+			}
+		}
+		
 		int wi = Screen.width;
 		int hi = Screen.height;
 
@@ -113,6 +143,8 @@ public class PlayerStatsGui : MonoBehaviour
 			healthAnimationIndex += 0.5f * Time.timeScale;
 
 		//draw the health backing, current bar, then rocky's face
+		healthLocation = new Rect (Screen.width  - healthBaseImage.width * 0.7f, 0, healthBaseImage.width * 0.7f, healthBaseImage.height * 0.7f);
+		
 		GUI.DrawTexture (healthLocation, healthBaseImage);
 		GUI.DrawTexture (healthLocation, healthBarImages [(int)healthAnimationIndex]);
 		

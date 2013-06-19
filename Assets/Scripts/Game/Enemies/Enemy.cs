@@ -16,8 +16,12 @@ public class Enemy : MonoBehaviour {
 	private EnemyState state;
 	private ShellDrop shellDrop;
 	
+	private Player player;
+	
 	// Use this for initialization
 	void Start () {
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+		
 		shellDrop = GetComponent<ShellDrop>();
 		state = EnemyState.IDLE;
 	}
@@ -36,7 +40,7 @@ public class Enemy : MonoBehaviour {
 		}
 		
 		if(transform.position.z < -5f && state == EnemyState.IDLE) {
-			Player.currentHealth -= healthDamage;
+			player.addHealth(-healthDamage);
 			Player.streak = 0;
 			Destroy(gameObject);
 		}

@@ -21,8 +21,7 @@ public class Player : MonoBehaviour
 	private Combo comboScript;
 	private bool tripping;
 	private static PlayerAnimator.PlayerState _state = PlayerAnimator.PlayerState.TongueIn;
-
-    public TripMode tripMode;
+	public TripMode tripMode;
 
 	public static PlayerAnimator.PlayerState State {
 		get { return _state; }
@@ -78,7 +77,7 @@ public class Player : MonoBehaviour
 		
 		LastState = PlayerAnimator.PlayerState.TongueIn;
 		_state = PlayerAnimator.PlayerState.TongueIn;
-        tripMode = GetComponent<TripMode>();
+		tripMode = GetComponent<TripMode> ();
 	}
 
 	void OnTriggerEnter (Collider c)
@@ -95,33 +94,29 @@ public class Player : MonoBehaviour
 	void Update ()
 	{
 		if (currentHealth <= 0 && State != PlayerAnimator.PlayerState.Dying && State != PlayerAnimator.PlayerState.Dead) {
+			//transitioned from alive to dying, do housekeeping here
 			State = PlayerAnimator.PlayerState.Dying;
 			GetComponent<MouseFollower> ().enabled = false;
 			tongue.enabled = false;
 			controller.enabled = false;
-			//tongue.tongue.renderer.enabled = false;
-		}
-		
-		if (State == PlayerAnimator.PlayerState.Dying && this.collider.enabled) {
 			collider.enabled = false;
+			
+			
+			GameObject.FindGameObjectWithTag("EnemySpawn").GetComponent<EnemySpawn>().enabled = false;
+			GameObject.FindGameObjectWithTag("Gui").GetComponent<Pause>().enabled = false;
+			
 		}
 		
 		if (currentHealth <= 0 && State == PlayerAnimator.PlayerState.Dead) {
 			initiateGameOver ();
 		}
 
-#if UNITY_IPHONE || UNITY_ANDROID
-            //device with accelerometer
-            Vector3 v = Input.acceleration;
-            accel = new Vector3(Mathf.Clamp((v.x - aCalib.x) * 2, -1f, 1f), Mathf.Clamp((v.z - aCalib.z) * 2, -1f, 1f), Mathf.Clamp((v.z - aCalib.z) * 2, -1f, 1f));
-#else
 		accel = new Vector3 (Input.GetAxis ("Horizontal"), 0f, Input.GetAxis ("Vertical"));
-#endif
 	}
 
 	void FixedUpdate ()
 	{
-		controller.Move (new Vector3 (accel.x * speed *TripMode.bonuses[TripMode.movementMultiplier] * Time.deltaTime, 0f, 0f));
+		controller.Move (new Vector3 (accel.x * speed * TripMode.bonuses [TripMode.movementMultiplier] * Time.deltaTime, 0f, 0f));
 		transform.position = new Vector3 (transform.position.x, 0f, 0f);
 	}
 
@@ -136,9 +131,28 @@ public class Player : MonoBehaviour
 		shells++;
 	}
 	
+	//updates players health
+	public void addHealth(int val)
+	{
+		//don't do anything if player is dead or dying
+		if (State == PlayerAnimator.PlayerState.Dying || State == PlayerAnimator.PlayerState.Dead) return;
+		
+		//otherwise adjust health
+		currentHealth = Mathf.Clamp (currentHealth + val, 0, 100);
+	}
+	
 	public void addShell (int amount)
 	{
 		shells += amount;
+	}
+	
+	//transitions a shell to score
+	public void transitionShell()
+	{
+		if (shells > 0) {
+			shells--;
+			score++;
+		}
 	}
 	
 	public int getTongueDamage ()
@@ -155,7 +169,7 @@ public class Player : MonoBehaviour
 			comboScript.spawnCombo (enemy, enemyCombo);
 		}
 		
-		float points = (float)enemy.getBasePoints () * Mathf.Pow (1.5f * TripMode.bonuses[TripMode.comboMultiplier], enemyCombo) * TripMode.bonuses[TripMode.pointsMultiplier];
+		float points = (float)enemy.getBasePoints () * Mathf.Pow (1.5f * TripMode.bonuses [TripMode.comboMultiplier], enemyCombo) * TripMode.bonuses [TripMode.pointsMultiplier];
 		
 		//Debug.Log (points);
 		
@@ -174,7 +188,7 @@ public class Player : MonoBehaviour
 	public static void addScore (int value)
 	{
 
-        changingScore = true;
+		changingScore = true;
 
 		score += value;
 
@@ -209,7 +223,17 @@ public class Player : MonoBehaviour
 	{
 		Screen.lockCursor = false;
 		Screen.showCursor = true;
-		Application.LoadLevel ("GameOver");
+		//Application.LoadLevel ("GameOver");
+	}
+	
+	public bool deadOrDying()
+	{
+		return State == PlayerAnimator.PlayerState.Dying || State == PlayerAnimator.PlayerState.Dead;
+	}
+	
+	public bool dead()
+	{
+		return State == PlayerAnimator.PlayerState.Dead;
 	}
 
 	public static int getScore ()

@@ -8,8 +8,12 @@ public class FriendlyMovement : MonoBehaviour {
 	float lastChange = 0f;
 	float nextChange = 0f;
 	public int regenerateHealth = 5;
+	
+	private Player player;
 
 	void Start () {
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+		
 		float xPos = Random.Range(-3.5f,3.5f);
 		//transform.position += new Vector3(xPos,startingYOffset,startingZOffset);
 		float randomForceX = Random.Range(-250f,100f);
@@ -28,7 +32,7 @@ public class FriendlyMovement : MonoBehaviour {
 		}
 		
 		if(transform.position.z < -5f) {
-			Player.currentHealth = Mathf.Min(100, Player.currentHealth + regenerateHealth);
+			player.addHealth(regenerateHealth);
 			Player.addScore(10);
 			Destroy(gameObject);
 		}
