@@ -10,14 +10,14 @@ public class ShellShard : MonoBehaviour {
 	private float currentlyAround;
 	
 	
-	public float waterLevel = 0.2f, floatHeight;
+	public float waterLevel = 0.0f, floatHeight;
 	public Vector3 buoyancyCentreOffset = Vector3.zero;
 	public float bounceDamp = 0.1f;
 	
 	
 	// Use this for initialization
 	void Start () {
-	
+		rigidbody.AddTorque(Random.Range(-10f,10f),Random.Range(-10f,10f),Random.Range(-10f,10f));
 	}
 	
 	// Update is called once per frame

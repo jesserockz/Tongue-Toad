@@ -5,15 +5,17 @@ using System.Collections;
 public class ShellDrop : MonoBehaviour {
 	
 	public GameObject[] shells;
+	public GameObject newShell;
 
 	
 	//Spawns the shells
 	public void spawnShells(Vector3 position, int numShells) {
         numShells *= (int)TripMode.bonuses[TripMode.shellDropMultiplier];
-		for (int i = 0; i < numShells; i++) {
+		for (int i = 0; i < 1; i++) {
 			//iterate over number, and fire some new shells around
 			int val = Random.Range (0, shells.Length);
-			GameObject shell = (GameObject) Instantiate(shells[val], position, Quaternion.identity);
+			position.y = -0.2f;
+			GameObject shell = (GameObject) Instantiate(newShell, position, Quaternion.identity);
 		}
 	}
 }
