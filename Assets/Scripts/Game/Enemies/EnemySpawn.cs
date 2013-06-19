@@ -46,7 +46,6 @@ public class EnemySpawn : MonoBehaviour
 		}
 		
 		//wave 1 – 10 plebs
-		addObject (formations [0], 10, spawnGood);
 		addObject (formations [0], 10, spawnPleb);
 		
 		//wave 2 - 8 plebs, 5 testudo

@@ -32,7 +32,11 @@ public class Combo : MonoBehaviour
 		}
 		
 		Texture2D tex = comboNumTextures[Mathf.Clamp(currentDisplay - 2, 0, comboSigns.Length - 1)];
-		Rect r = new Rect(Screen.width - comboNumTextures[0].width + 25, 170, comboNumTextures[0].width, comboNumTextures[0].height);
+		
+		float h = comboNumTextures[0].height * 0.9f;
+		float w = comboNumTextures[0].width * 0.9f;
+		
+		Rect r = new Rect(Screen.width - w, 180, w, h);
 		GUI.DrawTexture(r, tex);
 	}
 	
@@ -44,7 +48,7 @@ public class Combo : MonoBehaviour
 		currentDisplay = combo;
 		
 		//spawn enemy signs
-		int i = Mathf.Clamp (combo - 1, 0, comboSigns.Length - 1);
+		int i = Mathf.Clamp (combo - 2, 0, comboSigns.Length - 1);
 		
 		GameObject o = comboSigns [i];
 		
