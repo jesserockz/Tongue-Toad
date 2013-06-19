@@ -14,6 +14,8 @@ public class EnemyInfoPanels : MonoBehaviour {
 	
 	private Texture2D currentlyDisplaying;
 	
+	public GUISkin skin;
+	
 	private Pause pause; 
 	
 	// Use this for initialization
@@ -56,6 +58,8 @@ public class EnemyInfoPanels : MonoBehaviour {
 	void OnGUI() {
 		if (currentlyDisplaying == null) return;
 		
+		GUI.skin = skin; 
+		
 		pause.enabled = false;
 		Time.timeScale = 0;
 		
@@ -68,7 +72,7 @@ public class EnemyInfoPanels : MonoBehaviour {
 		
 		GUI.DrawTexture(new Rect(w * 0.1f, h * 0.1f, w * 0.8f, h * 0.8f), currentlyDisplaying);
 		
-		Rect r = new Rect((w - 100) / 2.0f, h * 0.77f, 100.0f, 30.0f);
+		Rect r = new Rect((w - 150) / 2.0f, h * 0.82f, 150.0f, 30.0f);
 		if (GUI.Button (r, "Okay!")) {
 			currentlyDisplaying = null;
 			pause.enabled = true;

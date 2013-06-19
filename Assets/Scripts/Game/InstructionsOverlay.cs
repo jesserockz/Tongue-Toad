@@ -19,7 +19,8 @@ public class InstructionsOverlay : MonoBehaviour
 			return; 
 		}
 		
-		if (!TransitionCamera.isTransitioning) displayInstructions();
+		//if (!TransitionCamera.isTransitioning) 
+		displayInstructions();
 	}
 	
 	// Update is called once per frame
@@ -41,8 +42,7 @@ public class InstructionsOverlay : MonoBehaviour
 		
 		GUI.DrawTexture (new Rect (w * 0.1f, h * 0.1f, w * 0.8f, h * 0.8f), instructions [currentIndex]);
 		
-		Rect r = new Rect ((w - 100) / 2.0f, h * 0.75f, 100.0f, 30.0f);
-		Rect r2 = new Rect ((w + 120) / 2.0f, h * 0.75f, 100.0f, 30.0f);
+		Rect r = new Rect ((w - 200) / 2.0f, h * 0.8f, 200.0f, 30.0f);
 		
 		if (currentIndex == instructions.Length - 1) {
 			//display only "start game"
@@ -52,8 +52,6 @@ public class InstructionsOverlay : MonoBehaviour
 			//display "skip to game" "next" buttons"
 			if (GUI.Button (r, "Next..."))
 				currentIndex++;
-			else if (GUI.Button (r2, "Skip to Game!"))
-				skipToGame();
 		}
 		
 	}
