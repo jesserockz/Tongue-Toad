@@ -221,9 +221,7 @@ public class Player : MonoBehaviour
 	
 	private void initiateGameOver ()
 	{
-		Screen.lockCursor = false;
-		Screen.showCursor = true;
-		//Application.LoadLevel ("GameOver");
+
 	}
 	
 	public bool deadOrDying()
