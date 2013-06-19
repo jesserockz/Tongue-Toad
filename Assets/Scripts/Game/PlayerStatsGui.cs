@@ -221,11 +221,8 @@ public class PlayerStatsGui : MonoBehaviour
 			currentAlpha = Mathf.Clamp (currentAlpha, 0.0f, 1.0f);
 			previousAlpha = Mathf.Clamp (previousAlpha, 0.0f, 1.0f);
 		}
-		
-		
-		
+
 		//check if we need to change face
-		
 		//can't change once it's dead
 		if (currentFace == deadFace)
 			return;
@@ -241,7 +238,6 @@ public class PlayerStatsGui : MonoBehaviour
 		}
 		
 		int tripCur = player.getTripMode();
-
 		if (player.isTripping()) {
 			if (tripMode == tripCur) return;
 			

@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class TripMode : MonoBehaviour {
+public class TripMode : MonoBehaviour
+{
 
     public const int attackSpeed = 0;
     public const int shellDropMultiplier = 1;
@@ -9,21 +10,21 @@ public class TripMode : MonoBehaviour {
     public const int comboMultiplier = 3;
     public const int movementMultiplier = 4;
     public const int enemySpeed = 5;
-	
-	public GameObject doubleScore, doubleShell, extraSpeed, fasterAttack, slowMotion, tripleCombo;
-	
+
+    public GameObject doubleScore, doubleShell, extraSpeed, fasterAttack, slowMotion, tripleCombo;
+
     public static float[] bonuses;
 
-    float[] timesLeft = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    float[] timesLeft = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
     bool[] activated = new bool[] { false, false, false, false, false, false };
     public bool blur = false;
-	
-	CameraControl cam;
+
+    CameraControl cam;
 
     bool cameraSpinning = false;
 
     public int toadsLicked = 0;
-	private int tripMode = 0;
+    private int tripMode = 0;
 
     private Player player;
 
@@ -33,15 +34,15 @@ public class TripMode : MonoBehaviour {
     {
         player = GetComponent<Player>();
         bonuses = new float[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-		cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
     }
-	
-	//returns the players trip mode. Is either between 0-3
-	public int getTripMode()
-	{
-		return Mathf.Clamp (tripMode, 0, 3);
-		
-	}
+
+    //returns the players trip mode. Is either between 0-3
+    public int getTripMode()
+    {
+        return Mathf.Clamp(tripMode, 0, 3);
+
+    }
 
     public void lickToad(Vector3 toadPosition)
     {
@@ -49,42 +50,40 @@ public class TripMode : MonoBehaviour {
         if (toadsLicked == 0 || toadsLicked == 1)
         {
             toadsLicked++;
-			
-			tripMode = toadsLicked;
-			
-			
-			if(toadsLicked == 1){
-				cam.pulseDirection = 1;
-			}
-			
+            tripMode = toadsLicked;
+
+            if (toadsLicked == 1)
+            {
+                cam.pulseDirection = 1;
+            }
             else if (toadsLicked == 2)
             {
                 blur = true;
-				
             }
+
             int i = Random.Range(0, bonuses.Length);
             switch (i)
             {
                 case attackSpeed:
-					create (fasterAttack, toadPosition);
-					break;
+                    create(fasterAttack, toadPosition);
+                    break;
                 case movementMultiplier:
-					create (extraSpeed, toadPosition);
+                    create(extraSpeed, toadPosition);
                     bonuses[i] *= 1.5f;
                     break;
                 case shellDropMultiplier:
-					create (doubleShell, toadPosition);
-					break;
+                    create(doubleShell, toadPosition);
+                    break;
                 case pointsMultiplier:
-					create (doubleScore, toadPosition);
+                    create(doubleScore, toadPosition);
                     bonuses[i] *= 2;
                     break;
                 case comboMultiplier:
-					create (tripleCombo, toadPosition);
+                    create(tripleCombo, toadPosition);
                     bonuses[i] *= 3;
                     break;
                 case enemySpeed:
-					create (slowMotion, toadPosition);
+                    create(slowMotion, toadPosition);
                     bonuses[i] *= 0.8f;
                     break;
             }
@@ -93,18 +92,19 @@ public class TripMode : MonoBehaviour {
         }
         else if (toadsLicked == 2)
         {
-			cam.pulseDirection = 0;
-			tripMode = 3;
+            toadsLicked++;
+            cam.pulseDirection = 0;
+            tripMode = 3;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
             cameraSpinning = true;
         }
     }
-	
-	private void create(GameObject o, Vector3 pos)
-	{
-		pos.y += 0.5f; 
-		Instantiate (o, pos, Quaternion.Euler (90, -180, 0));
-	}
+
+    private void create(GameObject o, Vector3 pos)
+    {
+        pos.y += 0.5f;
+        Instantiate(o, pos, Quaternion.Euler(90, -180, 0));
+    }
 
     public void OnGUI()
     {
@@ -123,20 +123,20 @@ public class TripMode : MonoBehaviour {
     public void finishCameraSpin()
     {
         cameraSpinning = false;
-		
+        
+
     }
 
     public void Update()
     {
         int deactivated = 0;
-        for(int i=0;i<timesLeft.Length;i++)
+        for (int i = 0; i < timesLeft.Length; i++)
         {
             if (activated[i])
             {
-
                 float f = timesLeft[i];
                 f -= Time.deltaTime;
-                timesLeft[i] = f; 
+                timesLeft[i] = f;
 
                 if (f <= 0.0f)
                 {
@@ -144,21 +144,20 @@ public class TripMode : MonoBehaviour {
                     timesLeft[i] = 0.0f;
                     activated[i] = false;
                     toadsLicked--;
-					tripMode = toadsLicked;
+                    if(!cameraSpinning)
+                        tripMode = toadsLicked;
                 }
-                
-            }else
+            }
+            else
                 deactivated++;
         }
         if (deactivated == timesLeft.Length && !cameraSpinning)
         {
             player.setTripping(false);
             toadsLicked = 0;
-			tripMode = toadsLicked;
-	cam.pulseDirection = 0;
+            tripMode = 0;
+            cam.pulseDirection = 0;
             blur = false;
-
         }
     }
-   
 }
