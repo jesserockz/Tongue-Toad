@@ -47,7 +47,7 @@ public class TongueBody : MonoBehaviour {
 
             //GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
 
-            player.tripMode.lickToad();
+            player.tripMode.lickToad(o.transform.position);
 
             Destroy(o);
         }

@@ -8,9 +8,11 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Game" expanded="True">
-                  <Node name="Enemies" expanded="True" />
+                  <Node name="Controls" expanded="True" />
+                  <Node name="Enemies" expanded="True">
+                    <Node name="EnemySpawn.cs" selected="True" />
+                  </Node>
                   <Node name="Player" expanded="True" />
-                  <Node name="EnemyInfoPanels.cs" selected="True" />
                 </Node>
               </Node>
             </Node>
