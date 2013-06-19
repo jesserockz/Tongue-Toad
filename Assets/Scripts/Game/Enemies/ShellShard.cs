@@ -75,6 +75,6 @@ public class ShellShard : MonoBehaviour {
 	
 	private void playSound()
 	{
-		AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.3f);	
+		AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.1f);	
 	}
 }

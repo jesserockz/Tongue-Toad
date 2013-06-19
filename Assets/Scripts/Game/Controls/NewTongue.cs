@@ -100,7 +100,7 @@ public class NewTongue : MonoBehaviour {
         else if (o.tag == "Friendly")
         {
             //GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>().activateSpin();
-            player.tripMode.lickToad();
+            player.tripMode.lickToad(o.transform.position);
             Destroy(o);
         }
         else if (o.tag == "Terrain")

@@ -9,7 +9,9 @@ public class TripMode : MonoBehaviour {
     public const int comboMultiplier = 3;
     public const int movementMultiplier = 4;
     public const int enemySpeed = 5;
-
+	
+	public GameObject doubleScore, doubleShell, extraSpeed, fasterAttack, slowMotion, tripleCombo;
+	
     public static float[] bonuses;
 
     float[] timesLeft = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
@@ -41,7 +43,7 @@ public class TripMode : MonoBehaviour {
 		
 	}
 
-    public void lickToad()
+    public void lickToad(Vector3 toadPosition)
     {
         player.setTripping(true);
         if (toadsLicked == 0 || toadsLicked == 1)
@@ -64,17 +66,25 @@ public class TripMode : MonoBehaviour {
             switch (i)
             {
                 case attackSpeed:
+					create (fasterAttack, toadPosition);
+					break;
                 case movementMultiplier:
+					create (extraSpeed, toadPosition);
                     bonuses[i] *= 1.5f;
                     break;
                 case shellDropMultiplier:
+					create (doubleShell, toadPosition);
+					break;
                 case pointsMultiplier:
+					create (doubleScore, toadPosition);
                     bonuses[i] *= 2;
                     break;
                 case comboMultiplier:
+					create (tripleCombo, toadPosition);
                     bonuses[i] *= 3;
                     break;
                 case enemySpeed:
+					create (slowMotion, toadPosition);
                     bonuses[i] *= 0.8f;
                     break;
             }
@@ -89,6 +99,12 @@ public class TripMode : MonoBehaviour {
             cameraSpinning = true;
         }
     }
+	
+	private void create(GameObject o, Vector3 pos)
+	{
+		pos.y += 0.5f; 
+		Instantiate (o, pos, Quaternion.Euler (90, -180, 0));
+	}
 
     public void OnGUI()
     {

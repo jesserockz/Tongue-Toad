@@ -95,7 +95,7 @@ public class MainMusic : MonoBehaviour
 		//Unity doesn't read them properly, giving a longer time, resulting in noticeable silence between tracks
 		switch (part) {
 		case SongPart.intro:
-			return 35.95f;
+			return 27f;
 		case SongPart.chorus:
 			return 11.95f;
 		case SongPart.verse:
