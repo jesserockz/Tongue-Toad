@@ -70,8 +70,6 @@ public class InstructionsOverlay : MonoBehaviour
         Time.timeScale = 1;
 
         Destroy(this);
-        Screen.showCursor = false;
-        Screen.lockCursor = true;
     }
 	
 	public void displayInstructions ()

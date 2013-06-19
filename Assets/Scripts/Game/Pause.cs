@@ -16,8 +16,6 @@ public class Pause : MonoBehaviour
 	
     void Start()
     {
-        //Screen.showCursor = false;
-        //Screen.lockCursor = true;
     }
 
     // Update is called once per frame
@@ -73,8 +71,7 @@ public class Pause : MonoBehaviour
 
         if (!GameObject.FindGameObjectWithTag("Player").GetComponent<MouseFollower>().follow)
         {
-            Screen.lockCursor = !pause;
-            Screen.showCursor = pause;
+            
         }
 		
         Time.timeScale = isPaused ? 0 : 1.0f;

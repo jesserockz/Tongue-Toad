@@ -46,7 +46,6 @@ public class MouseFollower : MonoBehaviour
 
         
         //Starts with old control style
-        follow = false;
 	}
 	
 	

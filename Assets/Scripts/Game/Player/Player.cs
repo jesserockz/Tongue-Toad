@@ -221,9 +221,7 @@ public class Player : MonoBehaviour
 	
 	private void initiateGameOver ()
 	{
-		Screen.lockCursor = false;
-		Screen.showCursor = true;
-		//Application.LoadLevel ("GameOver");
+
 	}
 	
 	public bool deadOrDying()
@@ -264,6 +262,11 @@ public class Player : MonoBehaviour
 	public bool isTripping ()
 	{
 		return tripping;
+	}
+	
+	public int getTripMode() 
+	{
+		return tripMode.getTripMode();
 	}
 	
 	public void setTripping (bool tripping)

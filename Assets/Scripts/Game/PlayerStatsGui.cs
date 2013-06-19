@@ -25,13 +25,15 @@ public class PlayerStatsGui : MonoBehaviour
 	//current face variables
 	private Texture2D currentFace, previousFace;
 	private float currentAlpha, previousAlpha;
-	private float transitionTime = 1;
+	private float transitionTime = 3;
 	private int lastHealth = 100;
 	
 	//gameover stuff
 	public Texture2D gameoverTexture;
 	private float gameoverAlpha = 0;
-	private float speed = 2;
+	private float gameoverSpeed = 4.0f;
+	private float finalDislpayTime = 2.0f;
+	private float accumulatedGameover = 0;
 	
 	//textures
 	private Texture2D[] scoreNumbers = new Texture2D[10];
@@ -97,7 +99,7 @@ public class PlayerStatsGui : MonoBehaviour
 		yScale = 189.0f / backboardLocation.height;
 		
 		//face stuff
-		currentFace = rockyFaces[rockyFaces.Length - 1];
+		currentFace = rockyFaces [rockyFaces.Length - 1];
 		previousFace = currentFace;
 		
 		currentAlpha = 1.0f;
@@ -109,14 +111,32 @@ public class PlayerStatsGui : MonoBehaviour
 	//draws health/ energy/ score
 	void OnGUI ()
 	{
-		if (player.deadOrDying()) {
+		if (Input.GetKeyDown (KeyCode.Minus))
+			player.addHealth (-10);
+		
+		if (player.deadOrDying ()) {
 			//transition down the shells
-			if (player.getShells() == 0) {
+			if (player.getShells () == 0) {
 				//we've finished moving shells
 				
+				if (Input.GetKeyDown (KeyCode.Escape)) {
+					Application.LoadLevel ("GameOver");
+				}
+				
+				//transition the alpha
+				gameoverAlpha += Time.deltaTime * (1.0f / gameoverSpeed);
+				gameoverAlpha = Mathf.Clamp (gameoverAlpha, 0.0f, 1.0f);
+				
 				//check if we've finished death animation/ fading
-				
-				
+				if (gameoverAlpha >= 0.9f) {
+					
+					if (player.dead ())
+						accumulatedGameover += Time.deltaTime;
+					
+					if (accumulatedGameover >= finalDislpayTime) {
+						Application.LoadLevel ("GameOver");
+					}
+				}
 				//fade out main gui components, fade in "game over"
 			} else {
 				//transition shells to score
@@ -124,11 +144,17 @@ public class PlayerStatsGui : MonoBehaviour
 				current += Time.deltaTime;
 				
 				if (current >= shellTime) {
-					player.transitionShell();
+					player.transitionShell ();
+					current = 0;
 				}
 				
 			}
 		}
+
+		Color c = GUI.color;
+		
+		c.a = (1 - gameoverAlpha);
+		GUI.color = c;
 		
 		int wi = Screen.width;
 		int hi = Screen.height;
@@ -143,7 +169,7 @@ public class PlayerStatsGui : MonoBehaviour
 			healthAnimationIndex += 0.5f * Time.timeScale;
 
 		//draw the health backing, current bar, then rocky's face
-		healthLocation = new Rect (Screen.width  - healthBaseImage.width * 0.7f, 0, healthBaseImage.width * 0.7f, healthBaseImage.height * 0.7f);
+		healthLocation = new Rect (Screen.width - healthBaseImage.width * 0.7f, 0, healthBaseImage.width * 0.7f, healthBaseImage.height * 0.7f);
 		
 		GUI.DrawTexture (healthLocation, healthBaseImage);
 		GUI.DrawTexture (healthLocation, healthBarImages [(int)healthAnimationIndex]);
@@ -167,23 +193,42 @@ public class PlayerStatsGui : MonoBehaviour
 		drawString (score, scoreNumbers, scoreDrawPoint, scoreHeight, scoreGap);
 		drawString (shells, shellNumbers, shellDrawPoint, shellHeight, shellGap);
 		drawString (combo, scoreNumbers, comboDrawPoint, comboHeight, comboGap);
+		
+		
+		//draw the death stuff
+		c.a = (gameoverAlpha);
+		GUI.color = c;
+		
+		Rect r = new Rect ((Screen.width - gameoverTexture.width) / 2, (Screen.height - gameoverTexture.height) / 2, gameoverTexture.width, gameoverTexture.height);
+		GUI.DrawTexture (r, gameoverTexture);
 	}
+	
+	private int tripMode = -1;
+	private bool wasTripping;
 	
 	//checks if we need to change face. If we do, changes the current to that face, and the previous to the correct face
 	//also updates the alpha values
 	private void updateFaces ()
 	{
 		//update alpha values
-		currentAlpha += Time.deltaTime * (1.0f / transitionTime);
-		previousAlpha -= Time.deltaTime * (1.0f / transitionTime);
+		if (player.deadOrDying ()) {
+			currentAlpha = gameoverAlpha;
+			previousAlpha = gameoverAlpha;
+		} else {
+			currentAlpha += Time.deltaTime * (1.0f / transitionTime);
+			previousAlpha -= Time.deltaTime * (1.0f / transitionTime);
 		
-		currentAlpha = Mathf.Clamp(currentAlpha, 0.0f, 1.0f);
-		previousAlpha = Mathf.Clamp(previousAlpha, 0.0f, 1.0f);
+			currentAlpha = Mathf.Clamp (currentAlpha, 0.0f, 1.0f);
+			previousAlpha = Mathf.Clamp (previousAlpha, 0.0f, 1.0f);
+		}
+		
+		
 		
 		//check if we need to change face
 		
 		//can't change once it's dead
-		if (currentFace == deadFace) return;
+		if (currentFace == deadFace)
+			return;
 		
 		if (lastHealth <= 0) {
 			previousFace = currentFace;
@@ -195,26 +240,61 @@ public class PlayerStatsGui : MonoBehaviour
 			return;
 		}
 		
-		int iCur = Mathf.Clamp (player.getHealth() * 3 / 100, 0, 2);
+		int tripCur = player.getTripMode();
+
+		if (player.isTripping()) {
+			if (tripMode == tripCur) return;
+			
+			int i = player.getTripMode();
+			
+			i = Mathf.Clamp (i - 1, 0, 2);
+			previousFace = currentFace;
+			currentFace = tripFaces[i];
+			
+			previousAlpha = currentAlpha;
+			currentAlpha = 0.0f;
+			
+			lastHealth = player.getHealth ();
+			
+			wasTripping = true;
+			tripMode = tripCur;
+			return;
+		}
+		
+		tripMode = -1;
+		
+		int iCur = Mathf.Clamp (player.getHealth () * 3 / 100, 0, 2);
 		int iLast = Mathf.Clamp (lastHealth * 3 / 100, 0, 2);
 		
-		if (iCur != iLast) {
+		if (iCur != iLast || wasTripping) {
+			wasTripping = false;
 			//we've transitioned
 			previousFace = currentFace;
-			currentFace = rockyFaces[iCur];
+			currentFace = rockyFaces [iCur];
 			
 			previousAlpha = currentAlpha;
 			currentAlpha = 0.0f;
 		}
 		
 		//then cache health
-		lastHealth = player.getHealth();
+		lastHealth = player.getHealth ();
 	}
 	
 	//draws the faces at the correct transparency levels
 	private void drawFaces ()
 	{
-		Color c = GUI.color;
+		Color c;
+		
+		if (player.deadOrDying ()) {
+			c = GUI.color;
+		
+			c.a = (1 - gameoverAlpha);
+			GUI.color = c;
+			GUI.DrawTexture (healthLocation, currentFace);
+			return;
+		}
+		
+		c = GUI.color;
 		
 		c.a = previousAlpha;
 		GUI.color = c;

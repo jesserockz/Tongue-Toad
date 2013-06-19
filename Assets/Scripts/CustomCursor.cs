@@ -13,7 +13,7 @@ public class CustomCursor : MonoBehaviour
 		
 		rect = new Rect (Input.mousePosition.x, Screen.height - Input.mousePosition.y, 32, 32);
 		
-		//DontDestroyOnLoad (this);
+		DontDestroyOnLoad (this);
 	}
      
 	void OnGUI ()
