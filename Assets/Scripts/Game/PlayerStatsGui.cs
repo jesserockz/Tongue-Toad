@@ -51,7 +51,7 @@ public class PlayerStatsGui : MonoBehaviour
 	private float scoreHeight = 40;
 	private float scoreGap = 0;
 	//87 pixels in, 80 down, -4 pixel gap between letters (draw them closer)
-	private Vector2 shellDrawPoint = new Vector2 (75, 75);
+	private Vector2 shellDrawPoint = new Vector2 (79, 100);
 	private float shellHeight = 25;
 	private float shellGap = -4;
 	//188 pixels in, 118 down, 0 pixel gap between letters
@@ -192,7 +192,7 @@ public class PlayerStatsGui : MonoBehaviour
 
 		drawString (score, scoreNumbers, scoreDrawPoint, scoreHeight, scoreGap);
 		drawString (shells, shellNumbers, shellDrawPoint, shellHeight, shellGap);
-		drawString (combo, scoreNumbers, comboDrawPoint, comboHeight, comboGap);
+		//drawString (combo, scoreNumbers, comboDrawPoint, comboHeight, comboGap);
 		
 		
 		//draw the death stuff
