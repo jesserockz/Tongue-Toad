@@ -1,9 +1,0 @@
-fileFormatVersion: 2
-guid: 37eb60079fba02f479a88911c6e46448
-MonoImporter:
-  serializedVersion: 2
-  defaultReferences:
-  - overlayTexture: {fileID: 2800000, guid: 4cea90149f592434b97fa0edf1454920, type: 3}
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
